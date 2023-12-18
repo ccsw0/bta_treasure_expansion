@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "fun_treasure",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This mod aims to help new BTA modders.",
+  "name": "Fun Treasure",
+  "description": "Adds miscellaneous treasures to find.",
   "authors": [
-    "Turnip Labs"
+    "csweetla"
   ],
   "contact": {
     "homepage": "",
@@ -18,12 +18,12 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-        "turniplabs.examplemod.ExampleMod"
+			"csweetla.fun_treasure.FunTreasure"
     ]
   },
-  "mixins": [
-      "examplemod.mixins.json"
-  ],
+	"mixins": [
+		"fun_treasure.mixins.json"
+	],
 
   "depends": {
     "fabricloader": ">=0.13.3"

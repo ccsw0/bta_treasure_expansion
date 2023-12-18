@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "csweetla.fun_treasure.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "WorldFeatureLabyrinthMixin",
+    "EntityPlayerMixin"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
