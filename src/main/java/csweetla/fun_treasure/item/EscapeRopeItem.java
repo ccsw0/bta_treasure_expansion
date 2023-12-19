@@ -9,6 +9,8 @@ import net.minecraft.core.world.World;
 
 import java.util.Random;
 
+import static csweetla.fun_treasure.FunTreasure.MOD_ID;
+
 public class EscapeRopeItem extends Item {
 
 	static int MAX_ESCAPE_TRIES = 20;
@@ -80,7 +82,8 @@ public class EscapeRopeItem extends Item {
 				// TODO: won't work in multiplayer I think, fix
 				entityplayer.absMoveTo(x + 0.5F, y + 3, z + 0.5F, 0F, 0F);
 				entityplayer.addChatMessage("Escaped successfully!");
-				world.playSoundAtEntity(entityplayer,"fire.ignite",1.0F,1.0F );
+				// TODO: snap sound when rope breaks
+				world.playSoundAtEntity(entityplayer,MOD_ID +".rope_whoosh",1.0F,1.0F );
 				itemstack.damageItem(1, entityplayer);
 				return itemstack;
 			}

@@ -12,8 +12,8 @@ import net.minecraft.core.item.material.ArmorMaterial;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import turniplabs.halplibe.helper.SoundHelper;
 import turniplabs.halplibe.helper.TextureHelper;
-
 
 public class FunTreasure implements ModInitializer {
     public static final String MOD_ID = "fun_treasure";
@@ -25,8 +25,10 @@ public class FunTreasure implements ModInitializer {
 	@Override
     public void onInitialize() {
 		int[] tex_coords;
+		int curr_id = ItemHelper.findOpenIds(3);
 		LOGGER.info(MOD_ID + " initialized.");
-		int curr_id = ItemHelper.findOpenIds(2);
+
+		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
 
 		armorItemPistonBoots = new ItemArmor(MOD_ID + ".piston_boots", curr_id++, ArmorMaterial.iron, 3).setIconCoord(2, 3);
 
