@@ -20,12 +20,14 @@ public class FunTreasure implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static Item armorItemPistonBoots;
 	public static Item ItemEscapeRope;
+	public static Item ItemStrangeDevice;
 	public static ItemFood FoodItemOrange;
+	public static ItemFood FoodItemGrapes;
 
 	@Override
     public void onInitialize() {
 		int[] tex_coords;
-		int curr_id = ItemHelper.findOpenIds(3);
+		int curr_id = ItemHelper.findOpenIds(5);
 		LOGGER.info(MOD_ID + " initialized.");
 
 		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
@@ -35,7 +37,13 @@ public class FunTreasure implements ModInitializer {
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
 		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]);
 
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"device.png");
+		ItemStrangeDevice = new Item(MOD_ID + ".strange_device", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");
 		FoodItemOrange = (ItemFood) new ItemFood(MOD_ID + ".orange",curr_id++,4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"grapes.png");
+		FoodItemGrapes = (ItemFood) new ItemFood(MOD_ID + ".grapes",curr_id++,4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 	}
 }

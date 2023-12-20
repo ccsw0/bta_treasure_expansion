@@ -4,8 +4,10 @@
   "package": "csweetla.fun_treasure.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "WorldFeatureLabyrinthMixin",
-    "EntityPlayerMixin"
+    "EntityPlayerMixin",
+    "GuiIngameMixin",
+    "GuiInventoryMixin",
+    "WorldFeatureLabyrinthMixin"
   ],
   "server": [],
   "injectors": {
