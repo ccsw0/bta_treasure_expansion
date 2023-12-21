@@ -10,3 +10,8 @@ item.fun_treasure.orange.name=Orange
 item.fun_treasure.orange.desc=Don't compare to apples!
 item.fun_treasure.grapes.name=Grapes
 item.fun_treasure.grapes.desc=I can't think of anything clever about grapes
+
+message.fun_treasure.escape_rope.use_nether=Escape Rope only works in the Overworld!
+message.fun_treasure.escape_rope.use_surface=Try to use the Escape Rope Underground!
+message.fun_treasure.escape_rope.use_success=Escaped unscathed!
+message.fun_treasure.escape_rope.use_failure=Can't locate an escape route here!

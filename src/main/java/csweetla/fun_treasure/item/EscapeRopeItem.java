@@ -69,13 +69,13 @@ public class EscapeRopeItem extends Item {
 		int rand_pos_offset = 50;
 
 		if (world.dimension != Dimension.overworld) {
-			entityplayer.addChatMessage("Escape Rope only works in the overworld!");
+			entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_nether");
 			return itemstack;
 		}
 		else if (entityplayer.y >= 128)
 		{
 			// TODO: Better detection of underground player
-			entityplayer.addChatMessage("Escape Rope only works underground!");
+			entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_surface");
 			return itemstack;
 		}
 
@@ -91,7 +91,7 @@ public class EscapeRopeItem extends Item {
 			int block_id = world.getBlockId(x,y,z);
 			if (acceptable_landing_block(block_id)) {
 				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
-				entityplayer.addChatMessage("Escaped successfully!");
+				entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_success");
 				// TODO: snap sound when rope breaks
 				world.playSoundAtEntity(entityplayer,MOD_ID +".rope_whoosh",1.0F,1.0F );
 				itemstack.damageItem(1, entityplayer);
@@ -99,7 +99,7 @@ public class EscapeRopeItem extends Item {
 			}
 		}
 
-		entityplayer.addChatMessage("Can't find an escape here!!!");
+		entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_failure");
 		return itemstack;
 	}
 }
