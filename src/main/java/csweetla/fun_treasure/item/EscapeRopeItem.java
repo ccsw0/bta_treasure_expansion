@@ -7,6 +7,7 @@ import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.Dimension;
 import net.minecraft.core.world.World;
+import net.minecraft.server.entity.player.EntityPlayerMP;
 
 import java.util.Random;
 
@@ -53,6 +54,16 @@ public class EscapeRopeItem extends Item {
 		return true;
 	}
 
+	// teleport player in singleplayer AND multiplayer without problems
+	private void teleport_safely(EntityPlayer entityPlayer, double x, double y, double z) {
+		if (entityPlayer instanceof EntityPlayerMP) {
+			EntityPlayerMP mp = (EntityPlayerMP) entityPlayer;
+			mp.playerNetServerHandler.teleportTo(x, y, z, 0F, 0F);
+		} else {
+			entityPlayer.absMoveTo(x, y, z, 0F, 0F);
+		}
+	}
+
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		int y;
 		int rand_pos_offset = 50;
@@ -79,8 +90,7 @@ public class EscapeRopeItem extends Item {
 			FunTreasure.LOGGER.info("x: " + x + " y: " + y + " z: " + z);
 			int block_id = world.getBlockId(x,y,z);
 			if (acceptable_landing_block(block_id)) {
-				// TODO: won't work in multiplayer I think, fix
-				entityplayer.absMoveTo(x + 0.5F, y + 3, z + 0.5F, 0F, 0F);
+				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
 				entityplayer.addChatMessage("Escaped successfully!");
 				// TODO: snap sound when rope breaks
 				world.playSoundAtEntity(entityplayer,MOD_ID +".rope_whoosh",1.0F,1.0F );
