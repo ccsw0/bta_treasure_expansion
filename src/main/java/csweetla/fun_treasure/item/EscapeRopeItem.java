@@ -1,5 +1,6 @@
 package csweetla.fun_treasure.item;
 
+import csweetla.fun_treasure.FunTreasure;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.entity.player.EntityPlayer;
 import net.minecraft.core.item.Item;
@@ -13,26 +14,28 @@ import static csweetla.fun_treasure.FunTreasure.MOD_ID;
 
 public class EscapeRopeItem extends Item {
 
-	static int MAX_ESCAPE_TRIES = 20;
+	static int MAX_ESCAPE_TRIES = 35;
 	static Random rand = new Random();
-	static String[] banned_landing_blocks = {
-		"tile.fluid.water.still",
-		"tile.fluid.water.flowing",
-		"tile.fluid.lava.still",
-		"tile.fluid.lava.flowing",
-		"tile.spikes",
-		"tile.fire",
-		"tile.cobweb",
-		"tile.cactus",
-		"tile.ice",
-		"tile.leaves.oak",
-		"tile.leaves.oak.retro",
-		"tile.leaves.pine",
-		"tile.leaves.birch",
-		"tile.leaves.cherry",
-		"tile.leaves.eucalyptus",
-		"tile.leaves.shrub",
-		"tile.leaves.cherry.flowering",
+	static int[] banned_landing_blocks = {
+		0,
+		Block.fluidWaterStill.id,
+		Block.fluidWaterFlowing.id,
+		Block.fluidLavaStill.id,
+		Block.fluidLavaFlowing.id,
+		Block.algae.id,
+		Block.spikes.id,
+		Block.fire.id,
+		Block.cobweb.id,
+		Block.cactus.id,
+		Block.ice.id,
+		Block.leavesOak.id,
+		Block.leavesOakRetro.id,
+		Block.leavesPine.id,
+		Block.leavesBirch.id,
+		Block.leavesEucalyptus.id,
+		Block.leavesShrub.id,
+		Block.leavesCherry.id,
+		Block.leavesCherryFlowering.id,
 	};
 	public EscapeRopeItem(String name, int id) {
 		super(name, id);
@@ -41,9 +44,9 @@ public class EscapeRopeItem extends Item {
 	}
 
 	// The escape rope should always put you on solid, safe ground.
-	private boolean acceptable_landing_block(String block_key) {
-		for (String banned : banned_landing_blocks) {
-			if (block_key.equals(banned)) {
+	private boolean acceptable_landing_block(int block_id) {
+		for (int banned : banned_landing_blocks) {
+			if (block_id == banned) {
 				return false;
 			}
 		}
@@ -61,24 +64,21 @@ public class EscapeRopeItem extends Item {
 		else if (entityplayer.y >= 128)
 		{
 			// TODO: Better detection of underground player
-
 			entityplayer.addChatMessage("Escape Rope only works underground!");
 			return itemstack;
 		}
 
+		// TODO: there are maybe some methods in world that could do this better
 		for (int i = 0; i < MAX_ESCAPE_TRIES; i++) {
 			y = world.getHeightBlocks();
 			int x = (int) entityplayer.x - rand_pos_offset/2 + rand.nextInt(rand_pos_offset);
 			int z = (int) entityplayer.z - rand_pos_offset/2 + rand.nextInt(rand_pos_offset);
-			while (world.isAirBlock(x, y, z)) {
+			while (world.isAirBlock(x, y, z) && y > 128) {
 				--y;
 			}
-			// if our escape is below sea level, it doesn't count
-			if (y < 128) {
-				continue;
-			}
-			String block_key = Block.getBlock(world.getBlockId(x,y,z)).getKey();
-			if (acceptable_landing_block(block_key)) {
+			FunTreasure.LOGGER.info("x: " + x + " y: " + y + " z: " + z);
+			int block_id = world.getBlockId(x,y,z);
+			if (acceptable_landing_block(block_id)) {
 				// TODO: won't work in multiplayer I think, fix
 				entityplayer.absMoveTo(x + 0.5F, y + 3, z + 0.5F, 0F, 0F);
 				entityplayer.addChatMessage("Escaped successfully!");
