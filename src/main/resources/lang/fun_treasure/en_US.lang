@@ -10,6 +10,10 @@ item.fun_treasure.orange.name=Orange
 item.fun_treasure.orange.desc=Don't compare to apples!
 item.fun_treasure.grapes.name=Grapes
 item.fun_treasure.grapes.desc=I can't think of anything clever about grapes
+item.fun_treasure.bananas.name=Bananas
+item.fun_treasure.bananas.desc=I love Bananas! I go nuts for them.
+item.fun_treasure.fruit_salad.name=Fruit Salad
+item.fun_treasure.fruit_salad.desc=Yummy yummy!
 
 message.fun_treasure.escape_rope.use_nether=Escape Rope only works in the Overworld!
 message.fun_treasure.escape_rope.use_surface=Try to use the Escape Rope Underground!

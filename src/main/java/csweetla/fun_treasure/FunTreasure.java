@@ -12,6 +12,7 @@ import net.minecraft.core.item.material.ArmorMaterial;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import turniplabs.halplibe.helper.RecipeHelper;
 import turniplabs.halplibe.helper.SoundHelper;
 import turniplabs.halplibe.helper.TextureHelper;
 
@@ -24,11 +25,13 @@ public class FunTreasure implements ModInitializer {
 	public static Item ItemStrangeDevice;
 	public static ItemFood FoodItemOrange;
 	public static ItemFood FoodItemGrapes;
+	public static ItemFood FoodItemBananas;
+	public static ItemFood FoodItemFruitSalad;
 
 	@Override
     public void onInitialize() {
 		int[] tex_coords;
-		int curr_id = ItemHelper.findOpenIds(6);
+		int curr_id = ItemHelper.findOpenIds(8);
 		LOGGER.info(MOD_ID + " initialized.");
 
 		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
@@ -49,5 +52,22 @@ public class FunTreasure implements ModInitializer {
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"grapes.png");
 		FoodItemGrapes = (ItemFood) new ItemFood(MOD_ID + ".grapes",curr_id++,4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"bananas.png");
+		FoodItemBananas = (ItemFood) new ItemFood(MOD_ID + ".bananas",curr_id++,4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"fruit_salad.png");
+		FoodItemFruitSalad = (ItemFood) new ItemFood(MOD_ID + ".fruit_salad",curr_id++,20,false).setIconCoord(tex_coords[0],tex_coords[1]);
+
+		RecipeHelper.Crafting.createShapelessRecipe(FoodItemFruitSalad,1,
+			 new Object[]{
+				 	Item.bowl,
+                    Item.foodApple,
+                    FoodItemBananas,
+                    FoodItemGrapes,
+                    FoodItemOrange
+            }
+        );
+
 	}
 }
