@@ -14,6 +14,9 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import static csweetla.fun_treasure.FunTreasure.armorItemDivingHelmet;
 
 @Mixin(value = net.minecraft.core.entity.player.EntityPlayer.class, remap = false)
 public abstract class EntityPlayerMixin extends net.minecraft.core.entity.EntityLiving {
@@ -50,6 +53,14 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 			else {
 				f -= 4.0F;
 			}
+		}
+	}
+
+	// allow player not to lose breathe if underwater and wearing diving helmet
+	@Inject(method="canBreatheUnderwater",at=@At("HEAD"), cancellable = true)
+	void canBreatheUnderwater(CallbackInfoReturnable<Boolean> cir) {
+		if (this.inventory.armorInventory[3] != null && this.inventory.armorInventory[3].itemID == armorItemDivingHelmet.id) {
+			cir.setReturnValue(true);
 		}
 	}
 }

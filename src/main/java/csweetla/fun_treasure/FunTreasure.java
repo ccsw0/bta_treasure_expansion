@@ -19,6 +19,7 @@ public class FunTreasure implements ModInitializer {
     public static final String MOD_ID = "fun_treasure";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static Item armorItemPistonBoots;
+	public static Item armorItemDivingHelmet;
 	public static Item ItemEscapeRope;
 	public static Item ItemStrangeDevice;
 	public static ItemFood FoodItemOrange;
@@ -27,12 +28,15 @@ public class FunTreasure implements ModInitializer {
 	@Override
     public void onInitialize() {
 		int[] tex_coords;
-		int curr_id = ItemHelper.findOpenIds(5);
+		int curr_id = ItemHelper.findOpenIds(6);
 		LOGGER.info(MOD_ID + " initialized.");
 
 		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
 
 		armorItemPistonBoots = new ItemArmor(MOD_ID + ".piston_boots", curr_id++, ArmorMaterial.iron, 3).setIconCoord(2, 3);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"diving_helmet.png");
+		armorItemDivingHelmet = new ItemArmor(MOD_ID + ".diving_helmet", curr_id++, ArmorMaterial.iron, 0).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
 		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]);
