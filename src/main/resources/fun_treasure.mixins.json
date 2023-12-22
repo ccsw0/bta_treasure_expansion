@@ -4,6 +4,7 @@
   "package": "csweetla.fun_treasure.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "EntityLivingMixin",
     "EntityPlayerMixin",
     "GuiIngameMixin",
     "GuiInventoryMixin",

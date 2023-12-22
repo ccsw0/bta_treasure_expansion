@@ -4,6 +4,9 @@ import csweetla.fun_treasure.item.EscapeRopeItem;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.item.ItemFood;
+import net.minecraft.core.item.material.ToolMaterial;
+import net.minecraft.core.item.tag.ItemTags;
+import net.minecraft.core.item.tool.ItemToolSword;
 import turniplabs.halplibe.helper.ItemHelper;
 
 import net.minecraft.core.item.Item;
@@ -19,8 +22,10 @@ import turniplabs.halplibe.helper.TextureHelper;
 public class FunTreasure implements ModInitializer {
     public static final String MOD_ID = "fun_treasure";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
 	public static Item armorItemPistonBoots;
 	public static Item armorItemDivingHelmet;
+	public static Item toolItemSilverSword;
 	public static Item ItemEscapeRope;
 	public static Item ItemStrangeDevice;
 	public static ItemFood FoodItemOrange;
@@ -31,7 +36,7 @@ public class FunTreasure implements ModInitializer {
 	@Override
     public void onInitialize() {
 		int[] tex_coords;
-		int curr_id = ItemHelper.findOpenIds(8);
+		int curr_id = ItemHelper.findOpenIds(9);
 		LOGGER.info(MOD_ID + " initialized.");
 
 		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
@@ -41,8 +46,15 @@ public class FunTreasure implements ModInitializer {
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"diving_helmet.png");
 		armorItemDivingHelmet = new ItemArmor(MOD_ID + ".diving_helmet", curr_id++, ArmorMaterial.iron, 0).setIconCoord(tex_coords[0],tex_coords[1]);
 
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"silver_sword.png");
+		//noinspection unchecked
+		toolItemSilverSword =  new ItemToolSword(MOD_ID + ".sword_silver", curr_id++, ToolMaterial.iron).setIconCoord(tex_coords[0],tex_coords[1]).withTags(ItemTags.preventCreativeMining);
+
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
-		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]);
+		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", curr_id++, 6).setIconCoord(tex_coords[0],tex_coords[1]);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope.png");
+		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", curr_id++, 1).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"device.png");
 		ItemStrangeDevice = new Item(MOD_ID + ".strange_device", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
@@ -63,6 +75,7 @@ public class FunTreasure implements ModInitializer {
 			 new Object[]{
 				 	Item.bowl,
                     Item.foodApple,
+				 	Item.cherry,
                     FoodItemBananas,
                     FoodItemGrapes,
                     FoodItemOrange

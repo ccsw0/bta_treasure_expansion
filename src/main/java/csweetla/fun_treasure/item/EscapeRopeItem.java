@@ -1,6 +1,5 @@
 package csweetla.fun_treasure.item;
 
-import csweetla.fun_treasure.FunTreasure;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.entity.player.EntityPlayer;
 import net.minecraft.core.item.Item;
@@ -38,10 +37,11 @@ public class EscapeRopeItem extends Item {
 		Block.leavesCherry.id,
 		Block.leavesCherryFlowering.id,
 	};
-	public EscapeRopeItem(String name, int id) {
+
+	public EscapeRopeItem(String name, int id, int durability) {
 		super(name, id);
 		this.maxStackSize = 1;
-		this.setMaxDamage(4);
+		this.setMaxDamage(2 * durability - 1) ;
 	}
 
 	// The escape rope should always put you on solid, safe ground.
@@ -65,6 +65,9 @@ public class EscapeRopeItem extends Item {
 	}
 
 	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+		if (world.isClientSide) {
+			return itemstack;
+		}
 		int y;
 		int rand_pos_offset = 50;
 
@@ -87,14 +90,15 @@ public class EscapeRopeItem extends Item {
 			while (world.isAirBlock(x, y, z) && y > 128) {
 				--y;
 			}
-			FunTreasure.LOGGER.info("x: " + x + " y: " + y + " z: " + z);
+
 			int block_id = world.getBlockId(x,y,z);
 			if (acceptable_landing_block(block_id)) {
 				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
 				entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_success");
 				// TODO: snap sound when rope breaks
 				world.playSoundAtEntity(entityplayer,MOD_ID +".rope_whoosh",1.0F,1.0F );
-				itemstack.damageItem(1, entityplayer);
+
+				itemstack.damageItem(2, entityplayer);
 				return itemstack;
 			}
 		}
