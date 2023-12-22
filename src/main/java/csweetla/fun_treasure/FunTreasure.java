@@ -1,6 +1,7 @@
 package csweetla.fun_treasure;
 
 import csweetla.fun_treasure.item.EscapeRopeItem;
+import csweetla.fun_treasure.item.LabyrinthGeneratorItem;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.item.ItemFood;
@@ -27,7 +28,9 @@ public class FunTreasure implements ModInitializer {
 	public static Item armorItemDivingHelmet;
 	public static Item toolItemSilverSword;
 	public static Item ItemEscapeRope;
+	public static Item ItemEscapeRopeGold;
 	public static Item ItemStrangeDevice;
+	public static Item ItemLabyrinthGenerator;
 	public static ItemFood FoodItemOrange;
 	public static ItemFood FoodItemGrapes;
 	public static ItemFood FoodItemBananas;
@@ -36,7 +39,7 @@ public class FunTreasure implements ModInitializer {
 	@Override
     public void onInitialize() {
 		int[] tex_coords;
-		int curr_id = ItemHelper.findOpenIds(9);
+		int curr_id = ItemHelper.findOpenIds(10);
 		LOGGER.info(MOD_ID + " initialized.");
 
 		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
@@ -51,13 +54,15 @@ public class FunTreasure implements ModInitializer {
 		toolItemSilverSword =  new ItemToolSword(MOD_ID + ".sword_silver", curr_id++, ToolMaterial.iron).setIconCoord(tex_coords[0],tex_coords[1]).withTags(ItemTags.preventCreativeMining);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
-		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", curr_id++, 6).setIconCoord(tex_coords[0],tex_coords[1]);
+		ItemEscapeRopeGold = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", curr_id++, 6).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope.png");
 		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", curr_id++, 1).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"device.png");
 		ItemStrangeDevice = new Item(MOD_ID + ".strange_device", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+
+		ItemLabyrinthGenerator = new LabyrinthGeneratorItem(MOD_ID + ".labyrinth_generator", curr_id++).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");
 		FoodItemOrange = (ItemFood) new ItemFood(MOD_ID + ".orange",curr_id++,4,false).setIconCoord(tex_coords[0],tex_coords[1]);

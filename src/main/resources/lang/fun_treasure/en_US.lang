@@ -16,6 +16,9 @@ item.fun_treasure.escape_rope.desc=It seems hardly strong enough to support your
 item.fun_treasure.strange_device.name=Strange Device
 item.fun_treasure.strange_device.desc=Created with strange technology, this device can tell you all kinds of information
 
+item.fun_treasure.labyrinth_generator.name=Labyrinth Generator
+item.fun_treasure.labyrinth_generator.desc=If you got this in survival, THROW IT OUT NOW!!!
+
 item.fun_treasure.orange.name=Orange
 item.fun_treasure.orange.desc=Don't compare to apples!
 
