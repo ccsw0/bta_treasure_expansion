@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "fun_treasure",
+  "id": "treasure_expansion",
   "version": "${version}",
 
-  "name": "Fun Treasure",
-  "description": "Adds miscellaneous treasures to find.",
+  "name": "Treasure Expansion",
+  "description": "Adds miscellaneous treasures to find, for better adventures.",
   "authors": [
     "csweetla"
   ],
@@ -18,11 +18,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-			"csweetla.fun_treasure.FunTreasure"
+			"csweetla.treasure_expansion.TreasureExpansion"
     ]
   },
 	"mixins": [
-		"fun_treasure.mixins.json"
+		"treasure_expansion.mixins.json"
 	],
 
   "depends": {

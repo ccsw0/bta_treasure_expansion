@@ -1,6 +1,6 @@
-package csweetla.fun_treasure.mixins;
+package csweetla.treasure_expansion.mixins;
 
-import csweetla.fun_treasure.FunTreasure;
+import csweetla.treasure_expansion.TreasureExpansion;
 
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
@@ -44,13 +44,13 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		int r = random.nextInt(5);
 		switch (r) {
 			case 0:
-				return new ItemStack(FunTreasure.ItemEscapeRopeGold);
+				return new ItemStack(TreasureExpansion.ItemEscapeRopeGold);
 			case 1:
-				return new ItemStack(FunTreasure.armorItemPistonBoots);
+				return new ItemStack(TreasureExpansion.armorItemPistonBoots);
 			case 2:
-				return new ItemStack(FunTreasure.armorItemDivingHelmet);
+				return new ItemStack(TreasureExpansion.armorItemDivingHelmet);
 			case 3:
-				return new ItemStack(FunTreasure.ItemStrangeDevice);
+				return new ItemStack(TreasureExpansion.ItemStrangeDevice);
 			default:
 				return new ItemStack(Item.armorQuiverGold);
 		}
@@ -60,9 +60,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	ItemStack pick_minor_treasure_item(Random random) {
 		int r = random.nextInt(3);
 		if (r == 0) {
-			return new ItemStack(FunTreasure.ItemEscapeRope);
+			return new ItemStack(TreasureExpansion.ItemEscapeRope);
 		} else if (r == 1) {
-			return new ItemStack(FunTreasure.toolItemSilverSword);
+			return new ItemStack(TreasureExpansion.toolItemSilverSword);
 		} else {
 			return new ItemStack(Item.diamond, 6 + random.nextInt(6));
 		}
@@ -74,11 +74,11 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		if (r == 0) {
 			this.fruit_item = Item.foodApple;
 		} else if (r == 1) {
-			this.fruit_item = FunTreasure.FoodItemBananas;
+			this.fruit_item = TreasureExpansion.FoodItemBananas;
 		} else if (r == 2) {
-			this.fruit_item = FunTreasure.FoodItemOrange;
+			this.fruit_item = TreasureExpansion.FoodItemOrange;
 		} else {
-			this.fruit_item = FunTreasure.FoodItemGrapes;
+			this.fruit_item = TreasureExpansion.FoodItemGrapes;
 		}
 		this.generate_minor_treasure = random.nextInt(3) == 0;
 	}

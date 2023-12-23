@@ -1,4 +1,4 @@
-package csweetla.fun_treasure.mixins;
+package csweetla.treasure_expansion.mixins;
 
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.EntityLiving;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
-import static csweetla.fun_treasure.FunTreasure.toolItemSilverSword;
+import static csweetla.treasure_expansion.TreasureExpansion.toolItemSilverSword;
 
 @Mixin(value = net.minecraft.core.entity.EntityLiving.class, remap = false)
 public abstract class EntityLivingMixin extends Entity {

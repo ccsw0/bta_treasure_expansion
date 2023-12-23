@@ -1,4 +1,4 @@
-package csweetla.fun_treasure.item;
+package csweetla.treasure_expansion.item;
 
 import net.minecraft.core.block.Block;
 import net.minecraft.core.entity.player.EntityPlayer;
@@ -10,7 +10,7 @@ import net.minecraft.server.entity.player.EntityPlayerMP;
 
 import java.util.Random;
 
-import static csweetla.fun_treasure.FunTreasure.MOD_ID;
+import static csweetla.treasure_expansion.TreasureExpansion.MOD_ID;
 
 public class EscapeRopeItem extends Item {
 

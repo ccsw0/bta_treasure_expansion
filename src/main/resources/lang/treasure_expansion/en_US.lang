@@ -1,0 +1,37 @@
+item.treasure_expansion.piston_boots.name=Piston Boots
+item.treasure_expansion.piston_boots.desc=You did WHAT? in the boots
+
+item.treasure_expansion.diving_helmet.name=Tarnished Diving Helmet
+item.treasure_expansion.diving_helmet.desc=By some miracle of jonk, it still works
+
+item.treasure_expansion.silver_sword.name=Silver Sword
+item.treasure_expansion.silver_sword.desc=Made out of a material with a burning hatred for monsters
+
+item.treasure_expansion.escape_rope_gold.name=Golden Escape Rope
+item.treasure_expansion.escape_rope_gold.desc=It's golden fibers make it strong enough for repeated use
+
+item.treasure_expansion.escape_rope.name=Escape Rope
+item.treasure_expansion.escape_rope.desc=This flimsy rope is hardly strong enough to support your weight.
+
+item.treasure_expansion.strange_device.name=Strange Device
+item.treasure_expansion.strange_device.desc=This device can access some kind of information superhighway!
+
+item.treasure_expansion.labyrinth_generator.name=Labyrinth Generator
+item.treasure_expansion.labyrinth_generator.desc=If you got this in survival, THROW IT AWAY NOW!!!
+
+item.treasure_expansion.orange.name=Orange
+item.treasure_expansion.orange.desc=Don't compare them to apples!
+
+item.treasure_expansion.grapes.name=Grapes
+item.treasure_expansion.grapes.desc=I can't think of anything clever about grapes
+
+item.treasure_expansion.bananas.name=Bananas
+item.treasure_expansion.bananas.desc=I go nuts for these.
+
+item.treasure_expansion.fruit_salad.name=Fruit Salad
+item.treasure_expansion.fruit_salad.desc=Yummy yummy!
+
+message.treasure_expansion.escape_rope.use_nether=Escape Rope will only work in the Overworld!
+message.treasure_expansion.escape_rope.use_surface=Try to use the Escape Rope Underground!
+message.treasure_expansion.escape_rope.use_success=Escaped unscathed!
+message.treasure_expansion.escape_rope.use_failure=No escape route found!

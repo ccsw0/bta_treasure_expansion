@@ -1,4 +1,4 @@
-package csweetla.fun_treasure.mixins;
+package csweetla.treasure_expansion.mixins;
 
 
 import net.minecraft.core.player.gamemode.Gamemode;
@@ -6,7 +6,7 @@ import net.minecraft.core.player.inventory.InventoryPlayer;
 import net.minecraft.core.world.World;
 import net.minecraft.core.entity.player.EntityPlayer;
 
-import csweetla.fun_treasure.FunTreasure;
+import csweetla.treasure_expansion.TreasureExpansion;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static csweetla.fun_treasure.FunTreasure.armorItemDivingHelmet;
+import static csweetla.treasure_expansion.TreasureExpansion.armorItemDivingHelmet;
 
 @Mixin(value = net.minecraft.core.entity.player.EntityPlayer.class, remap = false)
 public abstract class EntityPlayerMixin extends net.minecraft.core.entity.EntityLiving {
@@ -31,7 +31,7 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 	@Unique
 	public boolean piston_boots_equipped()
 	{
-		return this.inventory.armorInventory[0] != null && this.inventory.armorInventory[0].itemID == FunTreasure.armorItemPistonBoots.id;
+		return this.inventory.armorInventory[0] != null && this.inventory.armorInventory[0].itemID == TreasureExpansion.armorItemPistonBoots.id;
 	}
 
 	@Inject(method = "jump()V", at = @At("TAIL"))

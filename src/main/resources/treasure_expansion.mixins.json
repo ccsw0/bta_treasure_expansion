@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "csweetla.fun_treasure.mixins",
+  "package": "csweetla.treasure_expansion.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityLivingMixin",

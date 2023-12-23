@@ -1,7 +1,7 @@
-package csweetla.fun_treasure;
+package csweetla.treasure_expansion;
 
-import csweetla.fun_treasure.item.EscapeRopeItem;
-import csweetla.fun_treasure.item.LabyrinthGeneratorItem;
+import csweetla.treasure_expansion.item.EscapeRopeItem;
+import csweetla.treasure_expansion.item.LabyrinthGeneratorItem;
 
 import net.fabricmc.api.ModInitializer;
 
@@ -21,8 +21,8 @@ import turniplabs.halplibe.helper.*;
 
 import java.util.Properties;
 
-public class FunTreasure implements ModInitializer {
-    public static final String MOD_ID = "fun_treasure";
+public class TreasureExpansion implements ModInitializer {
+    public static final String MOD_ID = "treasure_expansion";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final ConfigHandler config;
 	static {

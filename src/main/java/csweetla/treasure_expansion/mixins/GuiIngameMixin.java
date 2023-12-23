@@ -1,4 +1,4 @@
-package csweetla.fun_treasure.mixins;
+package csweetla.treasure_expansion.mixins;
 
 
 import net.minecraft.client.entity.player.EntityPlayerSP;
@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import static csweetla.fun_treasure.FunTreasure.ItemStrangeDevice;
-import static csweetla.fun_treasure.FunTreasure.armorItemDivingHelmet;
+import static csweetla.treasure_expansion.TreasureExpansion.ItemStrangeDevice;
+import static csweetla.treasure_expansion.TreasureExpansion.armorItemDivingHelmet;
 
 @Mixin(value = GuiIngame.class, remap = false)
 public abstract class GuiIngameMixin extends Gui {

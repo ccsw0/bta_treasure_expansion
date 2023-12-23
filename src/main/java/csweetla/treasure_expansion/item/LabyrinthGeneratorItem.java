@@ -1,4 +1,4 @@
-package csweetla.fun_treasure.item;
+package csweetla.treasure_expansion.item;
 
 import net.minecraft.core.entity.player.EntityPlayer;
 import net.minecraft.core.item.Item;
