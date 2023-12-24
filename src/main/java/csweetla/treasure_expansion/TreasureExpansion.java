@@ -56,10 +56,6 @@ public class TreasureExpansion implements ModInitializer {
 	public static ItemFood FoodItemBananas;
 	public static ItemFood FoodItemFruitSalad;
 
-	public void initializeSounds() {
-		SoundHelper.addSound(MOD_ID,"rope_whoosh.ogg");
-	}
-
 	public void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial("piston_boots",220,50.0F,50.0F,20.0F,120.0F);
 		armorMaterialDiving = ArmorHelper.createArmorMaterial("diving",220,20.0F,60.0F,20.0F,20.0F);
@@ -119,10 +115,10 @@ public class TreasureExpansion implements ModInitializer {
     public void onInitialize() {
 		LOGGER.info(MOD_ID + " initialized.");
 
-		initializeSounds();
 		initializeArmorMaterials();
 		initializeItems();
 		initializeRecipes();
 
 	}
+
 }

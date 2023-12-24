@@ -58,7 +58,7 @@ public class EscapeRopeItem extends Item {
 	private void teleport_safely(EntityPlayer entityPlayer, double x, double y, double z) {
 		if (entityPlayer instanceof EntityPlayerMP) {
 			EntityPlayerMP mp = (EntityPlayerMP) entityPlayer;
-			mp.playerNetServerHandler.teleportTo(x, y, z, 0F, 0F);
+			mp.playerNetServerHandler.teleportAndRotate(x, y, z, 0F, 0F);
 		} else {
 			entityPlayer.absMoveTo(x, y, z, 0F, 0F);
 		}

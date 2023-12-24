@@ -6,9 +6,12 @@
   "mixins": [
     "EntityLivingMixin",
     "EntityPlayerMixin",
+    "WorldFeatureLabyrinthMixin"
+  ],
+  "client": [
     "GuiIngameMixin",
     "GuiInventoryMixin",
-    "WorldFeatureLabyrinthMixin"
+    "OxygenBarComponentMixin"
   ],
   "server": [],
   "injectors": {

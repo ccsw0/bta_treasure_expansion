@@ -19,8 +19,11 @@
   "entrypoints": {
     "main": [
 			"csweetla.treasure_expansion.TreasureExpansion"
-    ]
-  },
+    ],
+		"client": [
+			"csweetla.treasure_expansion.TreasureExpansionClient"
+		]
+	},
 	"mixins": [
 		"treasure_expansion.mixins.json"
 	],

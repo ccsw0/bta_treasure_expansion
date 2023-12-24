@@ -35,7 +35,7 @@ public abstract class EntityLivingMixin extends Entity {
 		if (type == DamageType.COMBAT && attacker instanceof EntityPlayer && t instanceof EntityMonster)
 		{
 			EntityPlayer player = (EntityPlayer) attacker;
-			if (player.getHeldItem().itemID == toolItemSilverSword.id ) {
+			if (player.getHeldItem() != null && player.getHeldItem().itemID == toolItemSilverSword.id ) {
 				this.hurt(attacker, 8, DamageType.FIRE);
 				this.remainingFireTicks = 50 + rand.nextInt(150);
 				this.maxFireTicks = this.remainingFireTicks;
