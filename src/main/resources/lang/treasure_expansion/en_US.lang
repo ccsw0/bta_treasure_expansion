@@ -8,13 +8,16 @@ item.treasure_expansion.silver_sword.name=Silver Sword
 item.treasure_expansion.silver_sword.desc=Made out of a material with a burning hatred for monsters
 
 item.treasure_expansion.escape_rope_gold.name=Golden Escape Rope
-item.treasure_expansion.escape_rope_gold.desc=It's golden fibers make it strong enough for repeated use
+item.treasure_expansion.escape_rope_gold.desc=This rope's golden fibers make it strong enough for repeated use
 
 item.treasure_expansion.escape_rope.name=Escape Rope
 item.treasure_expansion.escape_rope.desc=This flimsy rope is hardly strong enough to support your weight.
 
 item.treasure_expansion.strange_device.name=Strange Device
 item.treasure_expansion.strange_device.desc=This device can access some kind of information superhighway!
+
+item.treasure_expansion.lava_charm.name=Smoldering Tome
+item.treasure_expansion.lava_charm.desc=The pages of this ancient tome never seem to burn away.
 
 item.treasure_expansion.labyrinth_generator.name=Labyrinth Generator
 item.treasure_expansion.labyrinth_generator.desc=If you got this in survival, THROW IT AWAY NOW!!!

@@ -3,6 +3,7 @@ package csweetla.treasure_expansion;
 import csweetla.treasure_expansion.item.EscapeRopeItem;
 import csweetla.treasure_expansion.item.LabyrinthGeneratorItem;
 
+import csweetla.treasure_expansion.item.LavaCharmItem;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.item.ItemFood;
@@ -39,6 +40,7 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("ids.grapes", "32208");
 		prop.setProperty("ids.bananas", "32209");
 		prop.setProperty("ids.fruit_salad", "32210");
+		prop.setProperty("ids.lava_charm", "32211");
 		config = new ConfigHandler(MOD_ID, prop);
 	}
 
@@ -55,6 +57,7 @@ public class TreasureExpansion implements ModInitializer {
 	public static ItemFood FoodItemGrapes;
 	public static ItemFood FoodItemBananas;
 	public static ItemFood FoodItemFruitSalad;
+	public static Item itemLavaCharm;
 
 	public void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial("piston_boots",220,50.0F,50.0F,20.0F,120.0F);
@@ -96,6 +99,9 @@ public class TreasureExpansion implements ModInitializer {
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"fruit_salad.png");
 		FoodItemFruitSalad = (ItemFood) new ItemFood(MOD_ID + ".fruit_salad",config.getInt("ids.fruit_salad"),20,false).setIconCoord(tex_coords[0],tex_coords[1]);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"lava_charm.png");
+		itemLavaCharm = new LavaCharmItem(MOD_ID + ".lava_charm",config.getInt("ids.lava_charm")).setIconCoord(tex_coords[0],tex_coords[1]);
 	}
 
 	private void initializeRecipes() {
@@ -120,5 +126,4 @@ public class TreasureExpansion implements ModInitializer {
 		initializeRecipes();
 
 	}
-
 }
