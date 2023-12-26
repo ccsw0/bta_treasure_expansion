@@ -4,12 +4,11 @@ import csweetla.treasure_expansion.item.EscapeRopeItem;
 import csweetla.treasure_expansion.item.LabyrinthGeneratorItem;
 
 import csweetla.treasure_expansion.item.LavaCharmItem;
+import csweetla.treasure_expansion.item.SilverSwordItem;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.item.ItemFood;
 import net.minecraft.core.item.material.ToolMaterial;
-import net.minecraft.core.item.tag.ItemTags;
-import net.minecraft.core.item.tool.ItemToolSword;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemArmor;
 import net.minecraft.core.item.material.ArmorMaterial;
@@ -46,17 +45,17 @@ public class TreasureExpansion implements ModInitializer {
 
 	public static ArmorMaterial armorMaterialPistonBoots;
 	public static ArmorMaterial armorMaterialDiving;
-	public static ItemArmor armorItemPistonBoots;
-	public static ItemArmor armorItemDivingHelmet;
-	public static ItemToolSword toolItemSilverSword;
+	public static Item armorItemPistonBoots;
+	public static Item armorItemDivingHelmet;
+	public static Item toolItemSilverSword;
 	public static Item ItemEscapeRope;
 	public static Item ItemEscapeRopeGold;
 	public static Item ItemStrangeDevice;
 	public static Item ItemLabyrinthGenerator;
-	public static ItemFood FoodItemOrange;
-	public static ItemFood FoodItemGrapes;
-	public static ItemFood FoodItemBananas;
-	public static ItemFood FoodItemFruitSalad;
+	public static Item FoodItemOrange;
+	public static Item FoodItemGrapes;
+	public static Item FoodItemBananas;
+	public static Item FoodItemFruitSalad;
 	public static Item itemLavaCharm;
 
 	public void initializeArmorMaterials() {
@@ -68,14 +67,13 @@ public class TreasureExpansion implements ModInitializer {
 		int[] tex_coords;
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"piston_boots.png");
-		armorItemPistonBoots = (ItemArmor) new ItemArmor(MOD_ID + ".piston_boots", config.getInt("ids.piston_boots"), armorMaterialPistonBoots, 3).setIconCoord(tex_coords[0],tex_coords[1]);
+		armorItemPistonBoots = new ItemArmor(MOD_ID + ".piston_boots", config.getInt("ids.piston_boots"), armorMaterialPistonBoots, 3).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"diving_helmet.png");
-		armorItemDivingHelmet = (ItemArmor) new ItemArmor(MOD_ID + ".diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 0).setIconCoord(tex_coords[0],tex_coords[1]);
+		armorItemDivingHelmet = new ItemArmor(MOD_ID + ".diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 0).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"silver_sword.png");
-		//noinspection unchecked
-		toolItemSilverSword = (ItemToolSword) new ItemToolSword(MOD_ID + ".silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron).setIconCoord(tex_coords[0],tex_coords[1]).withTags(ItemTags.preventCreativeMining);
+		toolItemSilverSword = new SilverSwordItem(MOD_ID + ".silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
 		ItemEscapeRopeGold = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", config.getInt("ids.escape_rope_gold"), 6).setIconCoord(tex_coords[0],tex_coords[1]);
@@ -89,16 +87,16 @@ public class TreasureExpansion implements ModInitializer {
 		ItemLabyrinthGenerator = new LabyrinthGeneratorItem(MOD_ID + ".labyrinth_generator", config.getInt("ids.labyrinth_generator")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");
-		FoodItemOrange = (ItemFood) new ItemFood(MOD_ID + ".orange",config.getInt("ids.orange"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		FoodItemOrange = new ItemFood(MOD_ID + ".orange",config.getInt("ids.orange"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"grapes.png");
-		FoodItemGrapes = (ItemFood) new ItemFood(MOD_ID + ".grapes",config.getInt("ids.grapes"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		FoodItemGrapes = new ItemFood(MOD_ID + ".grapes",config.getInt("ids.grapes"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"bananas.png");
-		FoodItemBananas = (ItemFood) new ItemFood(MOD_ID + ".bananas",config.getInt("ids.bananas"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		FoodItemBananas = new ItemFood(MOD_ID + ".bananas",config.getInt("ids.bananas"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"fruit_salad.png");
-		FoodItemFruitSalad = (ItemFood) new ItemFood(MOD_ID + ".fruit_salad",config.getInt("ids.fruit_salad"),20,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		FoodItemFruitSalad = new ItemFood(MOD_ID + ".fruit_salad",config.getInt("ids.fruit_salad"),20,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"lava_charm.png");
 		itemLavaCharm = new LavaCharmItem(MOD_ID + ".lava_charm",config.getInt("ids.lava_charm")).setIconCoord(tex_coords[0],tex_coords[1]);
