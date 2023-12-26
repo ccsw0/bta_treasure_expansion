@@ -75,7 +75,7 @@ public class EscapeRopeItem extends Item {
 			entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_nether");
 			return itemstack;
 		}
-		else if (entityplayer.y >= 128)
+		else if (entityplayer.y >= world.worldType.getOceanY())
 		{
 			// TODO: Better detection of underground player
 			entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_surface");
@@ -87,7 +87,7 @@ public class EscapeRopeItem extends Item {
 			y = world.getHeightBlocks();
 			int x = (int) entityplayer.x - rand_pos_offset/2 + rand.nextInt(rand_pos_offset);
 			int z = (int) entityplayer.z - rand_pos_offset/2 + rand.nextInt(rand_pos_offset);
-			while (world.isAirBlock(x, y, z) && y > 128) {
+			while (world.isAirBlock(x, y, z) && y > world.worldType.getOceanY()) {
 				--y;
 			}
 
