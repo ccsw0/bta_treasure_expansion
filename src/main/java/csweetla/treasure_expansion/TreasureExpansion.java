@@ -48,14 +48,14 @@ public class TreasureExpansion implements ModInitializer {
 	public static Item armorItemPistonBoots;
 	public static Item armorItemDivingHelmet;
 	public static Item toolItemSilverSword;
-	public static Item ItemEscapeRope;
-	public static Item ItemEscapeRopeGold;
-	public static Item ItemStrangeDevice;
-	public static Item ItemLabyrinthGenerator;
-	public static Item FoodItemOrange;
-	public static Item FoodItemGrapes;
-	public static Item FoodItemBananas;
-	public static Item FoodItemFruitSalad;
+	public static Item itemEscapeRope;
+	public static Item itemEscapeRopeGold;
+	public static Item itemStrangeDevice;
+	public static Item itemLabyrinthGenerator;
+	public static Item foodItemOrange;
+	public static Item foodItemGrapes;
+	public static Item foodItemBananas;
+	public static Item foodItemFruitSalad;
 	public static Item itemLavaCharm;
 
 	public void initializeArmorMaterials() {
@@ -76,41 +76,41 @@ public class TreasureExpansion implements ModInitializer {
 		toolItemSilverSword = new SilverSwordItem(MOD_ID + ".silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
-		ItemEscapeRopeGold = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", config.getInt("ids.escape_rope_gold"), 6).setIconCoord(tex_coords[0],tex_coords[1]);
+		itemEscapeRopeGold = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", config.getInt("ids.escape_rope_gold"), 6).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope.png");
-		ItemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", config.getInt("ids.escape_rope"), 1).setIconCoord(tex_coords[0],tex_coords[1]);
+		itemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", config.getInt("ids.escape_rope"), 1).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"device.png");
-		ItemStrangeDevice = new Item(MOD_ID + ".strange_device", config.getInt("ids.strange_device")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+		itemStrangeDevice = new Item(MOD_ID + ".strange_device", config.getInt("ids.strange_device")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
-		ItemLabyrinthGenerator = new LabyrinthGeneratorItem(MOD_ID + ".labyrinth_generator", config.getInt("ids.labyrinth_generator")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+		itemLabyrinthGenerator = new LabyrinthGeneratorItem(MOD_ID + ".labyrinth_generator", config.getInt("ids.labyrinth_generator")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");
-		FoodItemOrange = new ItemFood(MOD_ID + ".orange",config.getInt("ids.orange"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemOrange = new ItemFood(MOD_ID + ".orange",config.getInt("ids.orange"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"grapes.png");
-		FoodItemGrapes = new ItemFood(MOD_ID + ".grapes",config.getInt("ids.grapes"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemGrapes = new ItemFood(MOD_ID + ".grapes",config.getInt("ids.grapes"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"bananas.png");
-		FoodItemBananas = new ItemFood(MOD_ID + ".bananas",config.getInt("ids.bananas"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemBananas = new ItemFood(MOD_ID + ".bananas",config.getInt("ids.bananas"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"fruit_salad.png");
-		FoodItemFruitSalad = new ItemFood(MOD_ID + ".fruit_salad",config.getInt("ids.fruit_salad"),20,false).setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemFruitSalad = new ItemFood(MOD_ID + ".fruit_salad",config.getInt("ids.fruit_salad"),20,false).setIconCoord(tex_coords[0],tex_coords[1]);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"lava_charm.png");
 		itemLavaCharm = new LavaCharmItem(MOD_ID + ".lava_charm",config.getInt("ids.lava_charm")).setIconCoord(tex_coords[0],tex_coords[1]);
 	}
 
 	private void initializeRecipes() {
-		RecipeHelper.Crafting.createShapelessRecipe(FoodItemFruitSalad,1,
+		RecipeHelper.Crafting.createShapelessRecipe(foodItemFruitSalad,1,
 			new Object[]{
 				Item.bowl,
 				Item.foodApple,
 				Item.cherry,
-				FoodItemBananas,
-				FoodItemGrapes,
-				FoodItemOrange
+				foodItemBananas,
+				foodItemGrapes,
+				foodItemOrange
 			}
 		);
 	}

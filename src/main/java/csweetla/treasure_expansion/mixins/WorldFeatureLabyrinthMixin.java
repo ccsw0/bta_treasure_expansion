@@ -34,6 +34,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	boolean generate_minor_treasure = false;
 
 	@Unique
+	Item[] fruit_choices = {Item.foodApple, TreasureExpansion.foodItemOrange, TreasureExpansion.foodItemBananas, TreasureExpansion.foodItemGrapes};
+
+	@Unique
 	ItemStack pick_major_treasure_item(Random random) {
 
 		// if its cold, 75% chance of ice skates
@@ -70,18 +73,10 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	// pick a random fruit item to generate in the labyrinth
 	@Inject(method = "generate",at = @At("HEAD"))
 	void generate(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
-		int r = random.nextInt(4);
-		if (r == 0) {
-			this.fruit_item = Item.foodApple;
-		} else if (r == 1) {
-			this.fruit_item = TreasureExpansion.FoodItemBananas;
-		} else if (r == 2) {
-			this.fruit_item = TreasureExpansion.FoodItemOrange;
-		} else {
-			this.fruit_item = TreasureExpansion.FoodItemGrapes;
-		}
+		this.fruit_item = fruit_choices[random.nextInt(fruit_choices.length)];
 		this.generate_minor_treasure = random.nextInt(3) == 0;
 	}
+
 	// generate major and minor treasures
 	@Inject(method = "pickCheckLootItem", at = @At("HEAD"), cancellable = true)
 	private void pickCheckLootItem(Random random, CallbackInfoReturnable<ItemStack> cir) {
@@ -94,7 +89,7 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		}
 	}
 
-	// return our chosen fruit than apples
+	// return our chosen fruit rather than apples
 	@Inject(method = "pickCheckLootItem", at = @At(value = "RETURN", ordinal = 9), cancellable = true)
 	private void pickCheckLootItem1(Random random, CallbackInfoReturnable<ItemStack> cir) {
 		cir.setReturnValue(new ItemStack(this.fruit_item));
