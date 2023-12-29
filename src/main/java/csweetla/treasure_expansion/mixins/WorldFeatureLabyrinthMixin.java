@@ -1,7 +1,10 @@
 package csweetla.treasure_expansion.mixins;
 
+import csweetla.treasure_expansion.LootTables;
 import csweetla.treasure_expansion.TreasureExpansion;
 
+
+import net.minecraft.core.block.Block;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.World;
@@ -16,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Random;
 
+import static csweetla.treasure_expansion.LootTables.LootTableType.*;
+
 @Mixin(value = net.minecraft.core.world.generate.feature.WorldFeatureLabyrinth.class, remap = false)
 public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 
@@ -25,6 +30,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	int dungeonSize;
 	@Shadow
 	boolean isCold;
+
+	@Shadow
+	int wallBlockA;
 
 	// if we see a stick something isn't working
 	@Unique
@@ -38,37 +46,23 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 
 	@Unique
 	ItemStack pick_major_treasure_item(Random random) {
-
-		// if its cold, 75% chance of ice skates
-		if (this.isCold && random.nextInt(4) != 0) {
-			return new ItemStack(Item.armorBootsIceskates);
+		ItemStack ret;
+		if (this.isCold) {
+			ret = LootTables.getInstance().randomLoot(SNOW, random);
+		} else if (this.wallBlockA == Block.sandstone.id) {
+			ret = LootTables.getInstance().randomLoot(DESERT, random);
+		} else {
+			ret = LootTables.getInstance().randomLoot(DEFAULT, random);
 		}
-
-		int r = random.nextInt(5);
-		switch (r) {
-			case 0:
-				return new ItemStack(TreasureExpansion.ItemEscapeRopeGold);
-			case 1:
-				return new ItemStack(TreasureExpansion.armorItemPistonBoots);
-			case 2:
-				return new ItemStack(TreasureExpansion.armorItemDivingHelmet);
-			case 3:
-				return new ItemStack(TreasureExpansion.ItemStrangeDevice);
-			default:
-				return new ItemStack(Item.armorQuiverGold);
-		}
+		//TreasureExpansion.LOGGER.info("Generated major treasure: " + ret);
+		return ret;
 	}
 
 	@Unique
 	ItemStack pick_minor_treasure_item(Random random) {
-		int r = random.nextInt(3);
-		if (r == 0) {
-			return new ItemStack(TreasureExpansion.ItemEscapeRope);
-		} else if (r == 1) {
-			return new ItemStack(TreasureExpansion.toolItemSilverSword);
-		} else {
-			return new ItemStack(Item.diamond, 6 + random.nextInt(6));
-		}
+		ItemStack ret = LootTables.getInstance().randomLoot(MINOR, random);
+		//TreasureExpansion.LOGGER.info("Generated minor treasure: " + ret);
+		return ret;
 	}
 	// pick a random fruit item to generate in the labyrinth
 	@Inject(method = "generate",at = @At("HEAD"))

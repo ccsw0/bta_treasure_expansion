@@ -1,0 +1,90 @@
+{
+  "default": {
+    "item.armor.quiver.gold": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.piston_boots": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.diving_helmet": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.escape_rope_gold": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.strange_device": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.lava_charm": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    }
+  },
+  "snow" : {
+    "item.armor.boots.iceskates": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    }
+  },
+  "desert": {
+    "item.armor.quiver.gold": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.piston_boots": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.diving_helmet": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.escape_rope_gold": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.strange_device": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.lava_charm": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    }
+  },
+  "minor": {
+    "item.treasure_expansion.escape_rope": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.silver_sword": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.diamond": {
+      "weight" : 1,
+      "amount": 6,
+      "amount-rand": 6
+    }
+  }
+}

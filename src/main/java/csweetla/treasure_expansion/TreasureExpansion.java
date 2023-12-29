@@ -117,6 +117,7 @@ public class TreasureExpansion implements ModInitializer {
 
 	@Override
     public void onInitialize() {
+		LootTables.initialize();
 		LOGGER.info(MOD_ID + " initialized.");
 
 		initializeArmorMaterials();
