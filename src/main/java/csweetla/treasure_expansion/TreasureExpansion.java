@@ -40,6 +40,7 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("ids.bananas", "32209");
 		prop.setProperty("ids.fruit_salad", "32210");
 		prop.setProperty("ids.lava_charm", "32211");
+		prop.setProperty("ids.spider_silk", "32212");
 		config = new ConfigHandler(MOD_ID, prop);
 	}
 
@@ -57,6 +58,7 @@ public class TreasureExpansion implements ModInitializer {
 	public static Item foodItemBananas;
 	public static Item foodItemFruitSalad;
 	public static Item itemLavaCharm;
+	public static Item itemSpiderSilk;
 
 	public void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial("piston_boots",220,50.0F,50.0F,20.0F,120.0F);
@@ -85,6 +87,9 @@ public class TreasureExpansion implements ModInitializer {
 		itemStrangeDevice = new Item(MOD_ID + ".strange_device", config.getInt("ids.strange_device")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		itemLabyrinthGenerator = new LabyrinthGeneratorItem(MOD_ID + ".labyrinth_generator", config.getInt("ids.labyrinth_generator")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"spider_silk.png");
+		itemSpiderSilk = new Item(MOD_ID + ".spider_silk", config.getInt("ids.spider_silk")).setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");
 		foodItemOrange = new ItemFood(MOD_ID + ".orange",config.getInt("ids.orange"),4,false).setIconCoord(tex_coords[0],tex_coords[1]);
