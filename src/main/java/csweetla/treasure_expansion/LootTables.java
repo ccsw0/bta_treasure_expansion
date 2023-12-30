@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 import static csweetla.treasure_expansion.TreasureExpansion.MOD_ID;
+import static csweetla.treasure_expansion.TreasureExpansion.config;
 
 public class LootTables {
 	private static final String config_location = FabricLoader.getInstance().getConfigDir().toString() + "/" + MOD_ID + ".loot_tables.json";
@@ -116,14 +117,24 @@ public class LootTables {
 
 	private static LootTables load_loot_tables() {
 		Gson GSON = (new GsonBuilder()).setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
-		File config_file = new File(config_location);
-
-		// Write default config (stored in jar) to config directory if it doesn't exist, then use that file
-		if (!config_file.exists()) {
-			TreasureExpansion.LOGGER.info("config file " + MOD_ID + ".loot_tables.json wasn't found. Creating default.");
-			write_default_loot_tables();
+		File config_file;
+		// use custom config from config directory
+		if (config.getBoolean("use_custom_loot_tables")) {
 			config_file = new File(config_location);
-			assert config_file.exists();
+
+			// if config doesn't exist, write default config (stored in jar) to config directory
+			// The purpose of this is to give the user a template to start from.
+			if (!config_file.exists()) {
+				write_custom_loot_table_template();
+				TreasureExpansion.LOGGER.info("use_custom_loot_tables was set to true, but no custom json was found. Wrote the default to the config directory.");
+				TreasureExpansion.LOGGER.info("If you wish to use custom loot tables, edit the file at " + config_location);
+				config_file = new File(config_location);
+				assert config_file.exists();
+			}
+		} else {
+			TreasureExpansion.LOGGER.info("use_custom_loot_tables was set to false, so using defaults.");
+			// use the default, located in the mod jar
+			config_file = new File(TreasureExpansion.class.getResource("/assets/" + MOD_ID + "/default.loot_tables.json").getPath());
 		}
 
 		try {
@@ -133,7 +144,7 @@ public class LootTables {
 		}
 	}
 
-	private static void write_default_loot_tables() {
+	private static void write_custom_loot_table_template() {
 		String default_filepath = "/assets/" + MOD_ID + "/default.loot_tables.json";
 		InputStream fileIn;
 		FileOutputStream fileOut;

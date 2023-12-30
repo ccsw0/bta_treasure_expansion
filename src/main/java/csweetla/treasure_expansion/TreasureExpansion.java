@@ -41,6 +41,7 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("ids.fruit_salad", "32210");
 		prop.setProperty("ids.lava_charm", "32211");
 		prop.setProperty("ids.spider_silk", "32212");
+		prop.setProperty("loot.use_custom_tables","false");
 		config = new ConfigHandler(MOD_ID, prop);
 	}
 
