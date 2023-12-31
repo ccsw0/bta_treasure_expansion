@@ -25,8 +25,9 @@ public class TreasureExpansion implements ModInitializer {
     public static final String MOD_ID = "treasure_expansion";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final ConfigHandler config;
-	public static boolean mod_fruit_allowed;
-	public static boolean minor_treasure_allowed;
+	public static boolean mod_fruit_enabled;
+	public static int minor_treasure_rarity;
+	public static boolean minor_treasure_enabled;
 	static {
 		// Config
 		Properties prop = new Properties();
@@ -44,8 +45,9 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("ids.lava_charm", "32211");
 		prop.setProperty("ids.spider_silk", "32212");
 		prop.setProperty("loot.use_custom_tables","false");
-		prop.setProperty("loot.mod_fruit","true");
-		prop.setProperty("loot.minor_treasure","true");
+		prop.setProperty("loot.mod_fruit_enabled","true");
+		prop.setProperty("loot.minor_treasure_enabled","true");
+		prop.setProperty("loot.minor_treasure_rarity","3");
 		prop.setProperty("durability.escape_rope_gold","6");
 		prop.setProperty("durability.escape_rope","1");
 		prop.setProperty("durability.piston_boots","220");
@@ -147,8 +149,9 @@ public class TreasureExpansion implements ModInitializer {
 
 	@Override
     public void onInitialize() {
-		mod_fruit_allowed = config.getBoolean("loot.mod_fruit");
-		minor_treasure_allowed = config.getBoolean("loot.minor_treasure");
+		mod_fruit_enabled = config.getBoolean("loot.mod_fruit_enabled");
+		minor_treasure_enabled = config.getBoolean("loot.minor_treasure_enabled");
+		minor_treasure_rarity = config.getInt("loot.minor_treasure_rarity");
 		LootTables.initialize();
 		LOGGER.info(MOD_ID + " initialized.");
 

@@ -70,8 +70,8 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	// pick a random fruit item to generate in the labyrinth
 	@Inject(method = "generate",at = @At("HEAD"))
 	void generate(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
-		this.fruit_item = mod_fruit_allowed ? random_fruit_item(random) : Item.foodApple;
-		this.generate_minor_treasure = minor_treasure_allowed && random.nextInt(3) == 0;
+		this.fruit_item = mod_fruit_enabled ? random_fruit_item(random) : Item.foodApple;
+		this.generate_minor_treasure = minor_treasure_enabled && random.nextInt(minor_treasure_rarity) == 0;
 	}
 
 	// generate major and minor treasures
