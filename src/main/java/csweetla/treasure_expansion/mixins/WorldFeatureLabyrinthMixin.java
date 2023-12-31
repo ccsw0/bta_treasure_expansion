@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Random;
 
 import static csweetla.treasure_expansion.LootTables.LootTableType.*;
+import static csweetla.treasure_expansion.TreasureExpansion.*;
 
 @Mixin(value = net.minecraft.core.world.generate.feature.WorldFeatureLabyrinth.class, remap = false)
 public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
@@ -34,15 +35,17 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	@Shadow
 	int wallBlockA;
 
-	// if we see a stick something isn't working
 	@Unique
-	Item fruit_item = Item.stick;
+	Item fruit_item = Item.foodApple;
 
 	@Unique
 	boolean generate_minor_treasure = false;
 
 	@Unique
-	Item[] fruit_choices = {Item.foodApple, TreasureExpansion.foodItemOrange, TreasureExpansion.foodItemBananas, TreasureExpansion.foodItemGrapes};
+	Item random_fruit_item(Random random) {
+		Item[] choices = {Item.foodApple, TreasureExpansion.foodItemOrange, TreasureExpansion.foodItemBananas, TreasureExpansion.foodItemGrapes};
+		return choices[random.nextInt(choices.length)];
+	}
 
 	@Unique
 	ItemStack pick_major_treasure_item(Random random) {
@@ -54,21 +57,21 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		} else {
 			ret = LootTables.getInstance().randomLoot(DEFAULT, random);
 		}
-		//TreasureExpansion.LOGGER.info("Generated major treasure: " + ret);
+//		TreasureExpansion.LOGGER.info("Generated major treasure: " + ret);
 		return ret;
 	}
 
 	@Unique
 	ItemStack pick_minor_treasure_item(Random random) {
 		ItemStack ret = LootTables.getInstance().randomLoot(MINOR, random);
-		//TreasureExpansion.LOGGER.info("Generated minor treasure: " + ret);
+//		TreasureExpansion.LOGGER.info("Generated minor treasure: " + ret);
 		return ret;
 	}
 	// pick a random fruit item to generate in the labyrinth
 	@Inject(method = "generate",at = @At("HEAD"))
 	void generate(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
-		this.fruit_item = fruit_choices[random.nextInt(fruit_choices.length)];
-		this.generate_minor_treasure = random.nextInt(3) == 0;
+		this.fruit_item = mod_fruit_allowed ? random_fruit_item(random) : Item.foodApple;
+		this.generate_minor_treasure = minor_treasure_allowed && random.nextInt(3) == 0;
 	}
 
 	// generate major and minor treasures
