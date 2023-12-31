@@ -8,21 +8,19 @@ import net.minecraft.core.world.World;
 
 public class LavaCharmItem extends Item {
 
-	private static final int health = 80;
-
-	public LavaCharmItem(String name, int id) {
+	public LavaCharmItem(String name, int id, int durability) {
 		super(name, id);
 		this.setMaxStackSize(1);
-		setMaxDamage(health);
+		setMaxDamage(durability);
 	}
 
 	private static boolean isFirstDamageableInInventory(ItemStack is, int slot, EntityPlayer player) {
 		// meta data == health -> would break if damaged
-		if (is.getMetadata() >= health)
+		if (is.getMetadata() >= is.getItem().getMaxDamage())
 			return false;
 		for(int pslot = 0; pslot < player.inventory.getSizeInventory(); ++pslot) {
 			ItemStack s = player.inventory.getStackInSlot(pslot);
-			if (s != null && s.itemID == is.getItem().id && s.getMetadata() < health) {
+			if (s != null && s.itemID == is.getItem().id && s.getMetadata() < is.getItem().getMaxDamage()) {
 				return pslot == slot;
 			}
 		}
