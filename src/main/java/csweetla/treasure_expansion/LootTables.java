@@ -6,8 +6,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.data.DataLoader;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import turniplabs.halplibe.HalpLibe;
 
 import java.io.*;
 import java.util.Map;
@@ -116,30 +119,28 @@ public class LootTables {
 
 	private static LootTables load_loot_tables() {
 		Gson GSON = (new GsonBuilder()).setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).setPrettyPrinting().create();
-		File config_file;
 		// use custom config from config directory
-		if (config.getBoolean("loot.use_custom_loot_tables")) {
-			config_file = new File(config_location);
+		if (config.getBoolean("loot.use_custom_tables")) {
+			File custom_config_file = new File(config_location);
 
 			// if config doesn't exist, write default config (stored in jar) to config directory
 			// The purpose of this is to give the user a template to start from.
-			if (!config_file.exists()) {
+			if (!custom_config_file.exists()) {
 				write_custom_loot_table_template();
 				TreasureExpansion.LOGGER.info("use_custom_loot_tables was set to true, but no custom json was found. Wrote the default to the config directory.");
 				TreasureExpansion.LOGGER.info("If you wish to use custom loot tables, edit the file at " + config_location);
-				config_file = new File(config_location);
-				assert config_file.exists();
+				custom_config_file = new File(config_location);
+				assert custom_config_file.exists();
 			}
-		} else {
+			try {
+				return GSON.fromJson(new JsonReader(new FileReader(custom_config_file)), LootTables.class);
+			} catch (FileNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+		}else {
 			TreasureExpansion.LOGGER.info("use_custom_loot_tables was set to false, so using defaults.");
 			// use the default, located in the mod jar
-			config_file = new File(TreasureExpansion.class.getResource("/assets/" + MOD_ID + "/default.loot_tables.json").getPath());
-		}
-
-		try {
-			return GSON.fromJson(new JsonReader(new FileReader(config_file)), LootTables.class);
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			return GSON.fromJson(new InputStreamReader(resourceAsStream("/assets/" + MOD_ID + "/default.loot_tables.json")), LootTables.class);
 		}
 	}
 
@@ -152,10 +153,7 @@ public class LootTables {
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		fileIn = TreasureExpansion.class.getResourceAsStream(default_filepath);
-		if (fileIn == null)
-			throw new RuntimeException("can't locate default loot tables file at '" + default_filepath + "'");
-
+		fileIn = resourceAsStream(default_filepath);
 
 		try {
 			while (fileIn.available() != 0)
@@ -163,6 +161,33 @@ public class LootTables {
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	// credit to Useless for this
+	private static InputStream resourceAsStream(String path) {
+		InputStream in;
+		in = LootTables.class.getResourceAsStream(path);
+		if (in != null)
+			return in;
+		in = FabricLoader.getInstance().getClass().getResourceAsStream(path);
+		if (in != null)
+			return in;
+		in = TreasureExpansion.class.getResourceAsStream(path);
+		if (in != null)
+			return in;
+		in = DataLoader.class.getResourceAsStream(path);
+		if (in != null)
+			return in;
+		in = HalpLibe.class.getResourceAsStream(path);
+		if (in != null)
+			return in;
+		in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+		if (in != null)
+			return in;
+		in = Minecraft.getMinecraft(Minecraft.class).getClass().getResourceAsStream(path);
+		if (in != null)
+			return in;
+		throw new RuntimeException("File at '"+ path + "' is seriously hard to find!");
 	}
 
 }
