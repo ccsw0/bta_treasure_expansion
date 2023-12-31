@@ -1,6 +1,7 @@
 package csweetla.treasure_expansion.mixins;
 
 
+import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.gamemode.Gamemode;
@@ -16,6 +17,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -66,6 +68,15 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 		if (diving_helmet_equipped()) {
 			cir.setReturnValue(true);
 		}
+	}
+
+	// allow player to break blocks fast underwater when wearing a diving helmet
+	@Redirect(method ="getCurrentPlayerStrVsBlock",at=@At(value = "INVOKE",target = "Lnet/minecraft/core/entity/player/EntityPlayer;isUnderLiquid(Lnet/minecraft/core/block/material/Material;)Z"))
+	boolean getCurrentPlayerStrVsBlock(EntityPlayer instance, Material material) {
+		boolean ret = isUnderLiquid(material);
+		if (ret && diving_helmet_equipped())
+			return false;
+		return ret;
 	}
 
 	// if the player has a damageable lava charm, then they won't get hurt by fire damage.
