@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityLivingMixin",
+    "EntityMixin",
     "EntityPlayerMixin",
     "EntitySpiderMixin",
     "WorldFeatureLabyrinthMixin"
