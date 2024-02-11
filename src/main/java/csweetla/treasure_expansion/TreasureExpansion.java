@@ -1,10 +1,7 @@
 package csweetla.treasure_expansion;
 
-import csweetla.treasure_expansion.item.EscapeRopeItem;
-import csweetla.treasure_expansion.item.LabyrinthGeneratorItem;
+import csweetla.treasure_expansion.item.*;
 
-import csweetla.treasure_expansion.item.LavaCharmItem;
-import csweetla.treasure_expansion.item.SilverSwordItem;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.item.ItemFood;
@@ -44,6 +41,7 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("ids.fruit_salad", "32210");
 		prop.setProperty("ids.lava_charm", "32211");
 		prop.setProperty("ids.spider_silk", "32212");
+		prop.setProperty("ids.fire_quiver", "32213");
 		prop.setProperty("loot.use_custom_tables","false");
 		prop.setProperty("loot.mod_fruit_enabled","true");
 		prop.setProperty("loot.minor_treasure_enabled","true");
@@ -54,6 +52,7 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("durability.diving_helmet","220");
 		prop.setProperty("durability.lava_charm","120");
 		prop.setProperty("durability.silver_sword","512");
+		prop.setProperty("durability.fire_quiver","192");
 
 		config = new ConfigHandler(MOD_ID, prop);
 	}
@@ -73,6 +72,8 @@ public class TreasureExpansion implements ModInitializer {
 	public static Item foodItemFruitSalad;
 	public static Item itemLavaCharm;
 	public static Item itemSpiderSilk;
+	public static Item itemFireQuiver;
+
 
 	public void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial("piston_boots",config.getInt("durability.diving_helmet"),50.0F,50.0F,20.0F,120.0F);
@@ -132,6 +133,8 @@ public class TreasureExpansion implements ModInitializer {
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"lava_charm.png");
 		itemLavaCharm = new LavaCharmItem(MOD_ID + ".lava_charm",config.getInt("ids.lava_charm"),config.getInt("durability.lava_charm"))
 			.setIconCoord(tex_coords[0],tex_coords[1]);
+
+		itemFireQuiver = new FireQuiverItem(MOD_ID + ".fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver"));
 	}
 
 	private void initializeRecipes() {

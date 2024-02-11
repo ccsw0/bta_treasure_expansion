@@ -8,6 +8,9 @@
     "EntityMixin",
     "EntityPlayerMixin",
     "EntitySpiderMixin",
+    "ItemBowMixin",
+    "EntityRendererMixin",
+    "SlotArmorMixin",
     "WorldFeatureLabyrinthMixin"
   ],
   "client": [

@@ -19,6 +19,9 @@ item.treasure_expansion.strange_device.desc=This device can access some kind of 
 item.treasure_expansion.lava_charm.name=Smoldering Tome
 item.treasure_expansion.lava_charm.desc=The pages of this ancient tome never seem to burn away.
 
+item.treasure_expansion.fire_quiver.name=Hellish Quiver
+item.treasure_expansion.fire_quiver.desc=The inside is burning hot!
+
 item.treasure_expansion.spider_silk.name=Ball of Spider Silk
 item.treasure_expansion.spider_silk.desc=It's sticky and disgusting
 

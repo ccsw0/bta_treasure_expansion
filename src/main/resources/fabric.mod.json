@@ -27,7 +27,7 @@
 	"mixins": [
 		"treasure_expansion.mixins.json"
 	],
-
+	"accessWidener": "treasure_expansion.accesswidener",
   "depends": {
     "fabricloader": ">=0.13.3"
   },
