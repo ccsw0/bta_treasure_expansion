@@ -25,6 +25,9 @@ item.treasure_expansion.fire_quiver.desc=The inside is burning hot!
 item.treasure_expansion.spider_silk.name=Ball of Spider Silk
 item.treasure_expansion.spider_silk.desc=It's sticky and disgusting
 
+item.treasure_expansion.flippers.name=Flippers
+item.treasure_expansion.flippers.desc=Allow you to flip! Well actually no...
+
 item.treasure_expansion.labyrinth_generator.name=Labyrinth Generator
 item.treasure_expansion.labyrinth_generator.desc=If you got this in survival, THROW IT AWAY NOW!!!
 

@@ -1,9 +1,13 @@
 package csweetla.treasure_expansion;
 
+import csweetla.treasure_expansion.block.DungeonChestBlock;
 import csweetla.treasure_expansion.item.*;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.core.block.Block;
+import net.minecraft.core.block.material.Material;
+import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.item.ItemFood;
 import net.minecraft.core.item.material.ToolMaterial;
 import net.minecraft.core.item.Item;
@@ -42,6 +46,7 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("ids.lava_charm", "32211");
 		prop.setProperty("ids.spider_silk", "32212");
 		prop.setProperty("ids.fire_quiver", "32213");
+		prop.setProperty("ids.flippers", "32214");
 		prop.setProperty("loot.use_custom_tables","false");
 		prop.setProperty("loot.mod_fruit_enabled","true");
 		prop.setProperty("loot.minor_treasure_enabled","true");
@@ -53,12 +58,14 @@ public class TreasureExpansion implements ModInitializer {
 		prop.setProperty("durability.lava_charm","120");
 		prop.setProperty("durability.silver_sword","512");
 		prop.setProperty("durability.fire_quiver","192");
+		prop.setProperty("durability.flippers","192");
 
 		config = new ConfigHandler(MOD_ID, prop);
 	}
 
 	public static ArmorMaterial armorMaterialPistonBoots;
 	public static ArmorMaterial armorMaterialDiving;
+	public static ArmorMaterial armorMaterialFlippers;
 	public static Item armorItemPistonBoots;
 	public static Item armorItemDivingHelmet;
 	public static Item toolItemSilverSword;
@@ -73,14 +80,18 @@ public class TreasureExpansion implements ModInitializer {
 	public static Item itemLavaCharm;
 	public static Item itemSpiderSilk;
 	public static Item itemFireQuiver;
+	public static Item itemFlippers;
+
+	public static Block blockCobbleChest;
 
 
-	public void initializeArmorMaterials() {
+	private void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial("piston_boots",config.getInt("durability.diving_helmet"),50.0F,50.0F,20.0F,120.0F);
-		armorMaterialDiving = ArmorHelper.createArmorMaterial("diving",config.getInt("durability.diving_helmet"),20.0F,60.0F,20.0F,20.0F);
+		armorMaterialDiving      = ArmorHelper.createArmorMaterial("diving",config.getInt("durability.diving_helmet"),20.0F,60.0F,20.0F,20.0F);
+		armorMaterialFlippers    = ArmorHelper.createArmorMaterial("flippers",config.getInt("durability.flippers"),5.0F,0.0F,0.0F,10.0F);
 	}
 
-	public void initializeItems() {
+	private void initializeItems() {
 		int[] tex_coords;
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"piston_boots.png");
@@ -135,6 +146,14 @@ public class TreasureExpansion implements ModInitializer {
 			.setIconCoord(tex_coords[0],tex_coords[1]);
 
 		itemFireQuiver = new FireQuiverItem(MOD_ID + ".fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver"));
+
+		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"flippers.png");
+		itemFlippers = new ItemArmor(MOD_ID + ".flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 3)
+			.setIconCoord(tex_coords[0],tex_coords[1]);
+	}
+
+	private void initializeBlocks() {
+		Block blockCobbleChest = new BlockBuilder(MOD_ID).setHardness(2.0f).setResistance(10.0F).addTags(BlockTags.MINEABLE_BY_PICKAXE).build(new DungeonChestBlock(MOD_ID + ".dungeon_chest.cobble",Block.highestBlockId + 25, Material.stone, "dungeon_chest_cobble"));
 	}
 
 	private void initializeRecipes() {
@@ -159,6 +178,7 @@ public class TreasureExpansion implements ModInitializer {
 		LOGGER.info(MOD_ID + " initialized.");
 
 		initializeArmorMaterials();
+		initializeBlocks();
 		initializeItems();
 		initializeRecipes();
 
