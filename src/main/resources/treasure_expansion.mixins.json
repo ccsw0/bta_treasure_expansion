@@ -7,9 +7,10 @@
     "EntityLivingMixin",
     "EntityMixin",
     "EntityPlayerMixin",
+    "EntityRendererMixin",
     "EntitySpiderMixin",
     "ItemBowMixin",
-    "EntityRendererMixin",
+    "ItemEntityMixin",
     "SlotArmorMixin",
     "WorldFeatureLabyrinthMixin"
   ],

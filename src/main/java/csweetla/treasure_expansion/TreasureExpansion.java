@@ -22,6 +22,10 @@ import turniplabs.halplibe.helper.*;
 
 import java.util.Properties;
 
+import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
+import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
+
+@SuppressWarnings({"unchecked", "unused"})
 public class TreasureExpansion implements ModInitializer {
     public static final String MOD_ID = "treasure_expansion";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -143,9 +147,11 @@ public class TreasureExpansion implements ModInitializer {
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"lava_charm.png");
 		itemLavaCharm = new LavaCharmItem(MOD_ID + ".lava_charm",config.getInt("ids.lava_charm"),config.getInt("durability.lava_charm"))
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+			.setIconCoord(tex_coords[0],tex_coords[1])
+			.withTags(fireImmuneAsEntity, fizzleInWater);
 
-		itemFireQuiver = new FireQuiverItem(MOD_ID + ".fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver"));
+		itemFireQuiver = new FireQuiverItem(MOD_ID + ".fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver"))
+			.withTags(fireImmuneAsEntity, fizzleInWater);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"flippers.png");
 		itemFlippers = new ItemArmor(MOD_ID + ".flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 3)
