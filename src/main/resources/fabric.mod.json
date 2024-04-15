@@ -22,6 +22,9 @@
     ],
 		"client": [
 			"csweetla.treasure_expansion.TreasureExpansionClient"
+		],
+		"recipesReady": [
+			"csweetla.treasure_expansion.TreasureExpansion"
 		]
 	},
 	"mixins": [

@@ -1,6 +1,5 @@
 package csweetla.treasure_expansion.mixins;
 
-
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.item.ItemStack;
@@ -50,7 +49,8 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 		if (piston_boots_equipped()) {
 			this.yd = 0.42 * 1.75;
 			if (this.gamemode == Gamemode.survival) {
-				this.world.playSoundAtEntity(((EntityPlayer) (Object) this), "tile.piston.out", 0.03F, world.rand.nextFloat() * 0.25F + 0.6F);
+				EntityPlayer thisAs = ((EntityPlayer) (Object) this);
+				this.world.playSoundAtEntity(thisAs, thisAs, "tile.piston.out", 0.03F, world.rand.nextFloat() * 0.25F + 0.6F);
 			}
 		}
 	}

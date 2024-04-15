@@ -96,7 +96,7 @@ public class EscapeRopeItem extends Item {
 				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
 				entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_success");
 				// TODO: snap sound when rope breaks
-				world.playSoundAtEntity(entityplayer,MOD_ID +".rope_whoosh",1.0F,1.0F );
+				world.playSoundAtEntity(entityplayer,entityplayer, MOD_ID +".rope_whoosh",1.0F,1.0F );
 
 				itemstack.damageItem(2, entityplayer);
 				return itemstack;

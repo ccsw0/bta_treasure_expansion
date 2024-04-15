@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.helper.*;
+import turniplabs.halplibe.util.RecipeEntrypoint;
 
 import java.util.Properties;
 
@@ -26,7 +27,7 @@ import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
 
 @SuppressWarnings({"unchecked", "unused"})
-public class TreasureExpansion implements ModInitializer {
+public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
     public static final String MOD_ID = "treasure_expansion";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final ConfigHandler config;
@@ -162,17 +163,16 @@ public class TreasureExpansion implements ModInitializer {
 		Block blockCobbleChest = new BlockBuilder(MOD_ID).setHardness(2.0f).setResistance(10.0F).addTags(BlockTags.MINEABLE_BY_PICKAXE).build(new DungeonChestBlock(MOD_ID + ".dungeon_chest.cobble",Block.highestBlockId + 25, Material.stone, "dungeon_chest_cobble"));
 	}
 
-	private void initializeRecipes() {
-		RecipeHelper.Crafting.createShapelessRecipe(foodItemFruitSalad,1,
-			new Object[]{
-				Item.bowl,
-				Item.foodApple,
-				Item.cherry,
-				foodItemBananas,
-				foodItemGrapes,
-				foodItemOrange
-			}
-		);
+	@Override
+	public void onRecipesReady() {
+		RecipeBuilder.Shapeless(MOD_ID)
+			.addInput(Item.bowl)
+			.addInput(Item.foodApple)
+			.addInput(Item.cherry)
+			.addInput(foodItemBananas)
+			.addInput(foodItemGrapes)
+			.addInput(foodItemOrange)
+			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
 	}
 
 	@Override
@@ -186,7 +186,6 @@ public class TreasureExpansion implements ModInitializer {
 		initializeArmorMaterials();
 		initializeBlocks();
 		initializeItems();
-		initializeRecipes();
-
 	}
+
 }

@@ -22,7 +22,7 @@ public class ItemBowMixin {
 			System.out.println("GOT HERE");
 			entityplayer.inventory.armorItemInSlot(2).damageItem(1, entityplayer);
 			itemstack.damageItem(1, entityplayer);
-			world.playSoundAtEntity(entityplayer, "random.bow", 0.3f, 1.0f / (Item.itemRand.nextFloat() * 0.4f + 0.8f));
+			world.playSoundAtEntity(entityplayer, entityplayer, "random.bow", 0.3f, 1.0f/ (Item.itemRand.nextFloat() * 0.4f + 0.8f));
 			if (!world.isClientSide) {
 				EntityArrow arrow = new EntityArrow(world, entityplayer, true, 0);
 				world.entityJoinedWorld(arrow);

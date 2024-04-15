@@ -29,6 +29,11 @@
       "weight" : 1,
       "amount": 1,
       "amount-rand": 0
+    },
+    "item.treasure_expansion.fire_quiver": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
     }
   },
   "snow" : {
@@ -77,6 +82,11 @@
       "amount-rand": 0
     },
     "item.treasure_expansion.silver_sword": {
+      "weight" : 1,
+      "amount": 1,
+      "amount-rand": 0
+    },
+    "item.treasure_expansion.flippers": {
       "weight" : 1,
       "amount": 1,
       "amount-rand": 0

@@ -2,6 +2,8 @@ package csweetla.treasure_expansion.mixins;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.Global;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.EntityItem;
@@ -57,8 +59,8 @@ public abstract class ItemEntityMixin extends Entity {
 		}
 
 		if (fizzleInWater.appliesTo(item.getItem()) && this.isInWaterOrRain() ) {
-			if (this.tickCount % 10 == 0 && random.nextInt(2) == 0)
-				this.world.playSoundAtEntity(this, "random.fizz", 0.4f, 2.0f + this.random.nextFloat() * 0.4f);
+			if (this.tickCount % 10 == 0 && random.nextInt(2) == 0 && !Global.isServer)
+				this.world.playSoundAtEntity(Minecraft.getMinecraft(this).thePlayer,this, "random.fizz", 0.4f, 2.0f + this.random.nextFloat() * 0.4f);
 			if (random.nextInt(4) == 0) {
 				world.spawnParticle("largesmoke", this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z - 0.5f + random.nextFloat(), 0, 0, 0);
 			}

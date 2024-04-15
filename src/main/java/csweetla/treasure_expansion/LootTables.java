@@ -19,6 +19,7 @@ import java.util.Random;
 import static csweetla.treasure_expansion.TreasureExpansion.MOD_ID;
 import static csweetla.treasure_expansion.TreasureExpansion.config;
 
+@SuppressWarnings("ALL")
 public class LootTables {
 	private static final String config_location = FabricLoader.getInstance().getConfigDir().toString() + "/" + MOD_ID + ".loot_tables.json";
 	private static LootTables instance = null;
@@ -95,6 +96,7 @@ public class LootTables {
 			if (rndi < w) {
 				Item chosen = Item.itemsList[Item.nameToIdMap.get(entry.getKey())];
 				int amount = v.get("amount") + rand.nextInt(v.get("amount-rand") + 1);
+				System.out.println("PICKED: " + chosen.getKey());
 				return new ItemStack(chosen,amount);
 			}
 			rndi -= w;
@@ -146,19 +148,13 @@ public class LootTables {
 
 	private static void write_custom_loot_table_template() {
 		String default_filepath = "/assets/" + MOD_ID + "/default.loot_tables.json";
-		InputStream fileIn;
-		FileOutputStream fileOut;
-		try {
-			fileOut = new FileOutputStream(config_location);
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		fileIn = resourceAsStream(default_filepath);
-
-		try {
+		try (
+			InputStream fileIn = resourceAsStream(default_filepath);
+			FileOutputStream fileOut = new FileOutputStream(config_location);
+		){
 			while (fileIn.available() != 0)
 				fileOut.write(fileIn.read());
-		} catch(IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
