@@ -21,6 +21,8 @@ import static csweetla.treasure_expansion.TreasureExpansion.config;
 
 @SuppressWarnings("ALL")
 public class LootTables {
+	/* WARNING we should get rid of this system, but I don't feel like it rn */
+
 	private static final String config_location = FabricLoader.getInstance().getConfigDir().toString() + "/" + MOD_ID + ".loot_tables.json";
 	private static LootTables instance = null;
 
@@ -96,7 +98,7 @@ public class LootTables {
 			if (rndi < w) {
 				Item chosen = Item.itemsList[Item.nameToIdMap.get(entry.getKey())];
 				int amount = v.get("amount") + rand.nextInt(v.get("amount-rand") + 1);
-				System.out.println("PICKED: " + chosen.getKey());
+//				System.out.println("PICKED: " + chosen.getKey());
 				return new ItemStack(chosen,amount);
 			}
 			rndi -= w;

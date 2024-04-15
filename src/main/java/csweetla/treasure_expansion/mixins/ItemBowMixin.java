@@ -19,7 +19,6 @@ public class ItemBowMixin {
 	public void onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer, CallbackInfoReturnable<ItemStack> cir) {
 		ItemStack quiverSlot = entityplayer.inventory.armorItemInSlot(2);
 		if (quiverSlot != null && quiverSlot.getItem().equals(TreasureExpansion.itemFireQuiver) && quiverSlot.getMetadata() < quiverSlot.getMaxDamage()) {
-			System.out.println("GOT HERE");
 			entityplayer.inventory.armorItemInSlot(2).damageItem(1, entityplayer);
 			itemstack.damageItem(1, entityplayer);
 			world.playSoundAtEntity(entityplayer, entityplayer, "random.bow", 0.3f, 1.0f/ (Item.itemRand.nextFloat() * 0.4f + 0.8f));
