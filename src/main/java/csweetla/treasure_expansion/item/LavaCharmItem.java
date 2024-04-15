@@ -35,7 +35,7 @@ public class LavaCharmItem extends Item {
 					if (isFirstDamageableInInventory(itemstack,slot, player)) {
 						itemstack.damageItem(1, player);
 					}
-				} else if(world.rand.nextInt(10) == 0) {
+				} else if(player.tickCount % 10 == 0) {
 					itemstack.repairItem(1);
 				}
 		}

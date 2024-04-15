@@ -64,6 +64,8 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		prop.setProperty("durability.silver_sword","512");
 		prop.setProperty("durability.fire_quiver","192");
 		prop.setProperty("durability.flippers","192");
+		prop.setProperty("durability.spider_silk","192");
+
 
 		config = new ConfigHandler(MOD_ID, prop);
 	}
@@ -127,7 +129,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"spider_silk.png");
-		itemSpiderSilk = new Item(MOD_ID + ".spider_silk", config.getInt("ids.spider_silk"))
+		itemSpiderSilk = new SpiderSilkItem(MOD_ID + ".spider_silk", config.getInt("ids.spider_silk"), config.getInt("durability.spider_silk"))
 			.setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
 
 		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");

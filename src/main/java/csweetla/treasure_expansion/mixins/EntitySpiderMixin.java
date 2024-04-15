@@ -20,7 +20,7 @@ public abstract class EntitySpiderMixin extends EntityMonster {
 	}
 
 	@Unique
-	private boolean spider_fang_equipped(EntityPlayer p) {
+	private boolean spider_silk_equipped(EntityPlayer p) {
 		for(int i = 0; i < p.inventory.getSizeInventory(); ++i) {
 			ItemStack is = p.inventory.getStackInSlot(i);
 			if (is != null && is.itemID == itemSpiderSilk.id) {
@@ -39,7 +39,7 @@ public abstract class EntitySpiderMixin extends EntityMonster {
 			EntityPlayer p = world.players.get(i);
 			double currentDistance = p.distanceToSqr(entity.x, entity.y, entity.z);
 			// important part here
-			if (spider_fang_equipped(p))
+			if (spider_silk_equipped(p))
 				currentDistance /= 0.3;
 
 			if (!(radius < 0.0) && !(currentDistance < radius * radius) || closestDistance != -1.0 && !(currentDistance < closestDistance)) continue;
