@@ -167,7 +167,8 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 	@Override
 	public void onRecipesReady() {
-		RecipeBuilder.Shapeless(MOD_ID)
+		// shouldnt use minecraft namespace but who cares
+		RecipeBuilder.Shapeless("minecraft")
 			.addInput(Item.bowl)
 			.addInput(Item.foodApple)
 			.addInput(Item.cherry)
