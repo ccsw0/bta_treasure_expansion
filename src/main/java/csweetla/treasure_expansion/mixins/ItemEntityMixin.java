@@ -62,11 +62,11 @@ public abstract class ItemEntityMixin extends Entity {
 			if (this.tickCount % 10 == 0 && random.nextInt(2) == 0 && !Global.isServer)
 				this.world.playSoundAtEntity(Minecraft.getMinecraft(this).thePlayer,this, "random.fizz", 0.4f, 2.0f + this.random.nextFloat() * 0.4f);
 			if (random.nextInt(4) == 0) {
-				world.spawnParticle("largesmoke", this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z - 0.5f + random.nextFloat(), 0, 0, 0);
+				world.spawnParticle("largesmoke", this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z - 0.5f + random.nextFloat(), 0, 0, 0, 0, 0);
 			}
 			if (random.nextInt(2) == 0)
-				world.spawnParticle("smoke",this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z  - 0.5f + random.nextFloat(), 0, 0, 0);
-			world.spawnParticle("bubble",this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z - 0.5f + random.nextFloat(), 0, 0.25f + 0.45f * random.nextFloat(), 0);
+				world.spawnParticle("smoke",this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z  - 0.5f + random.nextFloat(), 0, 0, 0, 0, 0);
+			world.spawnParticle("bubble",this.x - 0.5f + random.nextFloat(), this.y + 0.25f, this.z - 0.5f + random.nextFloat(), 0, 0.25f + 0.45f * random.nextFloat(), 0, 0, 0);
 		}
 	}
 

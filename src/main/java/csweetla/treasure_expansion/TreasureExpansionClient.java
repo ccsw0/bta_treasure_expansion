@@ -10,7 +10,7 @@ public class TreasureExpansionClient implements ClientModInitializer {
 
 	private void initializeSounds() {
 		if (!Global.isServer) {
-			SoundHelper.Client.addSound(MOD_ID, "rope_whoosh.ogg");
+			SoundHelper.addSound(MOD_ID, "rope_whoosh.ogg");
 		}
 	}
 

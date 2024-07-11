@@ -15,11 +15,12 @@ public class LabyrinthGeneratorItem extends Item {
 		super(s,i);
 	}
 
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+    @Override
+	public ItemStack onUseItem(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if (entityplayer.getGamemode() == Gamemode.creative) {
 			WorldFeatureLabyrinth wfl = new WorldFeatureLabyrinth();
 			boolean success = wfl.generate(world, new Random(), (int) entityplayer.x, (int) entityplayer.y, (int) entityplayer.z);
-			entityplayer.addChatMessage(success ? "Generated Labyrinth" : "Failed to generate labyrinth here!");
+			entityplayer.sendTranslatedChatMessage(success ? "Generated Labyrinth" : "Failed to generate labyrinth here!");
 
 			return itemstack;
 		}  else {
