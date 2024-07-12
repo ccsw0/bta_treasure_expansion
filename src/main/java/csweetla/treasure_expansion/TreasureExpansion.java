@@ -4,6 +4,7 @@ import csweetla.treasure_expansion.item.*;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockChest;
 import net.minecraft.client.render.block.model.BlockModelChest;
@@ -112,6 +113,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 		toolItemSilverSword = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/silver_sword")
+			.setItemModel(item -> new ItemModelStandard(item, null).setFull3D())
 		    .build(new SilverSwordItem("silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron, config.getInt("durability.silver_sword")));
 
 		itemEscapeRopeGold = new ItemBuilder(MOD_ID)
