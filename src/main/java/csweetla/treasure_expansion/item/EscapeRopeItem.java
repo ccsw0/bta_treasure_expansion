@@ -64,7 +64,8 @@ public class EscapeRopeItem extends Item {
 		}
 	}
 
-	public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+    @Override
+	public ItemStack onUseItem(ItemStack itemstack, World world, EntityPlayer entityplayer) {
 		if (world.isClientSide) {
 			return itemstack;
 		}
@@ -72,13 +73,13 @@ public class EscapeRopeItem extends Item {
 		int rand_pos_offset = 50;
 
 		if (world.dimension != Dimension.overworld) {
-			entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_nether");
+			entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_nether");
 			return itemstack;
 		}
 		else if (entityplayer.y >= world.worldType.getOceanY())
 		{
 			// TODO: Better detection of underground player
-			entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_surface");
+			entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_surface");
 			return itemstack;
 		}
 
@@ -94,7 +95,7 @@ public class EscapeRopeItem extends Item {
 			int block_id = world.getBlockId(x,y,z);
 			if (acceptable_landing_block(block_id)) {
 				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
-				entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_success");
+				entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_success");
 				// TODO: snap sound when rope breaks
 				world.playSoundAtEntity(entityplayer,entityplayer, MOD_ID +".rope_whoosh",1.0F,1.0F );
 
@@ -103,7 +104,7 @@ public class EscapeRopeItem extends Item {
 			}
 		}
 
-		entityplayer.addChatMessage("message." + MOD_ID + ".escape_rope.use_failure");
+		entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_failure");
 		return itemstack;
 	}
 }

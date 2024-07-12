@@ -13,7 +13,7 @@ public class SilverSwordItem extends ItemToolSword {
 
 	public SilverSwordItem(String name, int id, ToolMaterial enumtoolmaterial, int durability) {
 		super(name, id, enumtoolmaterial);
-		ItemTags.preventCreativeMining.tag(this);
+		ItemTags.PREVENT_CREATIVE_MINING.tag(this);
 		setMaxDamage(durability);
 	}
 

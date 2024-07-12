@@ -1,11 +1,12 @@
 package csweetla.treasure_expansion;
 
-import csweetla.treasure_expansion.block.DungeonChestBlock;
 import csweetla.treasure_expansion.item.*;
 
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.BlockChest;
+import net.minecraft.client.render.block.model.BlockModelChest;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.item.ItemFood;
@@ -34,6 +35,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	public static boolean mod_fruit_enabled;
 	public static int minor_treasure_rarity;
 	public static boolean minor_treasure_enabled;
+
 	static {
 		// Config
 		Properties prop = new Properties();
@@ -52,19 +54,20 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		prop.setProperty("ids.spider_silk", "32212");
 		prop.setProperty("ids.fire_quiver", "32213");
 		prop.setProperty("ids.flippers", "32214");
-		prop.setProperty("loot.use_custom_tables","false");
-		prop.setProperty("loot.mod_fruit_enabled","true");
-		prop.setProperty("loot.minor_treasure_enabled","true");
-		prop.setProperty("loot.minor_treasure_rarity","3");
-		prop.setProperty("durability.escape_rope_gold","6");
-		prop.setProperty("durability.escape_rope","1");
-		prop.setProperty("durability.piston_boots","220");
-		prop.setProperty("durability.diving_helmet","220");
-		prop.setProperty("durability.lava_charm","120");
-		prop.setProperty("durability.silver_sword","512");
-		prop.setProperty("durability.fire_quiver","192");
-		prop.setProperty("durability.flippers","192");
-		prop.setProperty("durability.spider_silk","192");
+		prop.setProperty("ids.chest", "1930");
+		prop.setProperty("loot.use_custom_tables", "false");
+		prop.setProperty("loot.mod_fruit_enabled", "true");
+		prop.setProperty("loot.minor_treasure_enabled", "true");
+		prop.setProperty("loot.minor_treasure_rarity", "3");
+		prop.setProperty("durability.escape_rope_gold", "6");
+		prop.setProperty("durability.escape_rope", "1");
+		prop.setProperty("durability.piston_boots", "220");
+		prop.setProperty("durability.diving_helmet", "220");
+		prop.setProperty("durability.lava_charm", "120");
+		prop.setProperty("durability.silver_sword", "512");
+		prop.setProperty("durability.fire_quiver", "192");
+		prop.setProperty("durability.flippers", "192");
+		prop.setProperty("durability.spider_silk", "192");
 
 
 		config = new ConfigHandler(MOD_ID, prop);
@@ -93,90 +96,104 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 
 	private void initializeArmorMaterials() {
-		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial("piston_boots",config.getInt("durability.diving_helmet"),50.0F,50.0F,20.0F,120.0F);
-		armorMaterialDiving      = ArmorHelper.createArmorMaterial("diving",config.getInt("durability.diving_helmet"),20.0F,60.0F,20.0F,20.0F);
-		armorMaterialFlippers    = ArmorHelper.createArmorMaterial("flippers",config.getInt("durability.flippers"),5.0F,0.0F,0.0F,10.0F);
+		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial(MOD_ID, "piston_boots", config.getInt("durability.diving_helmet"), 50.0F, 50.0F, 20.0F, 120.0F);
+		armorMaterialDiving      = ArmorHelper.createArmorMaterial(MOD_ID, "diving", config.getInt("durability.diving_helmet"), 20.0F, 60.0F, 20.0F, 20.0F);
+		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", config.getInt("durability.flippers"), 5.0F, 0.0F, 0.0F, 10.0F);
 	}
 
 	private void initializeItems() {
-		int[] tex_coords;
+		armorItemPistonBoots = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/piston_boots")
+		    .build(new ItemArmor("piston_boots", config.getInt("ids.piston_boots"), armorMaterialPistonBoots, 3));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"piston_boots.png");
-		armorItemPistonBoots = new ItemArmor(MOD_ID + ".piston_boots", config.getInt("ids.piston_boots"), armorMaterialPistonBoots, 3)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		armorItemDivingHelmet = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/diving_helmet")
+		    .build(new ItemArmor("diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 0));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"diving_helmet.png");
-		armorItemDivingHelmet = new ItemArmor(MOD_ID + ".diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 0)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		toolItemSilverSword = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/silver_sword")
+		    .build(new SilverSwordItem("silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron, config.getInt("durability.silver_sword")));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"silver_sword.png");
-		toolItemSilverSword = new SilverSwordItem(MOD_ID + ".silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron, config.getInt("durability.silver_sword"))
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		itemEscapeRopeGold = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/escape_rope_gold")
+		    .build(new EscapeRopeItem("escape_rope_gold", config.getInt("ids.escape_rope_gold"), config.getInt("durability.escape_rope_gold")));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope_gold.png");
-		itemEscapeRopeGold = new EscapeRopeItem(MOD_ID + ".escape_rope_gold", config.getInt("ids.escape_rope_gold"), config.getInt("durability.escape_rope_gold"))
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		itemEscapeRope = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/escape_rope")
+		    .build(new EscapeRopeItem("escape_rope", config.getInt("ids.escape_rope"), config.getInt("durability.escape_rope")));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"escape_rope.png");
-		itemEscapeRope = new EscapeRopeItem(MOD_ID + ".escape_rope", config.getInt("ids.escape_rope"), config.getInt("durability.escape_rope"))
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		itemStrangeDevice = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/device")
+    		.setStackSize(1)
+		    .build(new Item("strange_device", config.getInt("ids.strange_device")));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"device.png");
-		itemStrangeDevice = new Item(MOD_ID + ".strange_device", config.getInt("ids.strange_device"))
-			.setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+		itemLabyrinthGenerator = new ItemBuilder(MOD_ID)
+			.setStackSize(1)
+		    .build(new LabyrinthGeneratorItem("labyrinth_generator", config.getInt("ids.labyrinth_generator")));
 
-		itemLabyrinthGenerator = new LabyrinthGeneratorItem(MOD_ID + ".labyrinth_generator", config.getInt("ids.labyrinth_generator"))
-			.setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+		itemSpiderSilk = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/spider_silk")
+			.setStackSize(1)
+		    .build(new SpiderSilkItem("spider_silk", config.getInt("ids.spider_silk"), config.getInt("durability.spider_silk")));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"spider_silk.png");
-		itemSpiderSilk = new SpiderSilkItem(MOD_ID + ".spider_silk", config.getInt("ids.spider_silk"), config.getInt("durability.spider_silk"))
-			.setIconCoord(tex_coords[0],tex_coords[1]).setMaxStackSize(1);
+		foodItemOrange = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/orange")
+		    .build(new ItemFood("orange", config.getInt("ids.orange"), 4, 8, false, 8));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"orange.png");
-		foodItemOrange = new ItemFood(MOD_ID + ".orange",config.getInt("ids.orange"),4,false)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemGrapes = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/grapes")
+		    .build(new ItemFood("grapes", config.getInt("ids.grapes"), 4, 3, false, 16));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"grapes.png");
-		foodItemGrapes = new ItemFood(MOD_ID + ".grapes",config.getInt("ids.grapes"),4,false)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemBananas = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/bananas")
+		    .build(new ItemFood("bananas", config.getInt("ids.bananas"), 4, 6, false, 8));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"bananas.png");
-		foodItemBananas = new ItemFood(MOD_ID + ".bananas",config.getInt("ids.bananas"),4,false)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		foodItemFruitSalad = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/fruit_salad")
+		    .build(new ItemFood("fruit_salad", config.getInt("ids.fruit_salad"), 20, 5, false, 8));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"fruit_salad.png");
-		foodItemFruitSalad = new ItemFood(MOD_ID + ".fruit_salad",config.getInt("ids.fruit_salad"),20,false)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		itemLavaCharm = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/lava_charm")
+			.setTags(fireImmuneAsEntity, fizzleInWater)
+		    .build(new LavaCharmItem("lava_charm", config.getInt("ids.lava_charm"), config.getInt("durability.lava_charm")));
 
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"lava_charm.png");
-		itemLavaCharm = new LavaCharmItem(MOD_ID + ".lava_charm",config.getInt("ids.lava_charm"),config.getInt("durability.lava_charm"))
-			.setIconCoord(tex_coords[0],tex_coords[1])
-			.withTags(fireImmuneAsEntity, fizzleInWater);
+		itemFireQuiver = new ItemBuilder(MOD_ID)
+			.setTags(fireImmuneAsEntity, fizzleInWater)
+			.setItemModel(item -> new FireQuiverItemModel(item, MOD_ID))
+			.setIcon("treasure_expansion:item/fire_quiver")
+		    .build(new FireQuiverItem("fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver")));
 
-		itemFireQuiver = new FireQuiverItem(MOD_ID + ".fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver"))
-			.withTags(fireImmuneAsEntity, fizzleInWater);
-
-		tex_coords = TextureHelper.getOrCreateItemTexture(MOD_ID,"flippers.png");
-		itemFlippers = new ItemArmor(MOD_ID + ".flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 3)
-			.setIconCoord(tex_coords[0],tex_coords[1]);
+		itemFlippers = new ItemBuilder(MOD_ID)
+		    .setIcon(MOD_ID + ":item/flippers")
+		    .build(new ItemArmor("flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 3));
 	}
 
 	private void initializeBlocks() {
-		Block blockCobbleChest = new BlockBuilder(MOD_ID).setHardness(2.0f).setResistance(10.0F).addTags(BlockTags.MINEABLE_BY_PICKAXE).build(new DungeonChestBlock(MOD_ID + ".dungeon_chest.cobble",Block.highestBlockId + 25, Material.stone, "dungeon_chest_cobble"));
+		Block blockCobbleChest = new BlockBuilder(MOD_ID)
+		    .setHardness(2.0f)
+	        .setResistance(10.0F)
+	        .addTags(BlockTags.MINEABLE_BY_PICKAXE)
+	        .setBlockModel(block -> new BlockModelChest(block, "treasure_expansion:block/dungeon_chest_cobble"))
+	        .build(new BlockChest("dungeon_chest.cobble", config.getInt("ids.chest"), Material.stone));
 	}
 
 	@Override
 	public void onRecipesReady() {
 		// shouldnt use minecraft namespace but who cares
-		RecipeBuilder.Shapeless("minecraft")
+		RecipeBuilder.Shapeless(MOD_ID)
 			.addInput(Item.bowl)
 			.addInput(Item.foodApple)
-			.addInput(Item.cherry)
+			.addInput(Item.foodCherry)
 			.addInput(foodItemBananas)
 			.addInput(foodItemGrapes)
 			.addInput(foodItemOrange)
 			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
 	}
+
+	@Override
+    public void initNamespaces() {
+        RecipeBuilder.initNameSpace(MOD_ID);
+    }
 
 	@Override
     public void onInitialize() {

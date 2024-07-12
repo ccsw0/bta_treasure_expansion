@@ -24,7 +24,6 @@ import static csweetla.treasure_expansion.TreasureExpansion.*;
 
 @Mixin(value = net.minecraft.core.world.generate.feature.WorldFeatureLabyrinth.class, remap = false)
 public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
-
 	@Shadow
 	boolean treasureGenerated;
 	@Shadow
@@ -87,8 +86,11 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	}
 
 	// return our chosen fruit rather than apples
-	@Inject(method = "pickCheckLootItem", at = @At(value = "RETURN", ordinal = 9), cancellable = true)
+	@Inject(method = "pickCheckLootItem", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void pickCheckLootItem1(Random random, CallbackInfoReturnable<ItemStack> cir) {
-		cir.setReturnValue(new ItemStack(this.fruit_item));
+	    ItemStack ret = cir.getReturnValue();
+	    if (ret != null && ret.getItem() == Item.foodApple) {
+            cir.setReturnValue(new ItemStack(this.fruit_item));
+        }
 	}
 }
