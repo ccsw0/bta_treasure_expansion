@@ -130,6 +130,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		    .build(new Item("strange_device", config.getInt("ids.strange_device")));
 
 		itemLabyrinthGenerator = new ItemBuilder(MOD_ID)
+			.setIcon(MOD_ID + ":item/device")
 			.setStackSize(1)
 		    .build(new LabyrinthGeneratorItem("labyrinth_generator", config.getInt("ids.labyrinth_generator")));
 
@@ -181,7 +182,6 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 	@Override
 	public void onRecipesReady() {
-		// shouldnt use minecraft namespace but who cares
 		RecipeBuilder.Shapeless(MOD_ID)
 			.addInput(Item.bowl)
 			.addInput(Item.foodApple)
