@@ -1,14 +1,14 @@
 item.treasure_expansion.piston_boots.name=Piston Boots
-item.treasure_expansion.piston_boots.desc=You did WHAT? in the boots
+item.treasure_expansion.piston_boots.desc=You did WHAT in the boots?
 
 item.treasure_expansion.diving_helmet.name=Tarnished Diving Helmet
-item.treasure_expansion.diving_helmet.desc=By some miracle of jonk, it still works
+item.treasure_expansion.diving_helmet.desc=By some miracle of jonk, it still works!
 
 item.treasure_expansion.silver_sword.name=Silver Sword
-item.treasure_expansion.silver_sword.desc=Made out of a material with a burning hatred for monsters
+item.treasure_expansion.silver_sword.desc=Made out of a material with a burning hatred for monsters.
 
 item.treasure_expansion.escape_rope_gold.name=Golden Escape Rope
-item.treasure_expansion.escape_rope_gold.desc=This rope's golden fibers make it strong enough for repeated use
+item.treasure_expansion.escape_rope_gold.desc=This rope's golden fibers make it strong enough for repeated use.
 
 item.treasure_expansion.escape_rope.name=Escape Rope
 item.treasure_expansion.escape_rope.desc=This flimsy rope is hardly strong enough to support your weight.
@@ -23,7 +23,7 @@ item.treasure_expansion.fire_quiver.name=Hellish Quiver
 item.treasure_expansion.fire_quiver.desc=The inside is burning hot!
 
 item.treasure_expansion.spider_silk.name=Ball of Spider Silk
-item.treasure_expansion.spider_silk.desc=It's sticky and disgusting
+item.treasure_expansion.spider_silk.desc=It's sticky and disgusting.
 
 item.treasure_expansion.flippers.name=Flippers
 item.treasure_expansion.flippers.desc=Allow you to flip! Well actually no...
@@ -35,7 +35,7 @@ item.treasure_expansion.orange.name=Orange
 item.treasure_expansion.orange.desc=Don't compare them to apples!
 
 item.treasure_expansion.grapes.name=Grapes
-item.treasure_expansion.grapes.desc=I can't think of anything clever about grapes
+item.treasure_expansion.grapes.desc=I can't think of anything clever about grapes...
 
 item.treasure_expansion.bananas.name=Bananas
 item.treasure_expansion.bananas.desc=I go nuts for these.
@@ -47,3 +47,6 @@ message.treasure_expansion.escape_rope.use_nether=Escape Rope will only work in 
 message.treasure_expansion.escape_rope.use_surface=Try to use the Escape Rope Underground!
 message.treasure_expansion.escape_rope.use_success=Escaped unscathed!
 message.treasure_expansion.escape_rope.use_failure=No escape route found!
+
+tile.treasure_expansion.dungeon_chest.cobble.name=Dungeon Chest
+tile.treasure_expansion.dungeon_chest.cobble.desc=A rocky chest from a dungeon.

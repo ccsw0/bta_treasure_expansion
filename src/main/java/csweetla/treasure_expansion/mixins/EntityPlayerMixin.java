@@ -1,6 +1,7 @@
 package csweetla.treasure_expansion.mixins;
 
 import net.minecraft.core.block.material.Material;
+import net.minecraft.core.item.Item;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.gamemode.Gamemode;
@@ -91,5 +92,15 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 				}
 			}
 		}
+	}
+
+    @Inject(method="getNextArrow", at=@At("HEAD"), cancellable = true)
+	public void getNextArrow(CallbackInfoReturnable<Item> cir) {
+	    ItemStack quiverSlot = this.inventory.armorItemInSlot(2);
+	    if (quiverSlot != null && quiverSlot.itemID == itemFireQuiver.id) {
+	        // Evil hack, but getNextArrow is only used directly before rendering
+	        TreasureExpansion.renderingArrow = true;
+            cir.setReturnValue(itemFireQuiver);
+	    }
 	}
 }

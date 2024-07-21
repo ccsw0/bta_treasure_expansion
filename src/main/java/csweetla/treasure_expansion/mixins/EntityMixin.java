@@ -42,7 +42,7 @@ public class EntityMixin {
 		if (thisAs instanceof EntityPlayer && thisAs.wasInWater) {
 			ItemStack boots_slot = ((EntityPlayer) thisAs).inventory.armorInventory[0];
 			if (boots_slot != null && boots_slot.getItem().equals(TreasureExpansion.itemFlippers))
-				return f2 * 1.55F;
+				return f2 * 3F;
 		}
 		return f2;
 	}
