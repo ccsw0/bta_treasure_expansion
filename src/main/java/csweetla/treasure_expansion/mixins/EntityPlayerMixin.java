@@ -2,6 +2,7 @@ package csweetla.treasure_expansion.mixins;
 
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.Entity;
+import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.gamemode.Gamemode;
 import net.minecraft.core.player.inventory.InventoryPlayer;
@@ -90,6 +91,18 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 						break;
 				}
 			}
+		}
+	}
+
+	/*
+	 Fire quiver displays an arrow on the bow when equipped
+	 TODO: make it display a fire arrow?
+	 */
+	@Inject(method="getNextArrow", at=@At("HEAD"), cancellable = true)
+	public void getNextArrow(CallbackInfoReturnable<Item> cir) {
+		ItemStack quiverSlot = this.inventory.armorItemInSlot(2);
+		if (quiverSlot != null && quiverSlot.itemID == itemFireQuiver.id && quiverSlot.getMetadata() < quiverSlot.getMaxDamage()) {
+			cir.setReturnValue(Item.ammoArrow);
 		}
 	}
 }
