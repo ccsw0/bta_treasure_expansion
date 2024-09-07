@@ -209,7 +209,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
         	Registries.RECIPES.addCustomRecipe(
         	    "treasure_expansion:workbench/repair_silver_sword",
         	    new RecipeEntryRepairable(toolItemSilverSword, BonusItems.ingotSilver)
-            );            
+            );
 	    }
 	}
 
