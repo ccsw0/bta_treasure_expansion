@@ -15,6 +15,3 @@ pluginManagement {
         }
     }
 }
-
-include(":bonusblocks")
-project(":bonusblocks").projectDir = file("${rootProject.projectDir}/../bonusblocks")

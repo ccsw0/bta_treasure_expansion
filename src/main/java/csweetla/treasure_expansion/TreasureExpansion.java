@@ -104,7 +104,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	private void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial(MOD_ID, "piston_boots", config.getInt("durability.diving_helmet"), 50.0F, 50.0F, 20.0F, 120.0F);
 		armorMaterialDiving      = ArmorHelper.createArmorMaterial(MOD_ID, "diving", config.getInt("durability.diving_helmet"), 20.0F, 60.0F, 20.0F, 20.0F);
-		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", -1, 0.0F, 0.0F, 0.0F, 0.0F);
+		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", config.getInt("durability.flippers"), 0.0F, 0.0F, 0.0F, 0.0F);
 	}
 
 	private void initializeItems() {
@@ -135,8 +135,8 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		    .build(new Item("strange_device", config.getInt("ids.strange_device")));
 
 		itemLabyrinthGenerator = new ItemBuilder(MOD_ID)
-			.setStackSize(1)
 			.setIcon(MOD_ID + ":item/device")
+			.setStackSize(1)
 		    .build(new LabyrinthGeneratorItem("labyrinth_generator", config.getInt("ids.labyrinth_generator")));
 
 		itemSpiderSilk = new ItemBuilder(MOD_ID)
