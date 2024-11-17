@@ -73,8 +73,10 @@ public abstract class ItemEntityMixin extends Entity {
 	}
 
 
-	@WrapOperation(method = "tick", at=@At(value = "INVOKE", target = "Lnet/minecraft/core/world/World;getBlockMaterial(III)Lnet/minecraft/core/block/material/Material;"))
-	public Material stop_getting_block_mat(World instance, int x, int y, int z, Operation<Material> original) {
-		return fireImmuneAsEntity.appliesTo(item.getItem()) ? null : original.call(instance, x, y, z);
+    @Inject(method = "burn", at=@At("HEAD"), cancellable = true)
+	public void stop_getting_block_mat(int damage, CallbackInfo ci) {
+	    if (fireImmuneAsEntity.appliesTo(item.getItem())) {
+            ci.cancel();
+	    }
 	}
 }

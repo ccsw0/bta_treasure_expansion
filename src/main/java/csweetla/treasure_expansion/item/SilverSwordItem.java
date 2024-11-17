@@ -29,9 +29,9 @@ public class SilverSwordItem extends ItemToolSword {
 
 	@Override
 	public int getDamageVsEntity(Entity attacked) {
-		if (attacked instanceof EntityMonster) {
-			return Item.toolSwordDiamond.getDamageVsEntity(attacked);
-		}
+	    if (attacked instanceof EntityMonster) {
+            return Item.toolSwordIron.getDamageVsEntity(attacked);
+        }
 		return Item.toolSwordStone.getDamageVsEntity(attacked);
 	}
 }

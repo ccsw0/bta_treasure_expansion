@@ -8,6 +8,8 @@ import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockChest;
 import net.minecraft.client.render.block.model.BlockModelChest;
+import net.minecraft.core.data.registry.recipe.entry.RecipeEntryRepairable;
+import net.minecraft.core.data.registry.Registries;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.item.ItemFood;
@@ -28,11 +30,14 @@ import java.util.Properties;
 import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
 
+import luke.bonusblocks.item.BonusItems;
+
 @SuppressWarnings({"unchecked", "unused"})
 public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
     public static final String MOD_ID = "treasure_expansion";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final ConfigHandler config;
+	public static boolean renderingArrow = false;
 	public static boolean mod_fruit_enabled;
 	public static int minor_treasure_rarity;
 	public static boolean minor_treasure_enabled;
@@ -99,7 +104,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	private void initializeArmorMaterials() {
 		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial(MOD_ID, "piston_boots", config.getInt("durability.diving_helmet"), 50.0F, 50.0F, 20.0F, 120.0F);
 		armorMaterialDiving      = ArmorHelper.createArmorMaterial(MOD_ID, "diving", config.getInt("durability.diving_helmet"), 20.0F, 60.0F, 20.0F, 20.0F);
-		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", config.getInt("durability.flippers"), 5.0F, 0.0F, 0.0F, 10.0F);
+		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", config.getInt("durability.flippers"), 0.0F, 0.0F, 0.0F, 0.0F);
 	}
 
 	private void initializeItems() {
@@ -113,7 +118,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 		toolItemSilverSword = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/silver_sword")
-			.setItemModel(item -> new ItemModelStandard(item, null).setFull3D())
+		    .setItemModel(item -> new ItemModelStandard(item, null).setFull3D())
 		    .build(new SilverSwordItem("silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron, config.getInt("durability.silver_sword")));
 
 		itemEscapeRopeGold = new ItemBuilder(MOD_ID)
@@ -190,6 +195,22 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.addInput(foodItemGrapes)
 			.addInput(foodItemOrange)
 			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
+
+		Registries.RECIPES.addCustomRecipe(
+		    "treasure_expansion:workbench/repair_piston_boots",
+		    new RecipeEntryRepairable(armorItemPistonBoots, Item.itemsList[Block.pistonBase.id])
+	    );
+	    // BonusBlocks compat
+	    if (ModVersionHelper.isModPresent("bonusblocks")) {
+        	Registries.RECIPES.addCustomRecipe(
+        	    "treasure_expansion:workbench/repair_helm",
+        	    new RecipeEntryRepairable(armorItemDivingHelmet, BonusItems.ingotCopper)
+            );
+        	Registries.RECIPES.addCustomRecipe(
+        	    "treasure_expansion:workbench/repair_silver_sword",
+        	    new RecipeEntryRepairable(toolItemSilverSword, BonusItems.ingotSilver)
+            );
+	    }
 	}
 
 	@Override

@@ -7,7 +7,6 @@
     "EntityLivingMixin",
     "EntityMixin",
     "EntityPlayerMixin",
-    "EntityRendererMixin",
     "EntitySpiderMixin",
     "ItemBowMixin",
     "ItemEntityMixin",
@@ -17,7 +16,9 @@
   "client": [
     "GuiIngameMixin",
     "GuiInventoryMixin",
-    "OxygenBarComponentMixin"
+    "OxygenBarComponentMixin",
+    "EntityRendererMixin",
+    "CameraUtilMixin"
   ],
   "server": [],
   "injectors": {
