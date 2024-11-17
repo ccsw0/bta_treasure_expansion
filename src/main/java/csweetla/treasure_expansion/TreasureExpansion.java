@@ -30,7 +30,7 @@ import java.util.Properties;
 import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
 
-import luke.bonusblocks.item.BonusItems;
+//import luke.bonusblocks.item.BonusItems;
 
 @SuppressWarnings({"unchecked", "unused"})
 public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
@@ -200,17 +200,17 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		    "treasure_expansion:workbench/repair_piston_boots",
 		    new RecipeEntryRepairable(armorItemPistonBoots, Item.itemsList[Block.pistonBase.id])
 	    );
-	    // BonusBlocks compat
-	    if (ModVersionHelper.isModPresent("bonusblocks")) {
-        	Registries.RECIPES.addCustomRecipe(
-        	    "treasure_expansion:workbench/repair_helm",
-        	    new RecipeEntryRepairable(armorItemDivingHelmet, BonusItems.ingotCopper)
-            );
-        	Registries.RECIPES.addCustomRecipe(
-        	    "treasure_expansion:workbench/repair_silver_sword",
-        	    new RecipeEntryRepairable(toolItemSilverSword, BonusItems.ingotSilver)
-            );
-	    }
+//	    // BonusBlocks compat
+//	    if (ModVersionHelper.isModPresent("bonusblocks")) {
+//        	Registries.RECIPES.addCustomRecipe(
+//        	    "treasure_expansion:workbench/repair_helm",
+//        	    new RecipeEntryRepairable(armorItemDivingHelmet, BonusItems.ingotCopper)
+//            );
+//        	Registries.RECIPES.addCustomRecipe(
+//        	    "treasure_expansion:workbench/repair_silver_sword",
+//        	    new RecipeEntryRepairable(toolItemSilverSword, BonusItems.ingotSilver)
+//            );
+//	    }
 	}
 
 	@Override
