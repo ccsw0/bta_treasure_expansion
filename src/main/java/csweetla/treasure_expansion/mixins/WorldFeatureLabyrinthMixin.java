@@ -3,10 +3,10 @@ package csweetla.treasure_expansion.mixins;
 import csweetla.treasure_expansion.LootTables;
 import csweetla.treasure_expansion.TreasureExpansion;
 
-
-import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.item.Items;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 
@@ -35,14 +35,14 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	int wallBlockA;
 
 	@Unique
-	Item fruit_item = Item.foodApple;
+	Item fruit_item = Items.FOOD_APPLE;
 
 	@Unique
 	boolean generate_minor_treasure = false;
 
 	@Unique
 	Item random_fruit_item(Random random) {
-		Item[] choices = {Item.foodApple, TreasureExpansion.foodItemOrange, TreasureExpansion.foodItemBananas, TreasureExpansion.foodItemGrapes};
+		Item[] choices = {Items.FOOD_APPLE, TreasureExpansion.foodItemOrange, TreasureExpansion.foodItemBananas, TreasureExpansion.foodItemGrapes};
 		return choices[random.nextInt(choices.length)];
 	}
 
@@ -51,7 +51,7 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		ItemStack ret;
 		if (this.isCold) {
 			ret = LootTables.getInstance().randomLoot(SNOW, random);
-		} else if (this.wallBlockA == Block.sandstone.id) {
+		} else if (this.wallBlockA == Blocks.SANDSTONE.id()) {
 			ret = LootTables.getInstance().randomLoot(DESERT, random);
 		} else {
 			ret = LootTables.getInstance().randomLoot(DEFAULT, random);
@@ -67,9 +67,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		return ret;
 	}
 	// pick a random fruit item to generate in the labyrinth
-	@Inject(method = "generate",at = @At("HEAD"))
+	@Inject(method = "place",at = @At("HEAD"))
 	void generate(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
-		this.fruit_item = mod_fruit_enabled ? random_fruit_item(random) : Item.foodApple;
+		this.fruit_item = mod_fruit_enabled ? random_fruit_item(random) : Items.FOOD_APPLE;
 		this.generate_minor_treasure = minor_treasure_enabled && random.nextInt(minor_treasure_rarity) == 0;
 	}
 
@@ -89,7 +89,7 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	@Inject(method = "pickCheckLootItem", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void pickCheckLootItem1(Random random, CallbackInfoReturnable<ItemStack> cir) {
 	    ItemStack ret = cir.getReturnValue();
-	    if (ret != null && ret.getItem() == Item.foodApple) {
+	    if (ret != null && ret.getItem() == Items.FOOD_APPLE) {
             cir.setReturnValue(new ItemStack(this.fruit_item));
         }
 	}

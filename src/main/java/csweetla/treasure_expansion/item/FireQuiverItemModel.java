@@ -5,11 +5,12 @@ import csweetla.treasure_expansion.TreasureExpansion;
 import net.minecraft.client.render.ItemRenderer;
 import net.minecraft.client.render.tessellator.Tessellator;
 import net.minecraft.client.render.item.model.ItemModelStandard;
-import net.minecraft.client.render.stitcher.IconCoordinate;
-import net.minecraft.client.render.stitcher.TextureRegistry;
+import net.minecraft.client.render.texture.stitcher.IconCoordinate;
+import net.minecraft.client.render.texture.stitcher.TextureRegistry;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public class FireQuiverItemModel extends ItemModelStandard {
     IconCoordinate fireQuiverFull = TextureRegistry.getTexture("treasure_expansion:item/fire_quiver_empty");
@@ -27,7 +28,7 @@ public class FireQuiverItemModel extends ItemModelStandard {
     }
 
     @Override
-    public IconCoordinate getIcon(Entity entity, ItemStack itemStack) {
+    public @NotNull IconCoordinate getIcon(Entity entity, ItemStack itemStack) {
         if (TreasureExpansion.renderingArrow) {
             if (direct) return flamingArrow;
             // Evil hack, but it works!

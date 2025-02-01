@@ -1,12 +1,16 @@
 package csweetla.treasure_expansion.item;
 
-import net.minecraft.core.block.Block;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.block.Blocks;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.sound.SoundCategory;
+import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.world.Dimension;
 import net.minecraft.core.world.World;
-import net.minecraft.server.entity.player.EntityPlayerMP;
+import net.minecraft.server.entity.player.PlayerServer;
 
 import java.util.Random;
 
@@ -18,28 +22,29 @@ public class EscapeRopeItem extends Item {
 	static Random rand = new Random();
 	static int[] banned_landing_blocks = {
 		0,
-		Block.fluidWaterStill.id,
-		Block.fluidWaterFlowing.id,
-		Block.fluidLavaStill.id,
-		Block.fluidLavaFlowing.id,
-		Block.algae.id,
-		Block.spikes.id,
-		Block.fire.id,
-		Block.cobweb.id,
-		Block.cactus.id,
-		Block.ice.id,
-		Block.leavesOak.id,
-		Block.leavesOakRetro.id,
-		Block.leavesPine.id,
-		Block.leavesBirch.id,
-		Block.leavesEucalyptus.id,
-		Block.leavesShrub.id,
-		Block.leavesCherry.id,
-		Block.leavesCherryFlowering.id,
+		Blocks.FLUID_WATER_STILL.id(),
+		Blocks.FLUID_WATER_FLOWING.id(),
+		Blocks.FLUID_LAVA_STILL.id(),
+		Blocks.FLUID_LAVA_FLOWING.id(),
+		Blocks.ALGAE.id(),
+		Blocks.SPIKES.id(),
+		Blocks.FIRE.id(),
+		Blocks.COBWEB.id(),
+		Blocks.CACTUS.id(),
+		Blocks.ICE.id(),
+		Blocks.LEAVES_OAK.id(),
+		Blocks.LEAVES_OAK_RETRO.id(),
+		Blocks.LEAVES_PINE.id(),
+		Blocks.LEAVES_BIRCH.id(),
+		Blocks.LEAVES_EUCALYPTUS.id(),
+		Blocks.LEAVES_SHRUB.id(),
+		Blocks.LEAVES_CHERRY.id(),
+		Blocks.LEAVES_CHERRY_FLOWERING.id(),
 	};
 
 	public EscapeRopeItem(String name, int id, int durability) {
-		super(name, id);
+		super(new NamespaceID(MOD_ID, name), id);
+		setKey(name);
 		this.maxStackSize = 1;
 		this.setMaxDamage(2 * durability - 1) ;
 	}
@@ -55,9 +60,9 @@ public class EscapeRopeItem extends Item {
 	}
 
 	// teleport player in singleplayer AND multiplayer without problems
-	private void teleport_safely(EntityPlayer entityPlayer, double x, double y, double z) {
-		if (entityPlayer instanceof EntityPlayerMP) {
-			EntityPlayerMP mp = (EntityPlayerMP) entityPlayer;
+	private void teleport_safely(Player entityPlayer, double x, double y, double z) {
+		if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
+			PlayerServer mp = (PlayerServer) entityPlayer;
 			mp.playerNetServerHandler.teleportAndRotate(x, y, z, 0F, 0F);
 		} else {
 			entityPlayer.absMoveTo(x, y, z, 0F, 0F);
@@ -65,14 +70,14 @@ public class EscapeRopeItem extends Item {
 	}
 
     @Override
-	public ItemStack onUseItem(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+	public ItemStack onUseItem(ItemStack itemstack, World world, Player entityplayer) {
 		if (world.isClientSide) {
 			return itemstack;
 		}
 		int y;
 		int rand_pos_offset = 50;
 
-		if (world.dimension != Dimension.overworld) {
+		if (world.dimension != Dimension.OVERWORLD) {
 			entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_nether");
 			return itemstack;
 		}
@@ -97,8 +102,7 @@ public class EscapeRopeItem extends Item {
 				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
 				entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_success");
 				// TODO: snap sound when rope breaks
-				world.playSoundAtEntity(entityplayer,entityplayer, MOD_ID +".rope_whoosh",1.0F,1.0F );
-
+				world.playSoundEffect(entityplayer, SoundCategory.WORLD_SOUNDS,entityplayer.x,entityplayer.y,entityplayer.z,MOD_ID + ":escape_rope.use",1.0f,1.0f);
 				itemstack.damageItem(2, entityplayer);
 				return itemstack;
 			}

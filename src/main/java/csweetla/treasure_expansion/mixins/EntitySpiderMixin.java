@@ -1,10 +1,11 @@
 package csweetla.treasure_expansion.mixins;
 
 import net.minecraft.core.entity.Entity;
-import net.minecraft.core.entity.monster.EntityMonster;
-import net.minecraft.core.entity.monster.EntitySpider;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.monster.MobMonster;
+import net.minecraft.core.entity.monster.MobSpider;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.player.inventory.container.ContainerInventory;
 import net.minecraft.core.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -13,16 +14,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import static csweetla.treasure_expansion.TreasureExpansion.itemSpiderSilk;
 
-@Mixin(value = EntitySpider.class, remap = false)
-public abstract class EntitySpiderMixin extends EntityMonster {
+@Mixin(value = MobSpider.class, remap = false)
+public abstract class EntitySpiderMixin extends MobMonster {
 	public EntitySpiderMixin(World world) {
 		super(world);
 	}
 
 	@Unique
-	private boolean spider_silk_equipped(EntityPlayer p) {
-		for(int i = 0; i < p.inventory.getSizeInventory(); ++i) {
-			ItemStack is = p.inventory.getStackInSlot(i);
+	private boolean spider_silk_equipped(Player p) {
+		for(int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
+			ItemStack is = p.inventory.mainInventory[i];
 			if (is != null && is.itemID == itemSpiderSilk.id) {
 				return true;
 			}
@@ -31,12 +32,12 @@ public abstract class EntitySpiderMixin extends EntityMonster {
 	}
 
 	// Make spider calculate the closest player taking into account spider charm
-	@Redirect(method = "findPlayerToAttack", at=@At(value = "INVOKE",target = "Lnet/minecraft/core/world/World;getClosestPlayerToEntity(Lnet/minecraft/core/entity/Entity;D)Lnet/minecraft/core/entity/player/EntityPlayer;"))
-	protected EntityPlayer findPlayerToAttack(World world, Entity entity, double radius) {
+	@Redirect(method = "findPlayerToAttack", at=@At(value = "INVOKE",target = "Lnet/minecraft/core/world/World;getClosestPlayerToEntity(Lnet/minecraft/core/entity/Entity;D)Lnet/minecraft/core/entity/player/Player;"))
+	protected Player findPlayerToAttack(World world, Entity entity, double radius) {
 		double closestDistance = -1.0;
-		EntityPlayer closest = null;
+		Player closest = null;
 		for (int i = 0; i < world.players.size(); ++i) {
-			EntityPlayer p = world.players.get(i);
+			Player p = world.players.get(i);
 			double currentDistance = p.distanceToSqr(entity.x, entity.y, entity.z);
 			// important part here
 			if (spider_silk_equipped(p))

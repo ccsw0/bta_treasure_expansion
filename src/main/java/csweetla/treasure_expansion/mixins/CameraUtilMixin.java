@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class CameraUtilMixin {
 	@Inject(method = "isUnderLiquid", at = @At("HEAD"), cancellable = true)
 	private static void isUnderLiquid(ICamera camera, World world, Material material, float partialTick, CallbackInfoReturnable<Boolean> cir) {
-		ItemStack chest_item = Minecraft.getMinecraft(Minecraft.class).thePlayer.inventory.armorItemInSlot(3);
-		if (chest_item != null && chest_item.getItem().id == TreasureExpansion.armorItemDivingHelmet.id) {
+		ItemStack head_item = Minecraft.getMinecraft().thePlayer.inventory.armorItemInSlot(3);
+		if (head_item != null && head_item.getItem().id == TreasureExpansion.armorItemDivingHelmet.id) {
 			cir.setReturnValue(false);
 		}
 	}

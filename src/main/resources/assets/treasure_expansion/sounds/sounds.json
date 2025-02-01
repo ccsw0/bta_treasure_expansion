@@ -1,0 +1,9 @@
+{
+  "escape_rope.use": {
+    "sounds": [
+      {
+        "name": "rope_whoosh.ogg"
+      }
+    ]
+  }
+}

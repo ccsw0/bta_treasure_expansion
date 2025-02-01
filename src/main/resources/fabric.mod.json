@@ -25,6 +25,9 @@
 		],
 		"recipesReady": [
 			"csweetla.treasure_expansion.TreasureExpansion"
+		],
+		"afterClientStart": [
+			"csweetla.treasure_expansion.TreasureExpansionClient"
 		]
 	},
 	"mixins": [

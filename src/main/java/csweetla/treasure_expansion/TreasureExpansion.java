@@ -6,18 +6,22 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.core.block.Block;
-import net.minecraft.core.block.BlockChest;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.client.render.block.model.BlockModelChest;
 import net.minecraft.core.data.registry.recipe.entry.RecipeEntryRepairable;
 import net.minecraft.core.data.registry.Registries;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
-import net.minecraft.core.item.ItemFood;
+import net.minecraft.core.entity.EntityLightning;
+import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.*;
 import net.minecraft.core.item.material.ToolMaterial;
-import net.minecraft.core.item.Item;
-import net.minecraft.core.item.ItemArmor;
 import net.minecraft.core.item.material.ArmorMaterial;
 
+import net.minecraft.core.player.gamemode.Gamemode;
+import net.minecraft.core.util.collection.NamespaceID;
+import net.minecraft.core.world.World;
+import net.minecraft.core.world.generate.feature.WorldFeatureLabyrinth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +30,7 @@ import turniplabs.halplibe.helper.*;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
 import java.util.Properties;
+import java.util.Random;
 
 import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
@@ -110,11 +115,11 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	private void initializeItems() {
 		armorItemPistonBoots = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/piston_boots")
-		    .build(new ItemArmor("piston_boots", config.getInt("ids.piston_boots"), armorMaterialPistonBoots, 3));
+		    .build(new ItemArmor("piston_boots", MOD_ID + ":piston_boots", config.getInt("ids.piston_boots"), armorMaterialPistonBoots, 0));
 
 		armorItemDivingHelmet = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/diving_helmet")
-		    .build(new ItemArmor("diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 0));
+		    .build(new ItemArmor("diving_helmet", MOD_ID + ":diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 3));
 
 		toolItemSilverSword = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/silver_sword")
@@ -132,33 +137,34 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		itemStrangeDevice = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/device")
     		.setStackSize(1)
-		    .build(new Item("strange_device", config.getInt("ids.strange_device")));
+		    .build(new Item("strange_device", MOD_ID + ":strange_device", config.getInt("ids.strange_device")));
 
 		itemLabyrinthGenerator = new ItemBuilder(MOD_ID)
 			.setIcon(MOD_ID + ":item/device")
 			.setStackSize(1)
-		    .build(new LabyrinthGeneratorItem("labyrinth_generator", config.getInt("ids.labyrinth_generator")));
+			.build(new LabyrinthGeneratorItem("labyrinth_generator", config.getInt("ids.labyrinth_generator")));
 
 		itemSpiderSilk = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/spider_silk")
 			.setStackSize(1)
-		    .build(new SpiderSilkItem("spider_silk", config.getInt("ids.spider_silk"), config.getInt("durability.spider_silk")));
+			.setMaxDamage(config.getInt("durability.spider_silk"))
+		    .build(new Item("spider_silk", MOD_ID + ":spider_silk", config.getInt("ids.spider_silk")));
 
 		foodItemOrange = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/orange")
-		    .build(new ItemFood("orange", config.getInt("ids.orange"), 4, 8, false, 8));
+		    .build(new ItemFood("orange", MOD_ID + ":orange", config.getInt("ids.orange"), 4, 8, false, 8));
 
 		foodItemGrapes = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/grapes")
-		    .build(new ItemFood("grapes", config.getInt("ids.grapes"), 4, 3, false, 16));
+		    .build(new ItemFood("grapes", MOD_ID + ":grapes", config.getInt("ids.grapes"), 4, 3, false, 16));
 
 		foodItemBananas = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/bananas")
-		    .build(new ItemFood("bananas", config.getInt("ids.bananas"), 4, 6, false, 8));
+		    .build(new ItemFood("bananas", MOD_ID + ":bananas", config.getInt("ids.bananas"), 4, 6, false, 8));
 
 		foodItemFruitSalad = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/fruit_salad")
-		    .build(new ItemFood("fruit_salad", config.getInt("ids.fruit_salad"), 20, 5, false, 8));
+		    .build(new ItemFood("fruit_salad", MOD_ID + ":fruit_salad", config.getInt("ids.fruit_salad"), 20, 5, false, 8));
 
 		itemLavaCharm = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/lava_charm")
@@ -173,33 +179,35 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 		itemFlippers = new ItemBuilder(MOD_ID)
 		    .setIcon(MOD_ID + ":item/flippers")
-		    .build(new ItemArmor("flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 3));
+		    .build(new ItemArmor("flippers", MOD_ID + ":flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 0));
 	}
 
 	private void initializeBlocks() {
-		Block blockCobbleChest = new BlockBuilder(MOD_ID)
-		    .setHardness(2.0f)
-	        .setResistance(10.0F)
-	        .addTags(BlockTags.MINEABLE_BY_PICKAXE)
-	        .setBlockModel(block -> new BlockModelChest(block, "treasure_expansion:block/dungeon_chest_cobble"))
-	        .build(new BlockChest("dungeon_chest.cobble", config.getInt("ids.chest"), Material.stone));
+//		Block blockCobbleChest = new BlockBuilder(MOD_ID)
+//		    .setHardness(2.0f)
+//	        .setResistance(10.0F)
+//	        .addTags(BlockTags.MINEABLE_BY_PICKAXE)
+//	        .setBlockModel(block -> new BlockModelChest(block, "treasure_expansion:block/dungeon_chest_cobble"))
+//			.build("dungeon_chest.cobble",config.getInt("ids.chest"))
+//		//.build(new BlockChest("dungeon_chest.cobble", config.getInt("ids.chest"), Material.stone));
 	}
 
 	@Override
 	public void onRecipesReady() {
 		RecipeBuilder.Shapeless(MOD_ID)
-			.addInput(Item.bowl)
-			.addInput(Item.foodApple)
-			.addInput(Item.foodCherry)
+			.addInput(Items.BOWL)
+			.addInput(Items.FOOD_APPLE)
+			.addInput(Items.FOOD_CHERRY)
 			.addInput(foodItemBananas)
 			.addInput(foodItemGrapes)
 			.addInput(foodItemOrange)
 			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
 
-		Registries.RECIPES.addCustomRecipe(
-		    "treasure_expansion:workbench/repair_piston_boots",
-		    new RecipeEntryRepairable(armorItemPistonBoots, Item.itemsList[Block.pistonBase.id])
-	    );
+//		Registries.RECIPES.addCustomRecipe(
+//		    "treasure_expansion:workbench/repair_piston_boots",
+//		    new RecipeEntryRepairable(armorItemPistonBoots, Item.itemsList[Blocks.PISTON_BASE.id()])
+//	    );
+
 //	    // BonusBlocks compat
 //	    if (ModVersionHelper.isModPresent("bonusblocks")) {
 //        	Registries.RECIPES.addCustomRecipe(

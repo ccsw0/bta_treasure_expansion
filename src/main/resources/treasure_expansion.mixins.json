@@ -4,21 +4,22 @@
   "package": "csweetla.treasure_expansion.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EntityLivingMixin",
     "EntityMixin",
-    "EntityPlayerMixin",
+    "PlayerMixin",
     "EntitySpiderMixin",
     "ItemBowMixin",
     "ItemEntityMixin",
+    "MobMixin",
+    "PlayerMixin",
     "SlotArmorMixin",
     "WorldFeatureLabyrinthMixin"
   ],
   "client": [
-    "GuiIngameMixin",
-    "GuiInventoryMixin",
-    "OxygenBarComponentMixin",
+    "CameraUtilMixin",
     "EntityRendererMixin",
-    "CameraUtilMixin"
+    "GuiIngameMixin",
+    "HudComponentOxygenBarMixin",
+    "ScreenInventoryMixin"
   ],
   "server": [],
   "injectors": {

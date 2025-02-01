@@ -182,7 +182,7 @@ public class LootTables {
 		in = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
 		if (in != null)
 			return in;
-		in = Minecraft.getMinecraft(Minecraft.class).getClass().getResourceAsStream(path);
+		in = Minecraft.getMinecraft().getClass().getResourceAsStream(path);
 		if (in != null)
 			return in;
 		throw new RuntimeException("File at '"+ path + "' is seriously hard to find!");

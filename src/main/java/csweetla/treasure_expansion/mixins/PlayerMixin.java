@@ -3,13 +3,12 @@ package csweetla.treasure_expansion.mixins;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.entity.Entity;
-import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.gamemode.Gamemode;
-import net.minecraft.core.player.inventory.InventoryPlayer;
+import net.minecraft.core.player.inventory.container.ContainerInventory;
 import net.minecraft.core.util.helper.DamageType;
 import net.minecraft.core.world.World;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 
 import csweetla.treasure_expansion.TreasureExpansion;
 
@@ -24,15 +23,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static csweetla.treasure_expansion.TreasureExpansion.*;
 
-@Mixin(value = net.minecraft.core.entity.player.EntityPlayer.class, remap = false)
-public abstract class EntityPlayerMixin extends net.minecraft.core.entity.EntityLiving {
+@Mixin(value = net.minecraft.core.entity.player.Player.class, remap = false)
+public abstract class PlayerMixin extends net.minecraft.core.entity.Mob {
 	@Shadow
-	public InventoryPlayer inventory;
+	public ContainerInventory inventory;
 
 	@Shadow
 	public Gamemode gamemode;
 
-	public EntityPlayerMixin(World world) {super(world);}
+	public PlayerMixin(World world) {super(world);}
 
 	@Unique
 	public boolean piston_boots_equipped()
@@ -51,13 +50,13 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 		if (piston_boots_equipped()) {
 			this.yd = 0.42 * 1.75;
 			if (this.gamemode == Gamemode.survival) {
-				EntityPlayer thisAs = ((EntityPlayer) (Object) this);
-				this.world.playSoundAtEntity(thisAs, thisAs, "tile.piston.out", 0.03F, world.rand.nextFloat() * 0.25F + 0.6F);
+				Player thisAs = ((Player) (Object) this);
+				this.world.playSoundAtEntity(thisAs, thisAs, "tile.piston.out", 0.1F, world.rand.nextFloat() * 0.25F + 0.6F);
 			}
 		}
 	}
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/core/entity/EntityLiving;causeFallDamage(F)V"), method = "causeFallDamage(F)V", cancellable = true)
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/core/entity/Mob;causeFallDamage(F)V"), method = "causeFallDamage(F)V", cancellable = true)
 	protected void causeFallDamage(float f, CallbackInfo ci) {
 		if (f < 6.3F && piston_boots_equipped()) {
 				ci.cancel();
@@ -73,8 +72,8 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 	}
 
 	// allow player to break blocks fast underwater when wearing a diving helmet
-	@Redirect(method ="getCurrentPlayerStrVsBlock",at=@At(value = "INVOKE",target = "Lnet/minecraft/core/entity/player/EntityPlayer;isUnderLiquid(Lnet/minecraft/core/block/material/Material;)Z"))
-	boolean getCurrentPlayerStrVsBlock(EntityPlayer instance, Material material) {
+	@Redirect(method ="getCurrentPlayerStrVsBlock",at=@At(value = "INVOKE",target = "Lnet/minecraft/core/entity/player/Player;isUnderLiquid(Lnet/minecraft/core/block/material/Material;)Z"))
+	boolean getCurrentPlayerStrVsBlock(Player instance, Material material) {
 		boolean ret = isUnderLiquid(material);
 		if (ret && diving_helmet_equipped())
 			return false;
@@ -85,8 +84,8 @@ public abstract class EntityPlayerMixin extends net.minecraft.core.entity.Entity
 	@Inject(method="hurt",at=@At("HEAD"), cancellable = true)
 	public void hurt1(Entity attacker, int damage, DamageType type, CallbackInfoReturnable<Boolean> cir) {
 		if(type == DamageType.FIRE) {
-			for(int i = 0; i < this.inventory.getSizeInventory(); ++i) {
-				ItemStack is = this.inventory.getStackInSlot(i);
+			for(int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
+				ItemStack is = this.inventory.mainInventory[i];
 				if (is != null && is.itemID == itemLavaCharm.id && is.getMetadata() < is.getMaxDamage()) {
 						cir.setReturnValue(false);
 						break;

@@ -3,3 +3,4 @@ accessible field net/minecraft/core/item/Item itemRand Ljava/util/Random;
 accessible field net/minecraft/client/render/entity/EntityRenderer renderDispatcher Lnet/minecraft/client/render/EntityRenderDispatcher;
 accessible field net/minecraft/core/entity/Entity wasInWater Z
 accessible field net/minecraft/core/entity/Entity fireImmune Z
+accessible field net/minecraft/core/player/inventory/slot/SlotArmor armorType I

@@ -46,7 +46,7 @@ item.treasure_expansion.fruit_salad.desc=Yummy yummy!
 message.treasure_expansion.escape_rope.use_nether=Escape Rope will only work in the Overworld!
 message.treasure_expansion.escape_rope.use_surface=Try to use the Escape Rope Underground!
 message.treasure_expansion.escape_rope.use_success=Escaped unscathed!
-message.treasure_expansion.escape_rope.use_failure=No escape route found!
+message.treasure_expansion.escape_rope.use_failure=No escape route was found!
 
 tile.treasure_expansion.dungeon_chest.cobble.name=Dungeon Chest
 tile.treasure_expansion.dungeon_chest.cobble.desc=A rocky chest from a dungeon.

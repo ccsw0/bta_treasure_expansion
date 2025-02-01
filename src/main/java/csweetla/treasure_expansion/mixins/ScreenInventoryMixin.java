@@ -1,12 +1,10 @@
 package csweetla.treasure_expansion.mixins;
 
-
 import net.minecraft.client.entity.player.PlayerLocal;
-import net.minecraft.client.gui.hud.HudIngame;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.container.ScreenInventory;
 import net.minecraft.core.item.ItemStack;
-
 import net.minecraft.core.player.gamemode.Gamemode;
+
 import net.minecraft.core.player.inventory.container.ContainerInventory;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,17 +12,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import static csweetla.treasure_expansion.TreasureExpansion.itemStrangeDevice;
 
-@Mixin(value = HudIngame.class, remap = false)
-public abstract class GuiIngameMixin extends Gui {
-
-	// lie about gamemode when the player has a strange device to allow information overlays
-	@Redirect(method = "renderGameOverlay", at=@At(value = "INVOKE", target="Lnet/minecraft/client/entity/player/PlayerLocal;getGamemode()Lnet/minecraft/core/player/gamemode/Gamemode;", ordinal = 0 ))
-	public Gamemode updateOverlayButtons2(PlayerLocal entity_player) {
-		Gamemode g = entity_player.getGamemode();
+@Mixin(value = ScreenInventory.class, remap = false)
+public abstract class ScreenInventoryMixin {
+	// display buttons to toggle informational overlays when player has a strange device
+	@Redirect(method = "updateOverlayButtons", at=@At(value = "INVOKE", target="Lnet/minecraft/client/entity/player/PlayerLocal;getGamemode()Lnet/minecraft/core/player/gamemode/Gamemode;"))
+	public Gamemode updateOverlayButtons(PlayerLocal instance) {
+		Gamemode g = instance.getGamemode();
 
 		if (g == Gamemode.survival) {
 			for(int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
-				ItemStack is = entity_player.inventory.mainInventory[i];
+				ItemStack is = instance.inventory.mainInventory[i];
 				if (is != null && is.itemID == itemStrangeDevice.id) {
 					return Gamemode.creative;
 				}
@@ -32,5 +29,4 @@ public abstract class GuiIngameMixin extends Gui {
 		}
 		return g;
 	}
-
 }

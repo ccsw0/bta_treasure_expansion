@@ -9,8 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static csweetla.treasure_expansion.TreasureExpansion.armorItemDivingHelmet;
 
-@Mixin(value = net.minecraft.client.gui.hud.OxygenBarComponent.class, remap = false)
-public class OxygenBarComponentMixin {
+@Mixin(value = net.minecraft.client.gui.hud.component.HudComponentOxygenBar.class, remap = false)
+public class HudComponentOxygenBarMixin {
 	// don't draw oxygen bar when player wears a diving helmet
 	@Inject(method = "isVisible",at = @At("HEAD"), cancellable = true)
 	void isVisible(Minecraft mc, CallbackInfoReturnable<Boolean> cir) {
