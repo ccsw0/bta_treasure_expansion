@@ -4,6 +4,7 @@ import csweetla.treasure_expansion.item.FireQuiverItemModel;
 import net.minecraft.client.render.EntityRenderDispatcher;
 import net.minecraft.client.render.TileEntityRenderDispatcher;
 import net.minecraft.client.render.block.color.BlockColorDispatcher;
+import net.minecraft.client.render.block.model.BlockModelChest;
 import net.minecraft.client.render.block.model.BlockModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelStandard;
@@ -17,7 +18,11 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 
 	@Override
 	public void initBlockModels(BlockModelDispatcher dispatcher) {
-
+		ModelHelper.setBlockModel(blockCobbleChest, () -> {
+			BlockModelChest<?> bmc = (BlockModelChest<?>) new BlockModelChest<>(blockCobbleChest, MOD_ID + ":block/dungeon_chest/cobble/");
+			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/cobble/top");
+			return bmc;
+		});
 	}
 
 	@Override
@@ -123,7 +128,6 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 
 	@Override
 	public void initTileEntityModels(TileEntityRenderDispatcher dispatcher) {
-
 	}
 
 	@Override

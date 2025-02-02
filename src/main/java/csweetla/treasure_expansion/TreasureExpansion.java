@@ -7,23 +7,27 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.render.EntityRenderDispatcher;
 import net.minecraft.client.render.TileEntityRenderDispatcher;
 import net.minecraft.client.render.block.color.BlockColorDispatcher;
+import net.minecraft.client.render.block.model.BlockModelChest;
 import net.minecraft.client.render.block.model.BlockModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.client.render.item.model.ItemModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.client.render.texture.stitcher.TextureRegistry;
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.BlockLogic;
+import net.minecraft.core.block.BlockLogicChest;
+import net.minecraft.core.block.material.Material;
+import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.item.*;
 import net.minecraft.core.item.material.ToolMaterial;
 import net.minecraft.core.item.material.ArmorMaterial;
 
-import net.minecraft.core.util.collection.NamespaceID;
+import net.minecraft.core.sound.BlockSounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.helper.*;
-import turniplabs.halplibe.util.ModelEntrypoint;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
 import java.util.Properties;
@@ -99,7 +103,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	public static Item itemFireQuiver;
 	public static Item itemFlippers;
 
-	public static Block blockCobbleChest;
+	public static Block<BlockLogic> blockCobbleChest;
 
 
 	private void initializeArmorMaterials() {
@@ -162,13 +166,12 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	}
 
 	private void initializeBlocks() {
-//		Block blockCobbleChest = new BlockBuilder(MOD_ID)
-//		    .setHardness(2.0f)
-//	        .setResistance(10.0F)
-//	        .addTags(BlockTags.MINEABLE_BY_PICKAXE)
-//	        .setBlockModel(block -> new BlockModelChest(block, "treasure_expansion:block/dungeon_chest_cobble"))
-//			.build("dungeon_chest.cobble",config.getInt("ids.chest"))
-//		//.build(new BlockChest("dungeon_chest.cobble", config.getInt("ids.chest"), Material.stone));
+		blockCobbleChest = new BlockBuilder(MOD_ID)
+			.setHardness(2.0f)
+	        .setResistance(10.0F)
+			.setBlockSound(BlockSounds.STONE)
+	        .addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
+			.build("dungeon_chest.cobble","dungeon_chest_cobble",config.getInt("ids.chest"), b -> new BlockLogicChest(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
 	}
 
 	@Override
