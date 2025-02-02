@@ -21,13 +21,16 @@
 			"csweetla.treasure_expansion.TreasureExpansion"
     ],
 		"client": [
-			"csweetla.treasure_expansion.TreasureExpansionClient"
+			"csweetla.treasure_expansion.TreasureExpansionClientEntrypoint"
 		],
 		"recipesReady": [
 			"csweetla.treasure_expansion.TreasureExpansion"
 		],
+		"initModels": [
+			"csweetla.treasure_expansion.TreasureExpansionModelEntrypoint"
+		],
 		"afterClientStart": [
-			"csweetla.treasure_expansion.TreasureExpansionClient"
+			"csweetla.treasure_expansion.TreasureExpansionClientEntrypoint"
 		]
 	},
 	"mixins": [
