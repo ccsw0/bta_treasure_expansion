@@ -23,6 +23,18 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/cobble/top");
 			return bmc;
 		});
+
+		ModelHelper.setBlockModel(blockSandstoneChest, () -> {
+			BlockModelChest<?> bmc = (BlockModelChest<?>) new BlockModelChest<>(blockSandstoneChest, MOD_ID + ":block/dungeon_chest/sandstone/");
+			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/sandstone/top");
+			return bmc;
+		});
+
+		ModelHelper.setBlockModel(blockIceChest, () -> {
+			BlockModelChest<?> bmc = (BlockModelChest<?>) new BlockModelChest<>(blockIceChest, MOD_ID + ":block/dungeon_chest/frost/");
+			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/frost/top");
+			return bmc;
+		});
 	}
 
 	@Override

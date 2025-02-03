@@ -4,15 +4,6 @@ import csweetla.treasure_expansion.item.*;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.client.render.EntityRenderDispatcher;
-import net.minecraft.client.render.TileEntityRenderDispatcher;
-import net.minecraft.client.render.block.color.BlockColorDispatcher;
-import net.minecraft.client.render.block.model.BlockModelChest;
-import net.minecraft.client.render.block.model.BlockModelDispatcher;
-import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.client.render.item.model.ItemModelDispatcher;
-import net.minecraft.client.render.item.model.ItemModelStandard;
-import net.minecraft.client.render.texture.stitcher.TextureRegistry;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
@@ -34,8 +25,6 @@ import java.util.Properties;
 
 import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
-
-//import luke.bonusblocks.item.BonusItems;
 
 @SuppressWarnings({"unused"})
 public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
@@ -104,6 +93,9 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	public static Item itemFlippers;
 
 	public static Block<BlockLogic> blockCobbleChest;
+	public static Block<BlockLogic> blockSandstoneChest;
+	public static Block<BlockLogic> blockIceChest;
+
 
 
 	private void initializeArmorMaterials() {
@@ -172,6 +164,21 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.setBlockSound(BlockSounds.STONE)
 	        .addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
 			.build("dungeon_chest.cobble","dungeon_chest_cobble",config.getInt("ids.chest"), b -> new BlockLogicChest(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
+
+		blockSandstoneChest = new BlockBuilder(MOD_ID)
+			.setHardness(2.0f)
+			.setResistance(10.0F)
+			.setBlockSound(BlockSounds.STONE)
+			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
+			.build("dungeon_chest.sandstone","dungeon_chest_sandstone",config.getInt("ids.chest") + 1, b -> new BlockLogicChest(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
+
+		blockIceChest = new BlockBuilder(MOD_ID)
+			.setHardness(2.0f)
+			.setResistance(10.0F)
+			.setBlockSound(BlockSounds.STONE)
+			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
+			.build("dungeon_chest.frost","dungeon_chest_frost",config.getInt("ids.chest") + 2, b -> new BlockLogicChest(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
+
 	}
 
 	@Override
@@ -184,23 +191,6 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.addInput(foodItemGrapes)
 			.addInput(foodItemOrange)
 			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
-
-//		Registries.RECIPES.addCustomRecipe(
-//		    "treasure_expansion:workbench/repair_piston_boots",
-//		    new RecipeEntryRepairable(armorItemPistonBoots, Item.itemsList[Blocks.PISTON_BASE.id()])
-//	    );
-
-//	    // BonusBlocks compat
-//	    if (ModVersionHelper.isModPresent("bonusblocks")) {
-//        	Registries.RECIPES.addCustomRecipe(
-//        	    "treasure_expansion:workbench/repair_helm",
-//        	    new RecipeEntryRepairable(armorItemDivingHelmet, BonusItems.ingotCopper)
-//            );
-//        	Registries.RECIPES.addCustomRecipe(
-//        	    "treasure_expansion:workbench/repair_silver_sword",
-//        	    new RecipeEntryRepairable(toolItemSilverSword, BonusItems.ingotSilver)
-//            );
-//	    }
 	}
 
 	@Override

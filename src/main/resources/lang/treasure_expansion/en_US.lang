@@ -48,5 +48,11 @@ message.treasure_expansion.escape_rope.use_surface=Try to use the Escape Rope Un
 message.treasure_expansion.escape_rope.use_success=Escaped unscathed!
 message.treasure_expansion.escape_rope.use_failure=No escape route was found!
 
-tile.treasure_expansion.dungeon_chest.cobble.name=Dungeon Chest
+tile.treasure_expansion.dungeon_chest.cobble.name=Cobblestone Dungeon Chest
 tile.treasure_expansion.dungeon_chest.cobble.desc=A rocky chest from a dungeon.
+
+tile.treasure_expansion.dungeon_chest.sandstone.name=Sand Dungeon Chest
+tile.treasure_expansion.dungeon_chest.sandstone.desc=A sandy chest from a dungeon.
+
+tile.treasure_expansion.dungeon_chest.frost.name=Ice Dungeon Chest
+tile.treasure_expansion.dungeon_chest.frost.desc=An icy chest from a dungeon.
