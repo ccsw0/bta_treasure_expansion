@@ -1,5 +1,7 @@
 package csweetla.treasure_expansion.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import csweetla.treasure_expansion.LootTables;
 import csweetla.treasure_expansion.TreasureExpansion;
 
@@ -89,8 +91,32 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	@Inject(method = "pickCheckLootItem", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void pickCheckLootItem1(Random random, CallbackInfoReturnable<ItemStack> cir) {
 	    ItemStack ret = cir.getReturnValue();
-	    if (ret != null && ret.getItem() == Items.FOOD_APPLE) {
+	    if (ret != null && ret.getItem().equals(Items.FOOD_APPLE)) {
             cir.setReturnValue(new ItemStack(this.fruit_item));
         }
+	}
+
+	@WrapOperation(method = "generateDungeon", at = @At(value="INVOKE", target = "Lnet/minecraft/core/world/World;setBlockWithNotify(IIII)Z"))
+	private boolean generateDungeon1(World instance, int x, int y, int z, int id, Operation<Boolean> original) {
+		if (id != Blocks.CHEST_PLANKS_OAK.id())
+			return original.call(instance,x,y,z,id);
+
+		int chest_id;
+		if (this.isCold) {
+			chest_id = blockIceChest.id();
+		} else if (this.wallBlockA == Blocks.SANDSTONE.id()) {
+			chest_id = blockSandstoneChest.id();
+		} else {
+			chest_id = blockCobbleChest.id();
+		}
+
+		return instance.setBlockWithNotify(x,y,z,chest_id);
+	}
+
+	@Inject(method = "canReplace", at= @At(value = "HEAD"), cancellable = true)
+	private void canReplace(World world, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
+		int id = world.getBlockId(x,y,z);
+		if (id == blockCobbleChest.id() || id == blockIceChest.id() || id == blockSandstoneChest.id())
+			cir.setReturnValue(false);
 	}
 }
