@@ -7,6 +7,7 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
@@ -171,26 +172,26 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		public ItemStack[] getBreakResult(World world, EnumDropCause dropCause, int meta, TileEntity tileEntity) {
 			return new ItemStack[]{new ItemStack(this.block)};
 		}
-	};
+	}
 
 	private void initializeBlocks() {
 		blockCobbleChest = new BlockBuilder(MOD_ID)
-			.setHardness(2.0f)
-	        .setResistance(3.0F)
+			.setHardness(Blocks.COBBLE_STONE.getHardness())
+	        .setResistance(Blocks.COBBLE_STONE.blastResistance / 3.0f)
 			.setBlockSound(BlockSounds.STONE)
 	        .addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
 			.build("dungeon_chest.cobble","dungeon_chest_cobble",config.getInt("ids.chest"), b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
 
 		blockSandstoneChest = new BlockBuilder(MOD_ID)
-			.setHardness(0.6f)
-			.setResistance(2.0F)
+			.setHardness(Blocks.SAND.getHardness())
+			.setResistance(Blocks.SAND.blastResistance / 3.0f)
 			.setBlockSound(BlockSounds.SAND)
 			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_SHOVEL)
 			.build("dungeon_chest.sandstone","dungeon_chest_sandstone",config.getInt("ids.chest") + 1, b -> new BlockLogicChestDoesntNeedProperTool(b, Material.sand)).withDisabledNeighborNotifyOnMetadataChange();
 
 		blockIceChest = new BlockBuilder(MOD_ID)
-			.setHardness(1.2f)
-			.setResistance(2.5F)
+			.setHardness(Blocks.PERMAFROST.getHardness())
+			.setResistance(Blocks.PERMAFROST.blastResistance / 3.0f)
 			.setBlockSound(BlockSounds.GLASS)
 			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
 			.build("dungeon_chest.frost","dungeon_chest_frost",config.getInt("ids.chest") + 2, b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();

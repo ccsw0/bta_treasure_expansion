@@ -31,7 +31,9 @@ public abstract class EntitySpiderMixin extends MobMonster {
 		return false;
 	}
 
-	// Make spider calculate the closest player taking into account spider charm
+	/**
+	 *  For spiders, treat players holding a spider silk as physically further away when looking for a target
+	 */
 	@Redirect(method = "findPlayerToAttack", at=@At(value = "INVOKE",target = "Lnet/minecraft/core/world/World;getClosestPlayerToEntity(Lnet/minecraft/core/entity/Entity;D)Lnet/minecraft/core/entity/player/Player;"))
 	protected Player findPlayerToAttack(World world, Entity entity, double radius) {
 		double closestDistance = -1.0;

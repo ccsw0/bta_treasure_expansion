@@ -20,6 +20,9 @@ public class EntityMixin {
 		return player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].itemID == TreasureExpansion.armorItemPistonBoots.id;
 	}
 
+	/**
+	 * If we have piston boots, our step size ("foot size") increases so we can step up full blocks
+	 */
 	@Inject(method = "move", at=@At("HEAD"))
 	public void move_head(double xd, double yd, double zd, CallbackInfo ci) {
 		Entity thisAs = (Entity) (Object) this;
@@ -28,6 +31,9 @@ public class EntityMixin {
 		}
 	}
 
+	/**
+	 * return foot size to normal
+	 */
 	@Inject(method = "move", at=@At("TAIL"))
 	public void move_tail(double xd, double yd, double zd, CallbackInfo ci) {
 		Entity thisAs = (Entity) (Object) this;
@@ -36,6 +42,9 @@ public class EntityMixin {
 		}
 	}
 
+	/**
+	 * Swim faster if we have the flippers item
+	 */
 	@ModifyVariable(method = "moveRelative", at = @At("HEAD"), ordinal = 2, argsOnly = true)
 	public float move_relative(float f2) {
 		Entity thisAs = (Entity) (Object) this;

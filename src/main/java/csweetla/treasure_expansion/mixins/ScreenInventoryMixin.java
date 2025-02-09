@@ -14,7 +14,9 @@ import static csweetla.treasure_expansion.TreasureExpansion.itemStrangeDevice;
 
 @Mixin(value = ScreenInventory.class, remap = false)
 public abstract class ScreenInventoryMixin {
-	// display buttons to toggle informational overlays when player has a strange device
+	/**
+	 * display buttons to toggle informational overlays when player has a strange device
+	 */
 	@Redirect(method = "updateOverlayButtons", at=@At(value = "INVOKE", target="Lnet/minecraft/client/entity/player/PlayerLocal;getGamemode()Lnet/minecraft/core/player/gamemode/Gamemode;"))
 	public Gamemode updateOverlayButtons(PlayerLocal instance) {
 		Gamemode g = instance.getGamemode();

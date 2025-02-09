@@ -10,13 +10,15 @@ import net.minecraft.core.world.World;
 import net.minecraft.core.item.ItemStack;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = CameraUtil.class, remap = false)
 public class CameraUtilMixin {
+	/**
+	 * Disable the "water overlay" when underwater and wearing a diving helmet, for greater underwater visibility
+	 */
 	@Inject(method = "isUnderLiquid", at = @At("HEAD"), cancellable = true)
 	private static void isUnderLiquid(ICamera camera, World world, Material material, float partialTick, CallbackInfoReturnable<Boolean> cir) {
 		ItemStack head_item = Minecraft.getMinecraft().thePlayer.inventory.armorItemInSlot(3);

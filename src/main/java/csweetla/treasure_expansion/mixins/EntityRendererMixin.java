@@ -3,7 +3,6 @@ package csweetla.treasure_expansion.mixins;
 import csweetla.treasure_expansion.item.FireQuiverItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.EntityRenderDispatcher;
-import net.minecraft.client.render.Renderer;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.core.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,6 +22,9 @@ public class EntityRendererMixin {
 	@Unique
 	String fire_quiver_full_texture_path = "/assets/treasure_expansion/textures/armor/fire_quiver_1.png";
 
+	/**
+	 * Render the player with the fire quiver on their back when equipped
+	 */
 	@Inject(method = "bindTexture", at = @At("HEAD"), cancellable = true)
 	protected void loadTexture(String texturePath, CallbackInfo ci) {
 		if (texturePath.equals(quiver_full_texture_path)) {

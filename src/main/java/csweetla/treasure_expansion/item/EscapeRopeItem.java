@@ -43,7 +43,7 @@ public class EscapeRopeItem extends Item {
 	};
 
 	public EscapeRopeItem(String name, int id, int durability) {
-		super(new NamespaceID(MOD_ID, name), id);
+		super(NamespaceID.getPermanent(MOD_ID,name), id);
 		setKey(name);
 		this.maxStackSize = 1;
 		this.setMaxDamage(2 * durability - 1) ;

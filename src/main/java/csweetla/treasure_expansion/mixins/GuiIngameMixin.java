@@ -17,7 +17,9 @@ import static csweetla.treasure_expansion.TreasureExpansion.itemStrangeDevice;
 @Mixin(value = HudIngame.class, remap = false)
 public abstract class GuiIngameMixin extends Gui {
 
-	// lie about gamemode when the player has a strange device to allow information overlays
+	/**
+	 * Allow information overlays when holding the alien device (by 'lying' about our gamemode)
+	 */
 	@Redirect(method = "renderGameOverlay", at=@At(value = "INVOKE", target="Lnet/minecraft/client/entity/player/PlayerLocal;getGamemode()Lnet/minecraft/core/player/gamemode/Gamemode;", ordinal = 0 ))
 	public Gamemode updateOverlayButtons2(PlayerLocal entity_player) {
 		Gamemode g = entity_player.getGamemode();

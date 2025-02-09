@@ -68,14 +68,19 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 //		TreasureExpansion.LOGGER.info("Generated minor treasure: " + ret);
 		return ret;
 	}
-	// pick a random fruit item to generate in the labyrinth
+	/**
+	 * pick a random fruit item to generate in the labyrinth (if feature enabled) & decide if a minor treasure item
+	 * will be generated, based on the chance in the config file
+	 */
 	@Inject(method = "place",at = @At("HEAD"))
 	void generate(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
 		this.fruit_item = mod_fruit_enabled ? random_fruit_item(random) : Items.FOOD_APPLE;
 		this.generate_minor_treasure = minor_treasure_enabled && random.nextInt(minor_treasure_rarity) == 0;
 	}
 
-	// generate major and minor treasures
+	/**
+	 * generate major and minor treasures  (once per labyrinth)
+	 */
 	@Inject(method = "pickCheckLootItem", at = @At("HEAD"), cancellable = true)
 	private void pickCheckLootItem(Random random, CallbackInfoReturnable<ItemStack> cir) {
 		if (!this.treasureGenerated && this.dungeonSize > 7) {
@@ -87,7 +92,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		}
 	}
 
-	// return our chosen fruit rather than apples
+	/**
+	 * return our chosen fruit rather than apples
+	 */
 	@Inject(method = "pickCheckLootItem", at = @At(value = "RETURN", ordinal = 1), cancellable = true)
 	private void pickCheckLootItem1(Random random, CallbackInfoReturnable<ItemStack> cir) {
 	    ItemStack ret = cir.getReturnValue();
@@ -96,6 +103,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
         }
 	}
 
+	/**
+	 * Use mod chests (based on type of labyrinth) instead of the regular oak chest
+	 */
 	@WrapOperation(method = "generateDungeon", at = @At(value="INVOKE", target = "Lnet/minecraft/core/world/World;setBlockWithNotify(IIII)Z"))
 	private boolean generateDungeon1(World instance, int x, int y, int z, int id, Operation<Boolean> original) {
 		if (id != Blocks.CHEST_PLANKS_OAK.id())
@@ -113,6 +123,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 		return instance.setBlockWithNotify(x,y,z,chest_id);
 	}
 
+	/**
+	 * Don't allow the mod chests to be replaced when generating the structure
+	 */
 	@Inject(method = "canReplace", at= @At(value = "HEAD"), cancellable = true)
 	private void canReplace(World world, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
 		int id = world.getBlockId(x,y,z);

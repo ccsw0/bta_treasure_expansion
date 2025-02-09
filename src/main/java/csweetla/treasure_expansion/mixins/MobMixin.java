@@ -39,7 +39,9 @@ public abstract class MobMixin extends Entity {
 		return -1;
 	}
 
-	// allow climbing when spider charm is equipped
+	/**
+	 * Allow players to climb when they have the spider silk in their inventory
+	 */
 	@Inject(method="canClimb", at = @At("HEAD"), cancellable = true)
 	public void canClimb(CallbackInfoReturnable<Boolean> cir) {
 		Mob t = (Mob) (Object) this;
