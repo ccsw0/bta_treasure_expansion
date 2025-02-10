@@ -2,8 +2,11 @@ package csweetla.treasure_expansion;
 
 import csweetla.treasure_expansion.item.*;
 
+import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.client.gui.guidebook.crafting.RecipePageCrafting;
+import net.minecraft.client.gui.guidebook.crafting.displays.DisplayAdapterShapeless;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
@@ -11,6 +14,9 @@ import net.minecraft.core.block.Blocks;
 import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
+import net.minecraft.core.data.registry.Registries;
+import net.minecraft.core.data.registry.recipe.RecipeSymbol;
+import net.minecraft.core.data.registry.recipe.entry.RecipeEntryRepairable;
 import net.minecraft.core.enums.EnumDropCause;
 import net.minecraft.core.item.*;
 import net.minecraft.core.item.material.ToolMaterial;
@@ -26,7 +32,7 @@ import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.helper.*;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
-import java.util.Properties;
+import java.util.*;
 
 import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
@@ -59,7 +65,11 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		prop.setProperty("ids.spider_silk", "32212");
 		prop.setProperty("ids.fire_quiver", "32213");
 		prop.setProperty("ids.flippers", "32214");
-		prop.setProperty("ids.chest", "1930");
+		prop.setProperty("ids.treasure_scrap", "32215");
+
+		prop.setProperty("ids.chest_cobble", "1930");
+		prop.setProperty("ids.chest_sand", "1931");
+		prop.setProperty("ids.chest_frost", "1932");
 		prop.setProperty("loot.use_custom_tables", "false");
 		prop.setProperty("loot.mod_fruit_enabled", "true");
 		prop.setProperty("loot.minor_treasure_enabled", "true");
@@ -96,6 +106,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	public static Item itemSpiderSilk;
 	public static Item itemFireQuiver;
 	public static Item itemFlippers;
+	public static Item itemTreasureScrap;
 
 	public static Block<BlockLogic> blockCobbleChest;
 	public static Block<BlockLogic> blockSandstoneChest;
@@ -104,9 +115,9 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 
 	private void initializeArmorMaterials() {
-		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial(MOD_ID, "piston_boots", config.getInt("durability.diving_helmet"), 50.0F, 50.0F, 20.0F, 120.0F);
+		armorMaterialPistonBoots = ArmorHelper.createArmorMaterial(MOD_ID, "piston_boots", config.getInt("durability.piston_boots"), 50.0F, 50.0F, 20.0F, 120.0F);
 		armorMaterialDiving      = ArmorHelper.createArmorMaterial(MOD_ID, "diving", config.getInt("durability.diving_helmet"), 20.0F, 60.0F, 20.0F, 20.0F);
-		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", config.getInt("durability.flippers"), 0.0F, 0.0F, 0.0F, 0.0F);
+		armorMaterialFlippers    = ArmorHelper.createArmorMaterial(MOD_ID, "flippers", config.getInt("durability.flippers"), 0.0F, 0.0F, 0.0F, 100.0F);
 	}
 
 	private void initializeItems() {
@@ -160,6 +171,9 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 
 		itemFlippers = new ItemBuilder(MOD_ID)
 		    .build(new ItemArmor("flippers", MOD_ID + ":flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 0));
+
+		itemTreasureScrap = new ItemBuilder(MOD_ID)
+			.build(new Item("treasure_scrap", MOD_ID + ":treasure_scrap", config.getInt("ids.treasure_scrap")));
 	}
 
 	private static class BlockLogicChestDoesntNeedProperTool extends BlockLogicChest {
@@ -180,21 +194,21 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	        .setResistance(Blocks.COBBLE_STONE.blastResistance / 3.0f)
 			.setBlockSound(BlockSounds.STONE)
 	        .addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
-			.build("dungeon_chest.cobble","dungeon_chest_cobble",config.getInt("ids.chest"), b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
+			.build("dungeon_chest.cobble","dungeon_chest_cobble",config.getInt("ids.chest_cobble"), b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
 
 		blockSandstoneChest = new BlockBuilder(MOD_ID)
 			.setHardness(Blocks.SAND.getHardness())
 			.setResistance(Blocks.SAND.blastResistance / 3.0f)
 			.setBlockSound(BlockSounds.SAND)
 			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_SHOVEL)
-			.build("dungeon_chest.sandstone","dungeon_chest_sandstone",config.getInt("ids.chest") + 1, b -> new BlockLogicChestDoesntNeedProperTool(b, Material.sand)).withDisabledNeighborNotifyOnMetadataChange();
+			.build("dungeon_chest.sandstone","dungeon_chest_sandstone",config.getInt("ids.chest_sand"), b -> new BlockLogicChestDoesntNeedProperTool(b, Material.sand)).withDisabledNeighborNotifyOnMetadataChange();
 
 		blockIceChest = new BlockBuilder(MOD_ID)
 			.setHardness(Blocks.PERMAFROST.getHardness())
 			.setResistance(Blocks.PERMAFROST.blastResistance / 3.0f)
 			.setBlockSound(BlockSounds.GLASS)
 			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
-			.build("dungeon_chest.frost","dungeon_chest_frost",config.getInt("ids.chest") + 2, b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
+			.build("dungeon_chest.frost","dungeon_chest_frost",config.getInt("ids.chest_frost") + 2, b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
 
 	}
 
@@ -208,16 +222,65 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.addInput(foodItemGrapes)
 			.addInput(foodItemOrange)
 			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
+
+		Registries.RECIPES.addCustomRecipe(
+			MOD_ID + ":workbench/repair_silver_sword",
+			new RecipeEntryRepairable(toolItemSilverSword.getDefaultStack(),new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
+		);
+
+		Registries.RECIPES.addCustomRecipe(
+			MOD_ID + ":workbench/repair_piston_boots",
+			new RecipeEntryRepairable(armorItemPistonBoots.getDefaultStack(),new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
+		);
+
+		Registries.RECIPES.addCustomRecipe(
+			MOD_ID + ":workbench/repair_diving_helmet",
+			new RecipeEntryRepairable(armorItemDivingHelmet.getDefaultStack(),new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
+		);
+
+		Registries.RECIPES.addCustomRecipe(
+			MOD_ID + ":workbench/repair_flippers",
+			new RecipeEntryRepairable(itemFlippers.getDefaultStack(),new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
+		);
+
+		Registries.RECIPE_TYPES.register(MOD_ID + ":crafting/treasure_scrap", RecipeEntryTreasureScrap.class);
+		RecipePageCrafting.recipeToDisplayAdapterMap.put(RecipeEntryTreasureScrap.class, new DisplayAdapterShapeless() );
+
+		Map<Item,Integer> scrap_items = new HashMap<>();
+
+		scrap_items.put(itemFireQuiver,6);
+		scrap_items.put(Items.ARMOR_QUIVER_GOLD, 6);
+		scrap_items.put(armorItemPistonBoots, 6);
+		scrap_items.put(armorItemDivingHelmet, 6);
+		scrap_items.put(itemStrangeDevice, 6);
+		scrap_items.put(itemEscapeRopeGold, 6);
+		scrap_items.put(itemLavaCharm, 6);
+		scrap_items.put(itemSpiderSilk, 6);
+
+		scrap_items.put(toolItemSilverSword, 3);
+		scrap_items.put(itemFlippers, 4);
+		scrap_items.put(itemEscapeRope, 2);
+
+
+		for (Map.Entry<Item, Integer> entry : scrap_items.entrySet()) {
+
+			// get key without prefixes and such
+			String item_name = entry.getKey().getKey()
+				.replace('.', '_')
+				.replaceFirst("^item_","")
+				.replaceFirst(MOD_ID + "_","");
+
+			Registries.RECIPES.addCustomRecipe(MOD_ID + ":workbench/scrap_" + item_name,
+				new RecipeEntryTreasureScrap(entry.getKey(),itemTreasureScrap,entry.getValue())
+			);
+		}
+
 	}
 
 	@Override
     public void initNamespaces() {
         RecipeBuilder.initNameSpace(MOD_ID);
     }
-
-
-
-
 
 	@Override
 	public void onInitialize() {

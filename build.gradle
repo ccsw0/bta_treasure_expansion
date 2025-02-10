@@ -20,7 +20,7 @@ switch (OperatingSystem.current()) {
 
 group = project.mod_group
 archivesBaseName = project.mod_name
-version = "${project.mod_version}_${project.bta_version}"
+version = "${project.mod_version}+BTA${project.bta_version.replaceAll('_','.')}"
 
 loom {
 	accessWidenerPath = file("src/main/resources/treasure_expansion.accesswidener")

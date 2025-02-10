@@ -43,6 +43,9 @@ item.treasure_expansion.bananas.desc=I go nuts for these.
 item.treasure_expansion.fruit_salad.name=Fruit Salad
 item.treasure_expansion.fruit_salad.desc=Yummy yummy!
 
+item.treasure_expansion.treasure_scrap.name=Treasure Scrap
+item.treasure_expansion.treasure_scrap.desc=A piece of an ancient treasure.
+
 message.treasure_expansion.escape_rope.use_nether=Escape Rope will only work in the Overworld!
 message.treasure_expansion.escape_rope.use_surface=Try to use the Escape Rope Underground!
 message.treasure_expansion.escape_rope.use_success=Escaped unscathed!

@@ -5,6 +5,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import csweetla.treasure_expansion.LootTables;
 import csweetla.treasure_expansion.TreasureExpansion;
 
+import net.minecraft.core.WeightedRandomBag;
+import net.minecraft.core.WeightedRandomLootObject;
 import net.minecraft.core.block.Blocks;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
@@ -35,6 +37,9 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 
 	@Shadow
 	int wallBlockA;
+
+	@Shadow
+	public WeightedRandomBag<WeightedRandomLootObject> chestLoot;
 
 	@Unique
 	Item fruit_item = Items.FOOD_APPLE;
@@ -76,6 +81,14 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 	void generate(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
 		this.fruit_item = mod_fruit_enabled ? random_fruit_item(random) : Items.FOOD_APPLE;
 		this.generate_minor_treasure = minor_treasure_enabled && random.nextInt(minor_treasure_rarity) == 0;
+	}
+
+	/**
+	 * Add treasure scrap to the labyrinth loot table
+	 */
+	@Inject(method = "place",at = @At(value = "INVOKE", target = "Lnet/minecraft/core/WeightedRandomBag;addEntry(Ljava/lang/Object;D)V",ordinal=0))
+	void addTreasureScrap(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
+		this.chestLoot.addEntry(new WeightedRandomLootObject(itemTreasureScrap.getDefaultStack(), 1, 6), 25.0);
 	}
 
 	/**

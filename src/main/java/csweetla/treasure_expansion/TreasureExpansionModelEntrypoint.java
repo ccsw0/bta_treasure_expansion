@@ -19,19 +19,19 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 	@Override
 	public void initBlockModels(BlockModelDispatcher dispatcher) {
 		ModelHelper.setBlockModel(blockCobbleChest, () -> {
-			BlockModelChest<?> bmc = (BlockModelChest<?>) new BlockModelChest<>(blockCobbleChest, MOD_ID + ":block/dungeon_chest/cobble/");
+			BlockModelChest<?> bmc = new BlockModelChest<>(blockCobbleChest, MOD_ID + ":block/dungeon_chest/cobble/");
 			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/cobble/top");
 			return bmc;
 		});
 
 		ModelHelper.setBlockModel(blockSandstoneChest, () -> {
-			BlockModelChest<?> bmc = (BlockModelChest<?>) new BlockModelChest<>(blockSandstoneChest, MOD_ID + ":block/dungeon_chest/sandstone/");
+			BlockModelChest<?> bmc = new BlockModelChest<>(blockSandstoneChest, MOD_ID + ":block/dungeon_chest/sandstone/");
 			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/sandstone/top");
 			return bmc;
 		});
 
 		ModelHelper.setBlockModel(blockIceChest, () -> {
-			BlockModelChest<?> bmc = (BlockModelChest<?>) new BlockModelChest<>(blockIceChest, MOD_ID + ":block/dungeon_chest/frost/");
+			BlockModelChest<?> bmc = new BlockModelChest<>(blockIceChest, MOD_ID + ":block/dungeon_chest/frost/");
 			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/frost/top");
 			return bmc;
 		});
@@ -128,6 +128,12 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 		ModelHelper.setItemModel(itemFlippers, () -> {
 			ItemModelStandard im = new ItemModelStandard(itemFlippers, MOD_ID);
 			im.icon = TextureRegistry.getTexture(NamespaceID.getPermanent(MOD_ID, "item/flippers"));
+			return im;
+		});
+
+		ModelHelper.setItemModel(itemTreasureScrap, () -> {
+			ItemModelStandard im = new ItemModelStandard(itemTreasureScrap, MOD_ID);
+			im.icon = TextureRegistry.getTexture(NamespaceID.getPermanent(MOD_ID, "item/treasure_scrap"));
 			return im;
 		});
 
