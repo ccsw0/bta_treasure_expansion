@@ -31,6 +31,12 @@
 		],
 		"afterClientStart": [
 			"csweetla.treasure_expansion.TreasureExpansionClientEntrypoint"
+		],
+		"beforeGameStart": [
+			"csweetla.treasure_expansion.TreasureExpansion"
+		],
+		"afterGameStart": [
+			"csweetla.treasure_expansion.TreasureExpansion"
 		]
 	},
 	"mixins": [

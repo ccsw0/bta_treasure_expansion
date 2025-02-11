@@ -1,5 +1,7 @@
 package csweetla.treasure_expansion;
 
+import csweetla.treasure_expansion.block.BlockLogicDiscoJukebox;
+import csweetla.treasure_expansion.block.TileEntityJukeboxDisco;
 import csweetla.treasure_expansion.item.*;
 
 import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
@@ -23,6 +25,7 @@ import net.minecraft.core.item.material.ToolMaterial;
 import net.minecraft.core.item.material.ArmorMaterial;
 
 import net.minecraft.core.sound.BlockSounds;
+import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -30,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.helper.*;
+import turniplabs.halplibe.util.GameStartEntrypoint;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
 import java.util.*;
@@ -38,7 +42,7 @@ import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
 
 @SuppressWarnings({"unused"})
-public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
+public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, GameStartEntrypoint {
     public static final String MOD_ID = "treasure_expansion";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final ConfigHandler config;
@@ -111,6 +115,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 	public static Block<BlockLogic> blockCobbleChest;
 	public static Block<BlockLogic> blockSandstoneChest;
 	public static Block<BlockLogic> blockIceChest;
+	public static Block<BlockLogicDiscoJukebox> blockDiscoJukebox;
 
 
 
@@ -176,6 +181,16 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.build(new Item("treasure_scrap", MOD_ID + ":treasure_scrap", config.getInt("ids.treasure_scrap")));
 	}
 
+	@Override
+	public void beforeGameStart() {
+		EntityHelper.createTileEntity(TileEntityJukeboxDisco.class, NamespaceID.getPermanent(MOD_ID,"disco_jukebox"));
+	}
+
+	@Override
+	public void afterGameStart() {
+
+	}
+
 	private static class BlockLogicChestDoesntNeedProperTool extends BlockLogicChest {
 		public BlockLogicChestDoesntNeedProperTool(Block<?> block, Material material) {
 			super(block, material);
@@ -209,6 +224,11 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			.setBlockSound(BlockSounds.GLASS)
 			.addTags(BlockTags.FENCES_CONNECT,BlockTags.MINEABLE_BY_PICKAXE)
 			.build("dungeon_chest.frost","dungeon_chest_frost",config.getInt("ids.chest_frost") + 2, b -> new BlockLogicChestDoesntNeedProperTool(b, Material.stone)).withDisabledNeighborNotifyOnMetadataChange();
+
+		blockDiscoJukebox = new BlockBuilder(MOD_ID)
+			.setHardness(Blocks.JUKEBOX.getHardness())
+			.setResistance(Blocks.JUKEBOX.blastResistance / 3.0f)
+			.build("jukebox.disco","disco_jukebox",config.getInt("ids.chest_frost"), BlockLogicDiscoJukebox::new);
 
 	}
 

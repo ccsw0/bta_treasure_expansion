@@ -9,6 +9,7 @@ import net.minecraft.client.render.block.model.BlockModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.client.render.texture.stitcher.TextureRegistry;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.util.collection.NamespaceID;
 import turniplabs.halplibe.helper.ModelHelper;
 import turniplabs.halplibe.util.ModelEntrypoint;
@@ -35,6 +36,8 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/frost/top");
 			return bmc;
 		});
+
+		dispatcher.addDispatch(blockDiscoJukebox, dispatcher.getDispatch(Blocks.JUKEBOX));
 	}
 
 	@Override

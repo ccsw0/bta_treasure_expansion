@@ -4,3 +4,4 @@ accessible field net/minecraft/client/render/entity/EntityRenderer renderDispatc
 accessible field net/minecraft/core/entity/Entity wasInWater Z
 accessible field net/minecraft/core/entity/Entity fireImmune Z
 accessible field net/minecraft/core/player/inventory/slot/SlotArmor armorType I
+accessible field net/minecraft/client/sound/SoundEngine soundSystem Lpaulscode/sound/SoundSystem;
