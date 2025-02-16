@@ -1,13 +1,17 @@
 package csweetla.treasure_expansion;
 
+import csweetla.treasure_expansion.entity.EntityVampire;
+import csweetla.treasure_expansion.entity.EntityVampireRenderer;
 import csweetla.treasure_expansion.item.FireQuiverItemModel;
 import net.minecraft.client.render.EntityRenderDispatcher;
 import net.minecraft.client.render.TileEntityRenderDispatcher;
 import net.minecraft.client.render.block.color.BlockColorDispatcher;
 import net.minecraft.client.render.block.model.BlockModelChest;
 import net.minecraft.client.render.block.model.BlockModelDispatcher;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.item.model.ItemModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelStandard;
+import net.minecraft.client.render.model.ModelZombie;
 import net.minecraft.client.render.texture.stitcher.TextureRegistry;
 import net.minecraft.core.block.Blocks;
 import net.minecraft.core.util.collection.NamespaceID;
@@ -144,7 +148,11 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 
 	@Override
 	public void initEntityModels(EntityRenderDispatcher dispatcher) {
-
+		ModelHelper.setEntityModel(EntityVampire.class, () -> {
+			EntityRenderer<?> er = new EntityVampireRenderer(new ModelZombie(), 0.5F);
+			er.init(dispatcher);
+			return er;
+		});
 	}
 
 	@Override

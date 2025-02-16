@@ -9,7 +9,6 @@ import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.Items;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.feature.WorldFeatureDungeon;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.Random;
@@ -17,8 +16,8 @@ import java.util.Random;
 import static csweetla.treasure_expansion.TreasureExpansion.blockDiscoJukebox;
 
 public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
-	public WorldFeatureDiscoDungeon(int blockIdWalls, int blockIdFloor, @Nullable String mobOverride) {
-		super(blockIdWalls, blockIdFloor, mobOverride);
+	public WorldFeatureDiscoDungeon() {
+		super(Blocks.BRICK_CLAY.id(), Blocks.BRICK_CLAY.id(), null);
 	}
 
 
@@ -68,7 +67,7 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 							if (k2 == y - 1 /*&& random.nextInt(4) != 0*/) {
 								world.setBlockAndMetadataWithNotify(l1, k2, j3, Blocks.WOOL.id(),random.nextInt(16));
 							} else {
-								world.setBlockWithNotify(l1, k2, j3, this.blockIdFloor);
+								world.setBlockWithNotify(l1, k2, j3, this.blockIdWalls);
 							}
 						}
 					}
@@ -103,7 +102,7 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 							TileEntityChest tileentitychest = (TileEntityChest)world.getTileEntity(k3, y, i4);
 
 							for (int k4 = 0; k4 < 8; k4++) {
-								ItemStack itemstack = new ItemStack(new ItemStack(Objects.requireNonNull(Item.itemsList[Items.RECORD_13.id + random.nextInt(9)])));
+								ItemStack itemstack = new ItemStack(new ItemStack(Objects.requireNonNull(Item.itemsList[Items.RECORD_13.id + random.nextInt(12)])));
                                 tileentitychest.setItem(random.nextInt(tileentitychest.getContainerSize()), itemstack);
                             }
 							break;
@@ -113,9 +112,7 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 			}
 
 			world.setBlockWithNotify(x, y, z, blockDiscoJukebox.id());
-//			TileEntityMobSpawner tileentitymobspawner = (TileEntityMobSpawner)world.getTileEntity(x, y, z);
-//			tileentitymobspawner.setMobId(this.pickMobSpawner(random));
-			System.out.println("New Disco Dungeon: " + x + " " + y + " " + z);
+//			System.out.println("New Disco Dungeon: " + x + " " + y + " " + z);
 			return true;
 		} else {
 			return false;

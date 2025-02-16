@@ -2,6 +2,7 @@ package csweetla.treasure_expansion;
 
 import csweetla.treasure_expansion.block.BlockLogicDiscoJukebox;
 import csweetla.treasure_expansion.block.TileEntityJukeboxDisco;
+import csweetla.treasure_expansion.entity.EntityVampire;
 import csweetla.treasure_expansion.item.*;
 
 import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
@@ -9,6 +10,7 @@ import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.client.gui.guidebook.crafting.RecipePageCrafting;
 import net.minecraft.client.gui.guidebook.crafting.displays.DisplayAdapterShapeless;
+import net.minecraft.client.gui.guidebook.mobs.MobInfoRegistry;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
@@ -133,6 +135,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 		    .build(new ItemArmor("diving_helmet", MOD_ID + ":diving_helmet", config.getInt("ids.diving_helmet"), armorMaterialDiving, 3));
 
 		toolItemSilverSword = new ItemBuilder(MOD_ID)
+			.addTags(ModItemTags.noVampireDamagePenalty)
 		    .build(new SilverSwordItem("silver_sword", config.getInt("ids.silver_sword"), ToolMaterial.iron, config.getInt("durability.silver_sword")));
 
 		itemEscapeRopeGold = new ItemBuilder(MOD_ID)
@@ -184,11 +187,17 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 	@Override
 	public void beforeGameStart() {
 		EntityHelper.createTileEntity(TileEntityJukeboxDisco.class, NamespaceID.getPermanent(MOD_ID,"disco_jukebox"));
+
+		EntityHelper.createEntity(EntityVampire.class, NamespaceID.getPermanent(MOD_ID,"vampire"),"mob." + MOD_ID + ".vampire.name","Vampire", 312);
 	}
 
 	@Override
 	public void afterGameStart() {
+		MobInfoRegistry.register(EntityVampire.class, "mob." + MOD_ID + ".vampire.name", "mob." + MOD_ID + ".vampire.desc", 25, 1200,
+			new MobInfoRegistry.MobDrop[]{new MobInfoRegistry.MobDrop(Items.QUARTZ.getDefaultStack(), 0.66F, 1, 2)}
+		);
 
+		ModItemTags.noVampireDamagePenalty.tag(Items.TOOL_SWORD_WOOD);
 	}
 
 	private static class BlockLogicChestDoesntNeedProperTool extends BlockLogicChest {
@@ -228,6 +237,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 		blockDiscoJukebox = new BlockBuilder(MOD_ID)
 			.setHardness(Blocks.JUKEBOX.getHardness())
 			.setResistance(Blocks.JUKEBOX.blastResistance / 3.0f)
+			.setTags(BlockTags.MINEABLE_BY_AXE)
 			.build("jukebox.disco","disco_jukebox",config.getInt("ids.chest_frost"), BlockLogicDiscoJukebox::new);
 
 	}

@@ -1,5 +1,6 @@
 package csweetla.treasure_expansion.item;
 
+import csweetla.treasure_expansion.entity.EntityVampire;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.Mob;
 import net.minecraft.core.entity.monster.MobMonster;
@@ -32,6 +33,10 @@ public class SilverSwordItem extends ItemToolSword {
 	@Override
 	public int getDamageVsEntity(Entity attacked, ItemStack s) {
 	    if (attacked instanceof MobMonster) {
+			if (attacked instanceof EntityVampire) {
+				return 4 + ToolMaterial.diamond.getDamage() * 2;
+			}
+
             return ((ItemToolSword) Items.TOOL_SWORD_IRON).getDamageVsEntity(attacked, new ItemStack(Items.TOOL_SWORD_IRON));
         }
 		return ((ItemToolSword) Items.TOOL_SWORD_STONE).getDamageVsEntity(attacked, new ItemStack(Items.TOOL_SWORD_STONE));
