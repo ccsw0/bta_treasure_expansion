@@ -72,10 +72,12 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 		prop.setProperty("ids.fire_quiver", "32213");
 		prop.setProperty("ids.flippers", "32214");
 		prop.setProperty("ids.treasure_scrap", "32215");
+		prop.setProperty("ids.pear", "32216");
 
 		prop.setProperty("ids.chest_cobble", "1930");
 		prop.setProperty("ids.chest_sand", "1931");
 		prop.setProperty("ids.chest_frost", "1932");
+
 		prop.setProperty("loot.use_custom_tables", "false");
 		prop.setProperty("loot.mod_fruit_enabled", "true");
 		prop.setProperty("loot.minor_treasure_enabled", "true");
@@ -107,6 +109,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 	public static Item foodItemOrange;
 	public static Item foodItemGrapes;
 	public static Item foodItemBananas;
+	public static Item foodItemPear;
 	public static Item foodItemFruitSalad;
 	public static Item itemLavaCharm;
 	public static Item itemSpiderSilk;
@@ -163,6 +166,9 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 		foodItemGrapes = new ItemBuilder(MOD_ID)
 		    .build(new ItemFood("grapes", MOD_ID + ":grapes", config.getInt("ids.grapes"), 4, 3, false, 8));
 
+		foodItemPear = new ItemBuilder(MOD_ID)
+			.build(new ItemFood("pear", MOD_ID + ":pear", config.getInt("ids.pear"), 4, 3, false, 8));
+
 		foodItemBananas = new ItemBuilder(MOD_ID)
 		    .build(new ItemFood("bananas", MOD_ID + ":bananas", config.getInt("ids.bananas"), 4, 6, false, 8));
 
@@ -194,7 +200,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 	@Override
 	public void afterGameStart() {
 		MobInfoRegistry.register(EntityVampire.class, "mob." + MOD_ID + ".vampire.name", "mob." + MOD_ID + ".vampire.desc", 25, 1200,
-			new MobInfoRegistry.MobDrop[]{new MobInfoRegistry.MobDrop(Items.QUARTZ.getDefaultStack(), 0.66F, 1, 2)}
+			new MobInfoRegistry.MobDrop[]{new MobInfoRegistry.MobDrop(Items.QUARTZ.getDefaultStack(), 1.0F, 3, 4)}
 		);
 
 		ModItemTags.noVampireDamagePenalty.tag(Items.TOOL_SWORD_WOOD);
@@ -251,6 +257,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 			.addInput(foodItemBananas)
 			.addInput(foodItemGrapes)
 			.addInput(foodItemOrange)
+			.addInput(foodItemPear)
 			.create("fruitSalad", foodItemFruitSalad.getDefaultStack());
 
 		Registries.RECIPES.addCustomRecipe(

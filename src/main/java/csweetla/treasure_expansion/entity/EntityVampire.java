@@ -23,7 +23,7 @@ public class EntityVampire extends MobZombie {
 		super(world);
 		this.textureIdentifier = NamespaceID.getPermanent(MOD_ID, "vampire");
 		this.mobDrops.clear();
-		this.mobDrops.add(new WeightedRandomLootObject(Items.QUARTZ.getDefaultStack(),0,2));
+		this.mobDrops.add(new WeightedRandomLootObject(Items.QUARTZ.getDefaultStack(),3,4));
 		this.scoreValue = 1200;
 	}
 

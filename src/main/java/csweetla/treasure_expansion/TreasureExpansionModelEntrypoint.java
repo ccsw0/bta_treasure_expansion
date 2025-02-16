@@ -114,6 +114,12 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 			return im;
 		});
 
+		ModelHelper.setItemModel(foodItemPear, () -> {
+			ItemModelStandard im = new ItemModelStandard(foodItemPear, MOD_ID);
+			im.icon = TextureRegistry.getTexture(NamespaceID.getPermanent(MOD_ID, "item/pear"));
+			return im;
+		});
+
 		ModelHelper.setItemModel(foodItemFruitSalad, () -> {
 			ItemModelStandard im = new ItemModelStandard(foodItemFruitSalad, MOD_ID);
 			im.icon = TextureRegistry.getTexture(NamespaceID.getPermanent(MOD_ID, "item/fruit_salad"));

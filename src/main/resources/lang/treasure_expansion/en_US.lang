@@ -40,6 +40,9 @@ item.treasure_expansion.grapes.desc=I can't think of anything clever about grape
 item.treasure_expansion.bananas.name=Bananas
 item.treasure_expansion.bananas.desc=I go nuts for these.
 
+item.treasure_expansion.pear.name=Pear
+item.treasure_expansion.pear.desc=Why don't you grow one.
+
 item.treasure_expansion.fruit_salad.name=Fruit Salad
 item.treasure_expansion.fruit_salad.desc=Yummy yummy!
 
@@ -64,5 +67,5 @@ tile.treasure_expansion.jukebox.disco.name=Disco Jukebox
 tile.treasure_expansion.jukebox.disco.desc=Survival Unobtainable.
 
 mob.treasure_expansion.vampire.name=Vampire
-mob.treasure_expansion.vampire.desc=Something  idk
+mob.treasure_expansion.vampire.desc=Vampires are sneaky that lurk in shadow and only appear during the spookiest times. Except for wood and silver, weapons are ineffective towards them.
 

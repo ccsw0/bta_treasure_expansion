@@ -3,7 +3,6 @@ package csweetla.treasure_expansion.mixins;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import csweetla.treasure_expansion.LootTables;
-import csweetla.treasure_expansion.TreasureExpansion;
 
 import net.minecraft.core.WeightedRandomBag;
 import net.minecraft.core.WeightedRandomLootObject;
@@ -49,7 +48,7 @@ public abstract class WorldFeatureLabyrinthMixin extends WorldFeature {
 
 	@Unique
 	Item random_fruit_item(Random random) {
-		Item[] choices = {Items.FOOD_APPLE, TreasureExpansion.foodItemOrange, TreasureExpansion.foodItemBananas, TreasureExpansion.foodItemGrapes};
+		Item[] choices = {Items.FOOD_APPLE, foodItemOrange, foodItemBananas, foodItemGrapes, foodItemPear};
 		return choices[random.nextInt(choices.length)];
 	}
 
