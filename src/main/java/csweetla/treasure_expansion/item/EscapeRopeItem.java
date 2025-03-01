@@ -43,10 +43,10 @@ public class EscapeRopeItem extends Item {
 	};
 
 	public EscapeRopeItem(String name, int id, int durability) {
-		super(NamespaceID.getPermanent(MOD_ID,name), id);
+		super(NamespaceID.getPermanent(MOD_ID, name), id);
 		setKey(name);
 		this.maxStackSize = 1;
-		this.setMaxDamage(2 * durability - 1) ;
+		this.setMaxDamage(2 * durability - 1);
 	}
 
 	// The escape rope should always put you on solid, safe ground.
@@ -69,7 +69,7 @@ public class EscapeRopeItem extends Item {
 		}
 	}
 
-    @Override
+	@Override
 	public ItemStack onUseItem(ItemStack itemstack, World world, Player entityplayer) {
 		if (world.isClientSide) {
 			return itemstack;
@@ -80,9 +80,7 @@ public class EscapeRopeItem extends Item {
 		if (world.dimension != Dimension.OVERWORLD) {
 			entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_nether");
 			return itemstack;
-		}
-		else if (entityplayer.y >= world.worldType.getOceanY())
-		{
+		} else if (entityplayer.y >= world.worldType.getOceanY()) {
 			// TODO: Better detection of underground player
 			entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_surface");
 			return itemstack;
@@ -91,18 +89,18 @@ public class EscapeRopeItem extends Item {
 		// TODO: there are maybe some methods in world that could do this better
 		for (int i = 0; i < MAX_ESCAPE_TRIES; i++) {
 			y = world.getHeightBlocks();
-			int x = (int) entityplayer.x - rand_pos_offset/2 + rand.nextInt(rand_pos_offset);
-			int z = (int) entityplayer.z - rand_pos_offset/2 + rand.nextInt(rand_pos_offset);
+			int x = (int) entityplayer.x - rand_pos_offset / 2 + rand.nextInt(rand_pos_offset);
+			int z = (int) entityplayer.z - rand_pos_offset / 2 + rand.nextInt(rand_pos_offset);
 			while (world.isAirBlock(x, y, z) && y > world.worldType.getOceanY()) {
 				--y;
 			}
 
-			int block_id = world.getBlockId(x,y,z);
+			int block_id = world.getBlockId(x, y, z);
 			if (acceptable_landing_block(block_id)) {
 				teleport_safely(entityplayer, x + 0.5F, y + 3.0F, z + 0.5F);
 				entityplayer.sendTranslatedChatMessage("message." + MOD_ID + ".escape_rope.use_success");
 				// TODO: snap sound when rope breaks
-				world.playSoundEffect(entityplayer, SoundCategory.WORLD_SOUNDS,entityplayer.x,entityplayer.y,entityplayer.z,MOD_ID + ":escape_rope.use",1.0f,1.0f);
+				world.playSoundEffect(entityplayer, SoundCategory.WORLD_SOUNDS, entityplayer.x, entityplayer.y, entityplayer.z, MOD_ID + ":escape_rope.use", 1.0f, 1.0f);
 				itemstack.damageItem(2, entityplayer);
 				return itemstack;
 			}

@@ -58,14 +58,13 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 					for (int j3 = z - length - 1; j3 <= z + length + 1; j3++) {
 						if (has_ceiling && k2 == y + height) {
 							world.setBlockWithNotify(l1, k2, j3, Blocks.GLOWSTONE.id());
-						}
-						else if (l1 != x - width - 1 && k2 != y - 1 && j3 != z - length - 1 && l1 != x + width + 1 && k2 != y + height + 1 && j3 != z + length + 1) {
+						} else if (l1 != x - width - 1 && k2 != y - 1 && j3 != z - length - 1 && l1 != x + width + 1 && k2 != y + height + 1 && j3 != z + length + 1) {
 							world.setBlockWithNotify(l1, k2, j3, 0);
 						} else if (k2 >= 0 && !world.getBlockMaterial(l1, k2 - 1, j3).isSolid()) {
 							world.setBlockWithNotify(l1, k2, j3, 0);
 						} else if (world.getBlockMaterial(l1, k2, j3).isSolid()) {
 							if (k2 == y - 1 /*&& random.nextInt(4) != 0*/) {
-								world.setBlockAndMetadataWithNotify(l1, k2, j3, Blocks.WOOL.id(),random.nextInt(16));
+								world.setBlockAndMetadataWithNotify(l1, k2, j3, Blocks.WOOL.id(), random.nextInt(16));
 							} else {
 								world.setBlockWithNotify(l1, k2, j3, this.blockIdWalls);
 							}
@@ -99,12 +98,12 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 						if (j4 == 1) {
 							world.setBlockWithNotify(k3, y, i4, Blocks.CHEST_PLANKS_OAK.id());
 							BlockLogicChest.setDefaultDirection(world, k3, y, i4);
-							TileEntityChest tileentitychest = (TileEntityChest)world.getTileEntity(k3, y, i4);
+							TileEntityChest tileentitychest = (TileEntityChest) world.getTileEntity(k3, y, i4);
 
 							for (int k4 = 0; k4 < 8; k4++) {
 								ItemStack itemstack = new ItemStack(new ItemStack(Objects.requireNonNull(Item.itemsList[Items.RECORD_13.id + random.nextInt(12)])));
-                                tileentitychest.setItem(random.nextInt(tileentitychest.getContainerSize()), itemstack);
-                            }
+								tileentitychest.setItem(random.nextInt(tileentitychest.getContainerSize()), itemstack);
+							}
 							break;
 						}
 					}
@@ -118,7 +117,6 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 			return false;
 		}
 	}
-
 
 
 }

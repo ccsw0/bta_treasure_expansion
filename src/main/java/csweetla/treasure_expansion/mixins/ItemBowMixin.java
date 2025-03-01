@@ -18,13 +18,13 @@ public class ItemBowMixin {
 	/**
 	 * Allow shooting a fire arrow from a bow when the fire quiver is equipped
 	 */
-	@Inject(method = "onUseItem", at=@At("HEAD"), cancellable = true)
+	@Inject(method = "onUseItem", at = @At("HEAD"), cancellable = true)
 	public void onUseItem(ItemStack itemstack, World world, Player entityplayer, CallbackInfoReturnable<ItemStack> cir) {
 		ItemStack quiverSlot = entityplayer.inventory.armorItemInSlot(2);
 		if (quiverSlot != null && quiverSlot.getItem().equals(TreasureExpansion.itemFireQuiver) && quiverSlot.getMetadata() < quiverSlot.getMaxDamage()) {
 			entityplayer.inventory.armorItemInSlot(2).damageItem(1, entityplayer);
 			itemstack.damageItem(1, entityplayer);
-			world.playSoundAtEntity(entityplayer, entityplayer, "random.bow", 0.3f, 1.0f/ (Item.itemRand.nextFloat() * 0.4f + 0.8f));
+			world.playSoundAtEntity(entityplayer, entityplayer, "random.bow", 0.3f, 1.0f / (Item.itemRand.nextFloat() * 0.4f + 0.8f));
 			if (!world.isClientSide) {
 				ProjectileArrow arrow = new ProjectileArrow(world, entityplayer, true, 0);
 				world.entityJoinedWorld(arrow);

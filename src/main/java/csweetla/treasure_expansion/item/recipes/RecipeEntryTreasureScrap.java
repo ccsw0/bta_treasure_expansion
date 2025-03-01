@@ -6,14 +6,14 @@ import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.inventory.container.ContainerCrafting;
 
-import java.util.*;
+import java.util.Collections;
 
 /**
- *  The class for recipes allowing scrapping treasures into treasure scrap
- *  Reason for this not being RecipeEntryScrap is because I want it to always give the same scrap, whereas
- *  RecipeEntryScrap determines amount of scrap from metadata
- *  Reason for not just using shapeless is because it doesn't accept damaged items
- *  There is probably a better way to do this
+ * The class for recipes allowing scrapping treasures into treasure scrap
+ * Reason for this not being RecipeEntryScrap is because I want it to always give the same scrap, whereas
+ * RecipeEntryScrap determines amount of scrap from metadata
+ * Reason for not just using shapeless is because it doesn't accept damaged items
+ * There is probably a better way to do this
  */
 public class RecipeEntryTreasureScrap extends RecipeEntryCraftingShapeless {
 

@@ -25,29 +25,17 @@ public class LootTables {
 
 	private static final String config_location = FabricLoader.getInstance().getConfigDir().toString() + "/" + MOD_ID + ".loot_tables.json";
 	private static LootTables instance = null;
-
-	public enum LootTableType {
-		DEFAULT,
-		SNOW,
-		DESERT,
-		MINOR
-	}
-
 	@SerializedName("default")
-	private Map<String, Map<String,Integer>> default_loot_map;
+	private Map<String, Map<String, Integer>> default_loot_map;
 	private int default_cumsum = 0;
-
 	@SerializedName("snow")
-	private Map<String, Map<String,Integer>> snow_loot_map;
+	private Map<String, Map<String, Integer>> snow_loot_map;
 	private int snow_cumsum = 0;
-
-
 	@SerializedName("desert")
-	private Map<String, Map<String,Integer>> desert_loot_map;
+	private Map<String, Map<String, Integer>> desert_loot_map;
 	private int desert_cumsum = 0;
-
 	@SerializedName("minor")
-	private Map<String, Map<String,Integer>> minor_loot_map;
+	private Map<String, Map<String, Integer>> minor_loot_map;
 	private int minor_cumsum;
 
 	public static void initialize() {
@@ -62,63 +50,6 @@ public class LootTables {
 			throw new RuntimeException("Loot Tables were never initialized!");
 		}
 		return instance;
-	}
-
-	public ItemStack randomLoot(LootTableType type, Random rand) {
-		Map<String, Map<String,Integer>> table;
-		int cumsum;
-
-		switch (type){
-			case DEFAULT:
-				table = default_loot_map;
-				cumsum = default_cumsum;
-				break;
-			case SNOW:
-				table = snow_loot_map;
-				cumsum = snow_cumsum;
-				break;
-			case DESERT:
-				table = desert_loot_map;
-				cumsum = desert_cumsum;
-				break;
-			case MINOR:
-				table = minor_loot_map;
-				cumsum = minor_cumsum;
-				break;
-			default :
-				throw new RuntimeException("Should be unreachable 1");
-		}
-
-		int rndi = rand.nextInt(cumsum);
-
-		for (Map.Entry<String, Map<String,Integer>> entry: table.entrySet()) {
-			Map<String,Integer> v = entry.getValue();
-			int w = v.get("weight");
-			// we reached the chosen item
-			if (rndi < w) {
-				Item chosen = Item.itemsList[Item.nameToIdMap.get(entry.getKey())];
-				int amount = v.get("amount") + rand.nextInt(v.get("amount-rand") + 1);
-//				System.out.println("PICKED: " + chosen.getKey());
-				return new ItemStack(chosen,amount);
-			}
-			rndi -= w;
-		}
-		throw new RuntimeException("Should be unreachable 2");
-	}
-
-	private void calculate_cumsums() {
-		for (Map<String, Integer> v : default_loot_map.values()) {
-			default_cumsum += v.get("weight");
-		}
-		for (Map<String, Integer> v : snow_loot_map.values()) {
-			snow_cumsum += v.get("weight");
-		}
-		for (Map<String, Integer> v : desert_loot_map.values()) {
-			desert_cumsum += v.get("weight");
-		}
-		for (Map<String, Integer> v : minor_loot_map.values()) {
-			minor_cumsum += v.get("weight");
-		}
 	}
 
 	private static LootTables load_loot_tables() {
@@ -141,7 +72,7 @@ public class LootTables {
 			} catch (FileNotFoundException e) {
 				throw new RuntimeException(e);
 			}
-		}else {
+		} else {
 			TreasureExpansion.LOGGER.info("use_custom_loot_tables was set to false, so using defaults.");
 			// use the default, located in the mod jar
 			return GSON.fromJson(new InputStreamReader(resourceAsStream("/assets/" + MOD_ID + "/default.loot_tables.json")), LootTables.class);
@@ -153,7 +84,7 @@ public class LootTables {
 		try (
 			InputStream fileIn = resourceAsStream(default_filepath);
 			FileOutputStream fileOut = new FileOutputStream(config_location);
-		){
+		) {
 			while (fileIn.available() != 0)
 				fileOut.write(fileIn.read());
 		} catch (IOException e) {
@@ -185,7 +116,71 @@ public class LootTables {
 		in = Minecraft.getMinecraft().getClass().getResourceAsStream(path);
 		if (in != null)
 			return in;
-		throw new RuntimeException("File at '"+ path + "' is seriously hard to find!");
+		throw new RuntimeException("File at '" + path + "' is seriously hard to find!");
+	}
+
+	public ItemStack randomLoot(LootTableType type, Random rand) {
+		Map<String, Map<String, Integer>> table;
+		int cumsum;
+
+		switch (type) {
+			case DEFAULT:
+				table = default_loot_map;
+				cumsum = default_cumsum;
+				break;
+			case SNOW:
+				table = snow_loot_map;
+				cumsum = snow_cumsum;
+				break;
+			case DESERT:
+				table = desert_loot_map;
+				cumsum = desert_cumsum;
+				break;
+			case MINOR:
+				table = minor_loot_map;
+				cumsum = minor_cumsum;
+				break;
+			default:
+				throw new RuntimeException("Should be unreachable 1");
+		}
+
+		int rndi = rand.nextInt(cumsum);
+
+		for (Map.Entry<String, Map<String, Integer>> entry : table.entrySet()) {
+			Map<String, Integer> v = entry.getValue();
+			int w = v.get("weight");
+			// we reached the chosen item
+			if (rndi < w) {
+				Item chosen = Item.itemsList[Item.nameToIdMap.get(entry.getKey())];
+				int amount = v.get("amount") + rand.nextInt(v.get("amount-rand") + 1);
+//				System.out.println("PICKED: " + chosen.getKey());
+				return new ItemStack(chosen, amount);
+			}
+			rndi -= w;
+		}
+		throw new RuntimeException("Should be unreachable 2");
+	}
+
+	private void calculate_cumsums() {
+		for (Map<String, Integer> v : default_loot_map.values()) {
+			default_cumsum += v.get("weight");
+		}
+		for (Map<String, Integer> v : snow_loot_map.values()) {
+			snow_cumsum += v.get("weight");
+		}
+		for (Map<String, Integer> v : desert_loot_map.values()) {
+			desert_cumsum += v.get("weight");
+		}
+		for (Map<String, Integer> v : minor_loot_map.values()) {
+			minor_cumsum += v.get("weight");
+		}
+	}
+
+	public enum LootTableType {
+		DEFAULT,
+		SNOW,
+		DESERT,
+		MINOR
 	}
 
 }

@@ -17,6 +17,7 @@ import net.minecraft.core.block.Blocks;
 import net.minecraft.core.util.collection.NamespaceID;
 import turniplabs.halplibe.helper.ModelHelper;
 import turniplabs.halplibe.util.ModelEntrypoint;
+
 import static csweetla.treasure_expansion.TreasureExpansion.*;
 
 public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
@@ -25,19 +26,19 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 	public void initBlockModels(BlockModelDispatcher dispatcher) {
 		ModelHelper.setBlockModel(blockCobbleChest, () -> {
 			BlockModelChest<?> bmc = new BlockModelChest<>(blockCobbleChest, MOD_ID + ":block/dungeon_chest/cobble/");
-			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/cobble/top");
+			bmc.setAllTextures(0, MOD_ID + ":block/dungeon_chest/cobble/top");
 			return bmc;
 		});
 
 		ModelHelper.setBlockModel(blockSandstoneChest, () -> {
 			BlockModelChest<?> bmc = new BlockModelChest<>(blockSandstoneChest, MOD_ID + ":block/dungeon_chest/sandstone/");
-			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/sandstone/top");
+			bmc.setAllTextures(0, MOD_ID + ":block/dungeon_chest/sandstone/top");
 			return bmc;
 		});
 
 		ModelHelper.setBlockModel(blockIceChest, () -> {
 			BlockModelChest<?> bmc = new BlockModelChest<>(blockIceChest, MOD_ID + ":block/dungeon_chest/frost/");
-			bmc.setAllTextures(0,MOD_ID + ":block/dungeon_chest/frost/top");
+			bmc.setAllTextures(0, MOD_ID + ":block/dungeon_chest/frost/top");
 			return bmc;
 		});
 

@@ -1,14 +1,12 @@
 package csweetla.treasure_expansion.mixins;
 
 import csweetla.treasure_expansion.TreasureExpansion;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.camera.CameraUtil;
 import net.minecraft.client.render.camera.ICamera;
 import net.minecraft.core.block.material.Material;
-import net.minecraft.core.world.World;
 import net.minecraft.core.item.ItemStack;
-
+import net.minecraft.core.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

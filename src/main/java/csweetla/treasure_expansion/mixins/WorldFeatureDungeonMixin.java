@@ -13,7 +13,7 @@ import java.util.Random;
 @Mixin(value = WorldFeatureDungeon.class, remap = false)
 public abstract class WorldFeatureDungeonMixin {
 
-	@Inject(method = "place", at=@At("HEAD"), cancellable = true)
+	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
 	public void place(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
 		if (random.nextInt(20) == 0) {
 			WorldFeatureDiscoDungeon dd = new WorldFeatureDiscoDungeon();
@@ -24,4 +24,4 @@ public abstract class WorldFeatureDungeonMixin {
 		}
 	}
 
-	}
+}

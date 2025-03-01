@@ -21,20 +21,20 @@ public abstract class ItemEntityMixin extends Entity {
 	@Shadow
 	public ItemStack item;
 
-	@Shadow
-	public abstract void tick();
-
 	public ItemEntityMixin(World world) {
 		super(world);
 	}
 
+	@Shadow
+	public abstract void tick();
+
 	/**
 	 * make item entities who's item has the fire immune tag actually fire immune
 	 */
-	@Inject(method = "<init>(Lnet/minecraft/core/world/World;DDDLnet/minecraft/core/item/ItemStack;)V", at=@At("TAIL"))
+	@Inject(method = "<init>(Lnet/minecraft/core/world/World;DDDLnet/minecraft/core/item/ItemStack;)V", at = @At("TAIL"))
 	protected void init(World world, double d, double d1, double d2, ItemStack itemstack, CallbackInfo ci) {
 		if (itemstack != null && itemstack.getItem() != null && fireImmuneAsEntity.appliesTo(itemstack.getItem())) {
-			EntityItem instance = (EntityItem)(Object) this;
+			EntityItem instance = (EntityItem) (Object) this;
 			instance.fireImmune = true;
 		}
 	}
@@ -42,7 +42,7 @@ public abstract class ItemEntityMixin extends Entity {
 	/**
 	 * don't "damage" item entities who are fire immune
 	 */
-	@Inject(method = "hurt", at=@At("HEAD"), cancellable = true)
+	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
 	public void hurt(Entity entity, int i, DamageType type, CallbackInfoReturnable<Boolean> cir) {
 		if (type.equals(DamageType.FIRE) && fireImmuneAsEntity.appliesTo(item.getItem())) {
 			cir.setReturnValue(false);
@@ -52,7 +52,7 @@ public abstract class ItemEntityMixin extends Entity {
 	/**
 	 * fire immune item entities float on lava
 	 */
-	@Inject(method = "tick", at=@At("TAIL"))
+	@Inject(method = "tick", at = @At("TAIL"))
 	public void tick(CallbackInfo ci) {
 		if (fireImmuneAsEntity.appliesTo(item.getItem()) && this.world.isMaterialInBB(this.bb.expand(+0.1, -0.25, +0.1), Material.lava)) {
 			this.yd = 0.125f * random.nextFloat();
@@ -82,10 +82,10 @@ public abstract class ItemEntityMixin extends Entity {
 	/**
 	 * Prevent fire immune items from being burned again..
 	 */
-    @Inject(method = "burn", at=@At("HEAD"), cancellable = true)
+	@Inject(method = "burn", at = @At("HEAD"), cancellable = true)
 	public void stop_getting_block_mat(int damage, CallbackInfo ci) {
-	    if (fireImmuneAsEntity.appliesTo(item.getItem())) {
-            ci.cancel();
-	    }
+		if (fireImmuneAsEntity.appliesTo(item.getItem())) {
+			ci.cancel();
+		}
 	}
 }

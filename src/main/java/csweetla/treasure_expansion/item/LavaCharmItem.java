@@ -20,7 +20,7 @@ public class LavaCharmItem extends Item {
 		// meta data == health -> would break if damaged
 		if (is.getMetadata() >= is.getItem().getMaxDamage())
 			return false;
-		for(int pslot = 0; pslot < player.inventory.getContainerSize(); ++pslot) {
+		for (int pslot = 0; pslot < player.inventory.getContainerSize(); ++pslot) {
 			ItemStack s = player.inventory.mainInventory[pslot];
 			if (s != null && s.itemID == is.getItem().id && s.getMetadata() < is.getItem().getMaxDamage()) {
 				return pslot == slot;
@@ -32,14 +32,14 @@ public class LavaCharmItem extends Item {
 	@Override
 	public void inventoryTick(ItemStack itemstack, World world, Entity entity, int slot, boolean flag) {
 		if (entity instanceof Player) {
-				Player player = (Player) entity;
-				if ((player.isOnFire() || player.isInLava())) {
-					if (isFirstDamageableInInventory(itemstack,slot, player)) {
-						itemstack.damageItem(1, player);
-					}
-				} else if(player.tickCount % 10 == 0) {
-					itemstack.repairItem(1);
+			Player player = (Player) entity;
+			if ((player.isOnFire() || player.isInLava())) {
+				if (isFirstDamageableInInventory(itemstack, slot, player)) {
+					itemstack.damageItem(1, player);
 				}
+			} else if (player.tickCount % 10 == 0) {
+				itemstack.repairItem(1);
+			}
 		}
 		super.inventoryTick(itemstack, world, entity, slot, flag);
 	}

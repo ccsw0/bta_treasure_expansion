@@ -5,7 +5,6 @@ import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.gamemode.Gamemode;
-import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.feature.WorldFeatureLabyrinth;
 
@@ -18,7 +17,7 @@ public class LabyrinthGeneratorItem extends Item {
 		super(s, MOD_ID + ":" + s, i);
 	}
 
-    @Override
+	@Override
 	public ItemStack onUseItem(ItemStack itemstack, World world, Player entityplayer) {
 		if (entityplayer.getGamemode() == Gamemode.creative) {
 			WorldFeatureLabyrinth wfl = new WorldFeatureLabyrinth();
@@ -26,7 +25,7 @@ public class LabyrinthGeneratorItem extends Item {
 			entityplayer.sendTranslatedChatMessage(success ? "Generated Labyrinth" : "Failed to generate labyrinth here!");
 
 			return itemstack;
-		}  else {
+		} else {
 			world.addWeatherEffect(new EntityLightning(world, entityplayer.x, entityplayer.y, entityplayer.z));
 			return null;
 		}

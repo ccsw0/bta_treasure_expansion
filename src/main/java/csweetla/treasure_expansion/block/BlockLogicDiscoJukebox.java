@@ -2,7 +2,6 @@ package csweetla.treasure_expansion.block;
 
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogicJukebox;
-
 import net.minecraft.core.block.Blocks;
 import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.enums.EnumDropCause;

@@ -22,7 +22,7 @@ public abstract class EntitySpiderMixin extends MobMonster {
 
 	@Unique
 	private boolean spider_silk_equipped(Player p) {
-		for(int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
+		for (int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
 			ItemStack is = p.inventory.mainInventory[i];
 			if (is != null && is.itemID == itemSpiderSilk.id) {
 				return true;
@@ -32,9 +32,9 @@ public abstract class EntitySpiderMixin extends MobMonster {
 	}
 
 	/**
-	 *  For spiders, treat players holding a spider silk as physically further away when looking for a target
+	 * For spiders, treat players holding a spider silk as physically further away when looking for a target
 	 */
-	@Redirect(method = "findPlayerToAttack", at=@At(value = "INVOKE",target = "Lnet/minecraft/core/world/World;getClosestPlayerToEntity(Lnet/minecraft/core/entity/Entity;D)Lnet/minecraft/core/entity/player/Player;"))
+	@Redirect(method = "findPlayerToAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/world/World;getClosestPlayerToEntity(Lnet/minecraft/core/entity/Entity;D)Lnet/minecraft/core/entity/player/Player;"))
 	protected Player findPlayerToAttack(World world, Entity entity, double radius) {
 		double closestDistance = -1.0;
 		Player closest = null;
@@ -45,9 +45,11 @@ public abstract class EntitySpiderMixin extends MobMonster {
 			if (spider_silk_equipped(p))
 				currentDistance /= 0.3;
 
-			if (!(radius < 0.0) && !(currentDistance < radius * radius) || closestDistance != -1.0 && !(currentDistance < closestDistance)) continue;
+			if (!(radius < 0.0) && !(currentDistance < radius * radius) || closestDistance != -1.0 && !(currentDistance < closestDistance))
+				continue;
 			closestDistance = currentDistance;
 			closest = p;
 		}
 		return closest;
-	}}
+	}
+}

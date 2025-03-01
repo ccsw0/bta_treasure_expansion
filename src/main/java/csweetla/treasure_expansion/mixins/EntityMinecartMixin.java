@@ -1,6 +1,5 @@
 package csweetla.treasure_expansion.mixins;
 
-import static csweetla.treasure_expansion.TreasureExpansion.*;
 import net.minecraft.core.block.motion.CarriedBlock;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.player.Player;
@@ -14,15 +13,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static csweetla.treasure_expansion.TreasureExpansion.*;
+
 @Mixin(value = EntityMinecart.class, remap = false)
 public abstract class EntityMinecartMixin extends Entity implements Container {
-
-	@Shadow
-	public abstract byte getType();
 
 	public EntityMinecartMixin(@Nullable World world) {
 		super(world);
 	}
+
+	@Shadow
+	public abstract byte getType();
 
 	/**
 	 * Prevent the chests added by this mod being inserted into minecarts, because then they will be converted into oak chests

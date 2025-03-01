@@ -19,10 +19,10 @@ public class ItemToolSwordMixin {
 	@Shadow
 	private int weaponDamage;
 
-	@Inject(method = "getDamageVsEntity", at=@At("HEAD"), cancellable = true)
+	@Inject(method = "getDamageVsEntity", at = @At("HEAD"), cancellable = true)
 	public void getDamageVsEntity(Entity entity, ItemStack is, CallbackInfoReturnable<Integer> cir) {
-		if (entity instanceof EntityVampire ) {
-			if(!ModItemTags.noVampireDamagePenalty.appliesTo(is.getItem()))
+		if (entity instanceof EntityVampire) {
+			if (!ModItemTags.noVampireDamagePenalty.appliesTo(is.getItem()))
 				cir.setReturnValue(this.weaponDamage / 2);
 			else if (Items.TOOL_SWORD_WOOD.equals(is.getItem())) {
 				cir.setReturnValue(4 + ToolMaterial.iron.getDamage() * 2);

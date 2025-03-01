@@ -24,6 +24,6 @@ public abstract class BiomeMixin {
 
 	@Inject(method = "<init>", remap = false, at = @At("TAIL"))
 	private void addMobs(CallbackInfo ci) {
-		spawnableMonsterList.add(new SpawnListEntry(EntityVampire.class,4 ));
+		spawnableMonsterList.add(new SpawnListEntry(EntityVampire.class, 4));
 	}
 }

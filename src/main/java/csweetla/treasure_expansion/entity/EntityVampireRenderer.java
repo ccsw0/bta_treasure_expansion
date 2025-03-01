@@ -113,10 +113,10 @@ public class EntityVampireRenderer extends MobRendererBiped<EntityVampire> {
 				}
 
 				if ((argb >> 24 & 0xFF) > 0) {
-					float r = (float)(argb >> 16 & 0xFF) / 255.0F;
-					float g = (float)(argb >> 8 & 0xFF) / 255.0F;
-					float b = (float)(argb & 0xFF) / 255.0F;
-					float a = (float)(argb >> 24 & 0xFF) / 255.0F;
+					float r = (float) (argb >> 16 & 0xFF) / 255.0F;
+					float g = (float) (argb >> 8 & 0xFF) / 255.0F;
+					float b = (float) (argb & 0xFF) / 255.0F;
+					float a = (float) (argb >> 24 & 0xFF) / 255.0F;
 					GL11.glColor4f(r, g, b, a);
 					this.mainModel.render(walkProgress, walkSpeed, limbSway, headYaw - bodyYaw, headPitch, scale);
 					if (this.overlayModel != null) {

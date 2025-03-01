@@ -6,7 +6,6 @@ import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.player.inventory.container.ContainerInventory;
 import net.minecraft.core.world.World;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,8 +26,9 @@ public abstract class MobMixin extends Entity {
 		return is != null && is.getItem().equals(itemSpiderSilk);
 	}
 
-	@Unique private int ValidClimbingItemSlot(Player p) {
-		for(int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
+	@Unique
+	private int ValidClimbingItemSlot(Player p) {
+		for (int i = 0; i < ContainerInventory.playerMainInventorySize(); ++i) {
 			ItemStack is = p.inventory.mainInventory[i];
 			if (is == null) continue;
 
@@ -42,7 +42,7 @@ public abstract class MobMixin extends Entity {
 	/**
 	 * Allow players to climb when they have the spider silk in their inventory
 	 */
-	@Inject(method="canClimb", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "canClimb", at = @At("HEAD"), cancellable = true)
 	public void canClimb(CallbackInfoReturnable<Boolean> cir) {
 		Mob t = (Mob) (Object) this;
 		if (t instanceof Player) {
@@ -52,7 +52,7 @@ public abstract class MobMixin extends Entity {
 			if (p.horizontalCollision) {
 				int is = ValidClimbingItemSlot(p);
 				if (is != -1) {
-					p.inventory.mainInventory[is].damageItem(1,p);
+					p.inventory.mainInventory[is].damageItem(1, p);
 					cir.setReturnValue(true);
 				}
 				// not climbing, heal climbing items

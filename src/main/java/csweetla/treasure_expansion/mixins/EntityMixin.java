@@ -15,15 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class EntityMixin {
 
 	@Unique
-	public boolean piston_boots_equipped(Player player)
-	{
+	public boolean piston_boots_equipped(Player player) {
 		return player.inventory.armorInventory[0] != null && player.inventory.armorInventory[0].itemID == TreasureExpansion.armorItemPistonBoots.id;
 	}
 
 	/**
 	 * If we have piston boots, our step size ("foot size") increases so we can step up full blocks
 	 */
-	@Inject(method = "move", at=@At("HEAD"))
+	@Inject(method = "move", at = @At("HEAD"))
 	public void move_head(double xd, double yd, double zd, CallbackInfo ci) {
 		Entity thisAs = (Entity) (Object) this;
 		if (thisAs instanceof Player) {
@@ -34,7 +33,7 @@ public class EntityMixin {
 	/**
 	 * return foot size to normal
 	 */
-	@Inject(method = "move", at=@At("TAIL"))
+	@Inject(method = "move", at = @At("TAIL"))
 	public void move_tail(double xd, double yd, double zd, CallbackInfo ci) {
 		Entity thisAs = (Entity) (Object) this;
 		if (thisAs instanceof Player) {

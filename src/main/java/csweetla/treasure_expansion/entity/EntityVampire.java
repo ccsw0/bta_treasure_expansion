@@ -23,7 +23,7 @@ public class EntityVampire extends MobZombie {
 		super(world);
 		this.textureIdentifier = NamespaceID.getPermanent(MOD_ID, "vampire");
 		this.mobDrops.clear();
-		this.mobDrops.add(new WeightedRandomLootObject(Items.QUARTZ.getDefaultStack(),3,4));
+		this.mobDrops.add(new WeightedRandomLootObject(Items.QUARTZ.getDefaultStack(), 3, 4));
 		this.scoreValue = 1200;
 	}
 
@@ -32,12 +32,12 @@ public class EntityVampire extends MobZombie {
 	}
 
 	public float getAlpha() {
-        if (this.world == null)
+		if (this.world == null)
 			return 1.0f;
 
 		double closestDistance = Double.POSITIVE_INFINITY;
 
-        for (Player p : this.world.players) {
+		for (Player p : this.world.players) {
 			double currentDistance = p.distanceToSqr(this.x, this.y, this.z);
 			if (currentDistance < closestDistance) {
 				closestDistance = currentDistance;
@@ -45,12 +45,11 @@ public class EntityVampire extends MobZombie {
 		}
 
 
-
 		float player_closeness = (64f - (float) MathHelper.clamp(closestDistance, 0.0d, 64d)) / 64f;
 		float player_closeness_eased = (-(MathHelper.cos(3.145f * player_closeness) - 1) / 2);
-		float pos_brightness = (world.getBlockLightValue((int)x,(int)y + 1,(int)z) / 15.0f);
+		float pos_brightness = (world.getBlockLightValue((int) x, (int) y + 1, (int) z) / 15.0f);
 
-        return (float) Math.max(player_closeness_eased,easeInOutCubic(pos_brightness));
+		return (float) Math.max(player_closeness_eased, easeInOutCubic(pos_brightness));
 	}
 
 	@Override
@@ -71,14 +70,14 @@ public class EntityVampire extends MobZombie {
 		if (this.world == null)
 			return false;
 
-		int x = (int)this.x;
-		int y = (int)this.y;
-		int z = (int)this.z;
+		int x = (int) this.x;
+		int y = (int) this.y;
+		int z = (int) this.z;
 
-        if (!super.canSpawnHere()) return false;
+		if (!super.canSpawnHere()) return false;
 
-		Biome biome = this.world.getBlockBiome(x,y,z);
-        return biome == Biomes.OVERWORLD_HELL || biome == Biomes.NETHER_NETHER || (world.canBlockSeeTheSky(x, y, z) && (this.world.getSeasonManager().getCurrentSeason() == Seasons.OVERWORLD_FALL || this.world.getCurrentWeather() == Weathers.OVERWORLD_FOG));
+		Biome biome = this.world.getBlockBiome(x, y, z);
+		return biome == Biomes.OVERWORLD_HELL || biome == Biomes.NETHER_NETHER || (world.canBlockSeeTheSky(x, y, z) && (this.world.getSeasonManager().getCurrentSeason() == Seasons.OVERWORLD_FALL || this.world.getCurrentWeather() == Weathers.OVERWORLD_FOG));
 	}
 
 	@Override
