@@ -23,7 +23,7 @@ public class ItemToolSwordMixin {
 	public void getDamageVsEntity(Entity entity, ItemStack is, CallbackInfoReturnable<Integer> cir) {
 		if (entity instanceof EntityVampire) {
 			if (!ModItemTags.noVampireDamagePenalty.appliesTo(is.getItem()))
-				cir.setReturnValue(this.weaponDamage / 2);
+				cir.setReturnValue(Math.min(this.weaponDamage / 2, 2 + ToolMaterial.iron.getDamage()));
 			else if (Items.TOOL_SWORD_WOOD.equals(is.getItem())) {
 				cir.setReturnValue(4 + ToolMaterial.iron.getDamage() * 2);
 			}

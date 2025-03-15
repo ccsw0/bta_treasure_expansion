@@ -23,6 +23,7 @@ public class EntityVampire extends MobZombie {
 		super(world);
 		this.textureIdentifier = NamespaceID.getPermanent(MOD_ID, "vampire");
 		this.mobDrops.clear();
+		this.mobDrops.add(new WeightedRandomLootObject(Items.DUST_REDSTONE.getDefaultStack(), 0, 2));
 		this.mobDrops.add(new WeightedRandomLootObject(Items.QUARTZ.getDefaultStack(), 3, 4));
 		this.scoreValue = 1200;
 	}
@@ -90,24 +91,7 @@ public class EntityVampire extends MobZombie {
 		if (this.attackTime <= 0 && distance < 2.0F && entity.bb.maxY > this.bb.minY && entity.bb.minY < this.bb.maxY) {
 			this.attackTime = 20;
 			entity.hurt(this, this.attackStrength, DamageType.COMBAT);
-			this.heal(2);
-		}
-	}
-
-	@Override
-	public boolean hurt(Entity attacker, int i, DamageType type) {
-		if (super.hurt(attacker, i, type)) {
-			if (this.passenger != attacker && this.vehicle != attacker) {
-				if (attacker != this) {
-					this.target = attacker;
-				}
-
-				return true;
-			} else {
-				return true;
-			}
-		} else {
-			return false;
+			this.heal(2 + this.random.nextInt(3));
 		}
 	}
 }
