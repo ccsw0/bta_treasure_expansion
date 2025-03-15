@@ -130,7 +130,7 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 							TileEntityChest tileentitychest = (TileEntityChest) world.getTileEntity(k3, y, i4);
 
 							for (int k4 = 0; k4 < 8; k4++) {
-								ItemStack itemstack = new ItemStack(new ItemStack(Objects.requireNonNull(Item.itemsList[Items.RECORD_13.id + random.nextInt(12)])));
+								ItemStack itemstack = new ItemStack(new ItemStack(Objects.requireNonNull(Item.itemsList[Items.RECORD_CAT.id + random.nextInt(11)])));
 								tileentitychest.setItem(random.nextInt(tileentitychest.getContainerSize()), itemstack);
 							}
 							break;
