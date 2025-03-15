@@ -1,5 +1,6 @@
 package csweetla.treasure_expansion.world_features;
 
+import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogicChest;
 import net.minecraft.core.block.Blocks;
 import net.minecraft.core.block.entity.TileEntityChest;
@@ -10,26 +11,46 @@ import net.minecraft.core.item.Items;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.feature.WorldFeatureDungeon;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 
 import static csweetla.treasure_expansion.TreasureExpansion.blockDiscoJukebox;
 
 public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
+	static final ArrayList<Block<?>> wall_blocks = new ArrayList<>();
+	static final ArrayList<Block<?>> floor_blocks = new ArrayList<>();
+
+	static {
+		wall_blocks.add(Blocks.BRICK_CLAY);
+		wall_blocks.add(Blocks.BRICK_LIMESTONE);
+		wall_blocks.add(Blocks.BRICK_STONE);
+		wall_blocks.add(Blocks.BRICK_STONE_POLISHED);
+
+		floor_blocks.add(Blocks.WOOL);
+		floor_blocks.add(Blocks.LAMP_INVERTED_ACTIVE);
+	}
+
+
 	public WorldFeatureDiscoDungeon() {
-		super(Blocks.BRICK_CLAY.id(), Blocks.BRICK_CLAY.id(), null);
+		super(Blocks.BRICK_CLAY.id(), Blocks.WOOL.id(), null);
 	}
 
 
 	@Override
 	public boolean place(World world, Random random, int x, int y, int z) {
 		boolean has_ceiling = random.nextBoolean();
+		this.blockIdFloor = floor_blocks.get(random.nextInt(floor_blocks.size())).id();
+		this.blockIdWalls = wall_blocks.get(random.nextInt(wall_blocks.size())).id();
 		int height = has_ceiling ? 4 : 3;
 		int width = 2 + random.nextInt(2);
 		int length = 2 + random.nextInt(2);
 		int j1 = 0;
+		int floor_style = random.nextInt(2);
+		int floor_md = random.nextInt(16);
+		int floor_md_mod = 1 + random.nextInt(15);
 
-
+		// --- check for valid placement (dont touch) ---
 		for (int k1 = x - width - 1; k1 <= x + width + 1; k1++) {
 			for (int j2 = y - 1; j2 <= y + height + 1; j2++) {
 				for (int i3 = z - length - 1; i3 <= z + length + 1; i3++) {
@@ -51,8 +72,9 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 				}
 			}
 		}
+		// ------------------------------------------------
 
-		if (j1 >= 1 && j1 <= 5) {
+		if ( j1 >= 1 && j1 <= 5) {
 			for (int l1 = x - width - 1; l1 <= x + width + 1; l1++) {
 				for (int k2 = y + height; k2 >= y - 1; k2--) {
 					for (int j3 = z - length - 1; j3 <= z + length + 1; j3++) {
@@ -63,8 +85,15 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 						} else if (k2 >= 0 && !world.getBlockMaterial(l1, k2 - 1, j3).isSolid()) {
 							world.setBlockWithNotify(l1, k2, j3, 0);
 						} else if (world.getBlockMaterial(l1, k2, j3).isSolid()) {
+
 							if (k2 == y - 1 /*&& random.nextInt(4) != 0*/) {
-								world.setBlockAndMetadataWithNotify(l1, k2, j3, Blocks.WOOL.id(), random.nextInt(16));
+								if (floor_style == 1) {
+									world.setBlockAndMetadataWithNotify(l1, k2, j3,  this.blockIdFloor, random.nextInt(16));
+								} else  {
+									world.setBlockAndMetadataWithNotify(l1, k2, j3, this.blockIdFloor, floor_md);
+									floor_md ^= floor_md_mod;
+								}
+
 							} else {
 								world.setBlockWithNotify(l1, k2, j3, this.blockIdWalls);
 							}
