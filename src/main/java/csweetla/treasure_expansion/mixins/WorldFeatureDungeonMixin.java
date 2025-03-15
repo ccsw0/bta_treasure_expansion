@@ -15,7 +15,7 @@ public abstract class WorldFeatureDungeonMixin {
 
 	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
 	public void place(World world, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
-		if (random.nextInt(35) == 0) {
+		if (random.nextInt(8) == 0) {
 			WorldFeatureDiscoDungeon dd = new WorldFeatureDiscoDungeon();
 			boolean placed = dd.place(world, random, x, y, z);
 //			if (placed)
