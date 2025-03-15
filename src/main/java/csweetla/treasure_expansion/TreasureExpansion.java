@@ -266,7 +266,6 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 		);
 
 		Registries.RECIPE_TYPES.register(MOD_ID + ":crafting/treasure_scrap", RecipeEntryTreasureScrap.class);
-		RecipePageCrafting.recipeToDisplayAdapterMap.put(RecipeEntryTreasureScrap.class, new DisplayAdapterShapeless());
 
 		Map<Item, Integer> scrap_items = new HashMap<>();
 

@@ -71,7 +71,6 @@ public class TileEntityJukeboxDisco extends TileEntityJukebox {
 		if (this.record != 0) {
 			world.playBlockEvent(1005, x, y, z, 0);
 			world.playRecord(null, null, x, y, z);
-			this.record = 0;
 			this.setChanged();
 			world.setBlockMetadataWithNotify(x, y, z, 0);
 			playtime_millisec = 0;

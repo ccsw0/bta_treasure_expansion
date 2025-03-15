@@ -7,6 +7,7 @@ import net.minecraft.core.block.entity.TileEntity;
 import net.minecraft.core.block.entity.TileEntityActivator;
 import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.enums.EnumDropCause;
+import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.util.helper.Direction;
 import net.minecraft.core.util.helper.Side;
@@ -39,7 +40,14 @@ public class BlockLogicDiscoJukebox extends BlockLogicJukebox {
 	@Nullable
 	@Override
 	public ItemStack[] getBreakResult(World world, EnumDropCause dropCause, int meta, TileEntity tileEntity) {
-		return new ItemStack[]{new ItemStack(Blocks.JUKEBOX)};
+		if (tileEntity instanceof  TileEntityJukeboxDisco) {
+			TileEntityJukeboxDisco jukeboxDisco = (TileEntityJukeboxDisco) tileEntity;
+			if (jukeboxDisco.record != 0) {
+                assert Item.getItem(jukeboxDisco.record) != null;
+                return new ItemStack[]{Blocks.JUKEBOX.asItem().getDefaultStack(), new ItemStack(Item.getItem(jukeboxDisco.record))};
+			}
+		}
+		return new ItemStack[]{Blocks.JUKEBOX.asItem().getDefaultStack()};
 	}
 
 }
