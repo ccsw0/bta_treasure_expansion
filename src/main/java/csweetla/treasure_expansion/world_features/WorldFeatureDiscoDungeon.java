@@ -92,6 +92,7 @@ public class WorldFeatureDiscoDungeon extends WorldFeatureDungeon {
 								} else  {
 									world.setBlockAndMetadataWithNotify(l1, k2, j3, this.blockIdFloor, floor_md);
 									floor_md ^= floor_md_mod;
+									floor_md %= 16;
 								}
 
 							} else {
