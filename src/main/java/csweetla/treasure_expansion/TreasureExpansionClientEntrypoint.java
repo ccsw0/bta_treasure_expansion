@@ -1,9 +1,6 @@
 package csweetla.treasure_expansion;
 
-import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.gui.guidebook.crafting.RecipePageCrafting;
-import net.minecraft.client.gui.guidebook.crafting.displays.DisplayAdapterShapeless;
 import net.minecraft.client.sound.SoundRepository;
 import turniplabs.halplibe.util.ClientStartEntrypoint;
 
@@ -21,7 +18,6 @@ public class TreasureExpansionClientEntrypoint implements ClientModInitializer, 
 
 	@Override
 	public void afterClientStart() {
-		RecipePageCrafting.recipeToDisplayAdapterMap.put(RecipeEntryTreasureScrap.class, new DisplayAdapterShapeless() );
 		SoundRepository.registerNamespace(MOD_ID);
 	}
 }

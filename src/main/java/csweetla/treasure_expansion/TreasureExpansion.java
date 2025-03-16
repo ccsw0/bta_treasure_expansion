@@ -2,7 +2,6 @@ package csweetla.treasure_expansion;
 
 import csweetla.treasure_expansion.item.*;
 
-import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.core.block.Block;
@@ -14,6 +13,7 @@ import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.data.registry.Registries;
 import net.minecraft.core.data.registry.recipe.RecipeSymbol;
+import net.minecraft.core.data.registry.recipe.entry.RecipeEntryCraftingShapeless;
 import net.minecraft.core.data.registry.recipe.entry.RecipeEntryRepairable;
 import net.minecraft.core.enums.EnumDropCause;
 import net.minecraft.core.item.*;
@@ -241,7 +241,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 			new RecipeEntryRepairable(itemFlippers.getDefaultStack(),new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
 		);
 
-		Registries.RECIPE_TYPES.register(MOD_ID + ":crafting/treasure_scrap", RecipeEntryTreasureScrap.class);
+//		Registries.RECIPE_TYPES.register(MOD_ID + ":crafting/treasure_scrap", RecipeEntryTreasureScrap.class);
 
 		Map<Item,Integer> scrap_items = new HashMap<>();
 
@@ -268,8 +268,10 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 				.replaceFirst(MOD_ID + "_","");
 
 			Registries.RECIPES.addCustomRecipe(MOD_ID + ":workbench/scrap_" + item_name,
-				new RecipeEntryTreasureScrap(entry.getKey(),itemTreasureScrap,entry.getValue())
-			);
+				new RecipeEntryCraftingShapeless( (List<RecipeSymbol>) Arrays.asList(
+					new RecipeSymbol(new ItemStack(entry.getKey(),1,-1))
+				), new ItemStack(itemTreasureScrap, entry.getValue())));
+
 		}
 
 	}
