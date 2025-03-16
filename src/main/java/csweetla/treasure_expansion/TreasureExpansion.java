@@ -5,8 +5,6 @@ import csweetla.treasure_expansion.item.*;
 import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
 import net.fabricmc.api.ModInitializer;
 
-import net.minecraft.client.gui.guidebook.crafting.RecipePageCrafting;
-import net.minecraft.client.gui.guidebook.crafting.displays.DisplayAdapterShapeless;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
@@ -244,7 +242,6 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint {
 		);
 
 		Registries.RECIPE_TYPES.register(MOD_ID + ":crafting/treasure_scrap", RecipeEntryTreasureScrap.class);
-		RecipePageCrafting.recipeToDisplayAdapterMap.put(RecipeEntryTreasureScrap.class, new DisplayAdapterShapeless() );
 
 		Map<Item,Integer> scrap_items = new HashMap<>();
 
