@@ -4,11 +4,9 @@ import csweetla.treasure_expansion.block.BlockLogicDiscoJukebox;
 import csweetla.treasure_expansion.block.TileEntityJukeboxDisco;
 import csweetla.treasure_expansion.entity.EntityVampire;
 import csweetla.treasure_expansion.item.*;
-import csweetla.treasure_expansion.item.recipes.RecipeEntryTreasureScrap;
+
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.client.gui.guidebook.crafting.RecipePageCrafting;
-import net.minecraft.client.gui.guidebook.crafting.displays.DisplayAdapterShapeless;
-import net.minecraft.client.gui.guidebook.mobs.MobInfoRegistry;
+
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
@@ -18,6 +16,7 @@ import net.minecraft.core.block.material.Material;
 import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.data.registry.Registries;
 import net.minecraft.core.data.registry.recipe.RecipeSymbol;
+import net.minecraft.core.data.registry.recipe.entry.RecipeEntryCraftingShapeless;
 import net.minecraft.core.data.registry.recipe.entry.RecipeEntryRepairable;
 import net.minecraft.core.enums.EnumDropCause;
 import net.minecraft.core.item.*;
@@ -34,9 +33,7 @@ import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.util.GameStartEntrypoint;
 import turniplabs.halplibe.util.RecipeEntrypoint;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static csweetla.treasure_expansion.ModItemTags.fireImmuneAsEntity;
 import static csweetla.treasure_expansion.ModItemTags.fizzleInWater;
@@ -193,12 +190,6 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 
 	@Override
 	public void afterGameStart() {
-		MobInfoRegistry.register(EntityVampire.class, "mob." + MOD_ID + ".vampire.name", "mob." + MOD_ID + ".vampire.desc", 25, 1200,
-			new MobInfoRegistry.MobDrop[]{
-				new MobInfoRegistry.MobDrop(Items.QUARTZ.getDefaultStack(), 1.0F, 3, 4),
-				new MobInfoRegistry.MobDrop(Items.DUST_REDSTONE.getDefaultStack(), 0.5F, 0, 2)
-			}
-		);
 
 		ModItemTags.noVampireDamagePenalty.tag(Items.TOOL_SWORD_WOOD);
 	}
@@ -265,7 +256,6 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 			new RecipeEntryRepairable(itemFlippers.getDefaultStack(), new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
 		);
 
-		Registries.RECIPE_TYPES.register(MOD_ID + ":crafting/treasure_scrap", RecipeEntryTreasureScrap.class);
 
 		Map<Item, Integer> scrap_items = new HashMap<>();
 
@@ -292,8 +282,9 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 				.replaceFirst(MOD_ID + "_", "");
 
 			Registries.RECIPES.addCustomRecipe(MOD_ID + ":workbench/scrap_" + item_name,
-				new RecipeEntryTreasureScrap(entry.getKey(), itemTreasureScrap, entry.getValue())
-			);
+				new RecipeEntryCraftingShapeless(Collections.singletonList(new RecipeSymbol(new ItemStack(entry.getKey(), 1, -1))
+                ), new ItemStack(itemTreasureScrap, entry.getValue())));
+
 		}
 
 	}
