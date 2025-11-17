@@ -164,7 +164,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 			.build(new ItemFood("bananas", MOD_ID + ":bananas", config.getInt("ids.bananas"), 4, 6, false, 8));
 
 		foodItemFruitSalad = new ItemBuilder(MOD_ID)
-			.build(new ItemFood("fruit_salad", MOD_ID + ":fruit_salad", config.getInt("ids.fruit_salad"), 20, 5, false, 8));
+			.build(new FruitSaladItem("fruit_salad", MOD_ID + ":fruit_salad", config.getInt("ids.fruit_salad"), 20, 5, false, 4));
 
 		itemLavaCharm = new ItemBuilder(MOD_ID)
 			.setTags(fireImmuneAsEntity, fizzleInWater)
