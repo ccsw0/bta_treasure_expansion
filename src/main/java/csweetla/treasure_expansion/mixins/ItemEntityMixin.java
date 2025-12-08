@@ -1,8 +1,11 @@
 package csweetla.treasure_expansion.mixins;
 
+import csweetla.treasure_expansion.ModAchievements;
+import csweetla.treasure_expansion.ModItemTags;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.EntityItem;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.util.helper.DamageType;
 import net.minecraft.core.world.World;
@@ -29,11 +32,11 @@ public abstract class ItemEntityMixin extends Entity {
 	public abstract void tick();
 
 	/**
-	 * make item entities who's item has the fire immune tag actually fire immune
+	 * make item entities whose item has the fire immune tag actually fire immune
 	 */
 	@Inject(method = "<init>(Lnet/minecraft/core/world/World;DDDLnet/minecraft/core/item/ItemStack;)V", at = @At("TAIL"))
 	protected void init(World world, double d, double d1, double d2, ItemStack itemstack, CallbackInfo ci) {
-		if (itemstack != null && itemstack.getItem() != null && fireImmuneAsEntity.appliesTo(itemstack.getItem())) {
+		if (itemstack != null && fireImmuneAsEntity.appliesTo(itemstack.getItem())) {
 			EntityItem instance = (EntityItem) (Object) this;
 			instance.fireImmune = true;
 		}
@@ -88,4 +91,12 @@ public abstract class ItemEntityMixin extends Entity {
 			ci.cancel();
 		}
 	}
+
+	@Inject( method = "playerTouch", at = @At(value = "INVOKE", target = "Lnet/minecraft/core/block/Block;id()I", ordinal = 0))
+	public void earnAchievements(Player player, CallbackInfo ci) {
+		if (this.item != null && ModItemTags.earnsTreasureAchievement.appliesTo(this.item.getItem())) {
+			player.triggerAchievement(ModAchievements.FIND_TREASURE);
+		}
+	}
+
 }

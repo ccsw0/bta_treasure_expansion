@@ -7,6 +7,7 @@ import csweetla.treasure_expansion.item.*;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.minecraft.client.gui.achievements.data.AchievementPages;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogic;
 import net.minecraft.core.block.BlockLogicChest;
@@ -65,7 +66,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 	public static Item itemLavaCharm;
 	public static Item itemSpiderSilk;
 	public static Item itemFireQuiver;
-	public static Item itemFlippers;
+	public static Item armorItemFlippers;
 	public static Item itemTreasureScrap;
 	public static Block<BlockLogic> blockCobbleChest;
 	public static Block<BlockLogic> blockSandstoneChest;
@@ -174,7 +175,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 			.setTags(fireImmuneAsEntity, fizzleInWater)
 			.build(new FireQuiverItem("fire_quiver", config.getInt("ids.fire_quiver"), config.getInt("durability.fire_quiver")));
 
-		itemFlippers = new ItemBuilder(MOD_ID)
+		armorItemFlippers = new ItemBuilder(MOD_ID)
 			.build(new ItemArmor("flippers", MOD_ID + ":flippers", config.getInt("ids.flippers"), armorMaterialFlippers, 0));
 
 		itemTreasureScrap = new ItemBuilder(MOD_ID)
@@ -190,8 +191,21 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 
 	@Override
 	public void afterGameStart() {
-
+		AchievementPages.register(ModAchievementPage.THE);
 		ModItemTags.noVampireDamagePenalty.tag(Items.TOOL_SWORD_WOOD);
+		ModItemTags.earnsTreasureAchievement.tagAll(Arrays.asList(
+			Items.ARMOR_QUIVER_GOLD,
+			Items.ARMOR_BOOTS_ICESKATES,
+			armorItemPistonBoots,
+			armorItemDivingHelmet,
+			itemStrangeDevice,
+			itemEscapeRope,
+			armorItemFlippers,
+			itemFireQuiver,
+			itemEscapeRopeGold,
+			itemSpiderSilk,
+			itemLavaCharm,
+			toolItemSilverSword));
 	}
 
 	private void initializeBlocks() {
@@ -253,7 +267,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 
 		Registries.RECIPES.addCustomRecipe(
 			MOD_ID + ":workbench/repair_flippers",
-			new RecipeEntryRepairable(itemFlippers.getDefaultStack(), new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
+			new RecipeEntryRepairable(armorItemFlippers.getDefaultStack(), new RecipeSymbol(itemTreasureScrap.getDefaultStack()))
 		);
 
 
@@ -269,7 +283,7 @@ public class TreasureExpansion implements ModInitializer, RecipeEntrypoint, Game
 		scrap_items.put(itemSpiderSilk, 6);
 
 		scrap_items.put(toolItemSilverSword, 3);
-		scrap_items.put(itemFlippers, 4);
+		scrap_items.put(armorItemFlippers, 4);
 		scrap_items.put(itemEscapeRope, 2);
 
 

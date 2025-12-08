@@ -67,5 +67,19 @@ tile.treasure_expansion.jukebox.disco.name=Disco Jukebox
 tile.treasure_expansion.jukebox.disco.desc=Survival Unobtainable.
 
 mob.treasure_expansion.vampire.name=Vampire
-mob.treasure_expansion.vampire.desc=Vampires are sneaky that lurk in shadow and only appear during the spookiest times. Except for wood and silver, weapons are ineffective towards them.
+mob.treasure_expansion.vampire.desc=Vampires are sneaky that lurk in shadow and only appear during the spookiest times. Weapons hardly damage them, except for wood and silver.
 
+achievement.treasure_expansion.eatFruitSalad=Yummy Yummy
+achievement.treasure_expansion.eatFruitSalad.desc=Eat a healthy snack
+
+achievement.treasure_expansion.findTreasure=Find Treasure
+achievement.treasure_expansion.findTreasure.desc=Find any treasure item in a labyrinth
+
+achievement.treasure_expansion.killVampire=Buffy
+achievement.treasure_expansion.killVampire.desc=Slay a vampire with a silver sword
+
+achievement.treasure_expansion.findDisco=Join the Party!
+achievement.treasure_expansion.findDisco.desc=Find a Disco Dungeon
+
+achievement.treasure_expansion.goDiving=Better than Land
+achievement.treasure_expansion.goDiving.desc=Go for a swim with flippers and a diving helmet

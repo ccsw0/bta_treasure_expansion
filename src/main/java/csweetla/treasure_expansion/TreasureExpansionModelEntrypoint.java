@@ -139,8 +139,8 @@ public class TreasureExpansionModelEntrypoint implements ModelEntrypoint {
 			return im;
 		});
 
-		ModelHelper.setItemModel(itemFlippers, () -> {
-			ItemModelStandard im = new ItemModelStandard(itemFlippers, MOD_ID);
+		ModelHelper.setItemModel(armorItemFlippers, () -> {
+			ItemModelStandard im = new ItemModelStandard(armorItemFlippers, MOD_ID);
 			im.icon = TextureRegistry.getTexture(NamespaceID.getPermanent(MOD_ID, "item/flippers"));
 			return im;
 		});

@@ -1,6 +1,8 @@
 package csweetla.treasure_expansion.mixins;
 
+import csweetla.treasure_expansion.ModAchievements;
 import csweetla.treasure_expansion.TreasureExpansion;
+import net.minecraft.core.achievement.stat.Stat;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.player.Player;
@@ -29,6 +31,9 @@ public abstract class PlayerMixin extends net.minecraft.core.entity.Mob {
 	@Shadow
 	public Gamemode gamemode;
 
+	@Shadow
+	public abstract void triggerAchievement(Stat statbase);
+
 	public PlayerMixin(World world) {
 		super(world);
 	}
@@ -36,6 +41,11 @@ public abstract class PlayerMixin extends net.minecraft.core.entity.Mob {
 	@Unique
 	public boolean piston_boots_equipped() {
 		return this.inventory.armorInventory[0] != null && this.inventory.armorInventory[0].itemID == TreasureExpansion.armorItemPistonBoots.id;
+	}
+
+	@Unique
+	public boolean flippers_equipped() {
+		return this.inventory.armorInventory[0] != null && this.inventory.armorInventory[0].itemID == armorItemFlippers.id;
 	}
 
 	@Unique
@@ -73,6 +83,9 @@ public abstract class PlayerMixin extends net.minecraft.core.entity.Mob {
 	@Inject(method = "canBreatheUnderwater", at = @At("HEAD"), cancellable = true)
 	void canBreatheUnderwater(CallbackInfoReturnable<Boolean> cir) {
 		if (diving_helmet_equipped()) {
+			if (flippers_equipped()) {
+				this.triggerAchievement(ModAchievements.GO_DIVING);
+			}
 			cir.setReturnValue(true);
 		}
 	}

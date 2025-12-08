@@ -1,5 +1,6 @@
 package csweetla.treasure_expansion.item;
 
+import csweetla.treasure_expansion.ModAchievements;
 import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemFood;
 import net.minecraft.core.item.ItemStack;
@@ -14,6 +15,7 @@ public class FruitSaladItem extends ItemFood {
 
 	public ItemStack onUseItem(ItemStack itemstack, World world, Player entityplayer) {
 		if (entityplayer.getHealth() < entityplayer.getMaxHealth() && entityplayer.getHealth() + entityplayer.getTotalHealingRemaining() < entityplayer.getMaxHealth()) {
+			entityplayer.triggerAchievement(ModAchievements.EAT_FRUIT_SALAD);
 			entityplayer.heal(this.getHealAmount());
 			itemstack.damageItem(1, entityplayer);
 			world.playSoundAtEntity(entityplayer, entityplayer,"random.bite", 0.5F + (itemRand.nextFloat() - itemRand.nextFloat()) * 0.1F, 1.1F + (itemRand.nextFloat() - itemRand.nextFloat()) * 0.1F);

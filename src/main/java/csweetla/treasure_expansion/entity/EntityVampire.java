@@ -1,9 +1,12 @@
 package csweetla.treasure_expansion.entity;
 
+import csweetla.treasure_expansion.ModAchievements;
+import csweetla.treasure_expansion.TreasureExpansion;
 import net.minecraft.core.WeightedRandomLootObject;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.monster.MobZombie;
 import net.minecraft.core.entity.player.Player;
+import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.Items;
 import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.util.helper.DamageType;
@@ -50,7 +53,7 @@ public class EntityVampire extends MobZombie {
 		float player_closeness_eased = (-(MathHelper.cos(3.145f * player_closeness) - 1) / 2);
 		float pos_brightness = (world.getBlockLightValue((int) x, (int) y + 1, (int) z) / 15.0f);
 
-		return (float) Math.max(player_closeness_eased, easeInOutCubic(pos_brightness));
+		return Math.max(player_closeness_eased, easeInOutCubic(pos_brightness));
 	}
 
 	@Override
@@ -93,5 +96,17 @@ public class EntityVampire extends MobZombie {
 			entity.hurt(this, this.attackStrength, DamageType.COMBAT);
 			this.heal(2 + this.random.nextInt(3));
 		}
+	}
+
+	@Override
+	public void onDeath(Entity entityKilledBy) {
+		if (entityKilledBy instanceof Player) {
+			Player p = (Player) entityKilledBy;
+			ItemStack is = p.getHeldItem();
+			if (is != null && is.getItem().equals(TreasureExpansion.toolItemSilverSword)) {
+				p.triggerAchievement(ModAchievements.KILL_VAMPIRE);
+			}
+		}
+		super.onDeath(entityKilledBy);
 	}
 }

@@ -1,5 +1,6 @@
 package csweetla.treasure_expansion.block;
 
+import csweetla.treasure_expansion.ModAchievements;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.BlockLogicJukebox;
 import net.minecraft.core.block.Blocks;
@@ -25,6 +26,7 @@ public class BlockLogicDiscoJukebox extends BlockLogicJukebox {
 	public boolean onBlockRightClicked(World world, int x, int y, int z, Player player, Side side, double xPlaced, double yPlaced) {
 		TileEntity te = world.getTileEntity(x,y,z);
 		if (te instanceof TileEntityJukeboxDisco) {
+			player.triggerAchievement(ModAchievements.FIND_DISCO);
 			TileEntityJukeboxDisco jukeboxEnt =  (TileEntityJukeboxDisco) te;
 			jukeboxEnt.displayTitle();
 		}
@@ -50,4 +52,7 @@ public class BlockLogicDiscoJukebox extends BlockLogicJukebox {
 		return new ItemStack[]{Blocks.JUKEBOX.asItem().getDefaultStack()};
 	}
 
+	public void onBlockDestroyedByPlayer(World world, int x, int y, int z, Side side, int meta, Player player, Item item) {
+		player.triggerAchievement(ModAchievements.FIND_DISCO);
+	}
 }

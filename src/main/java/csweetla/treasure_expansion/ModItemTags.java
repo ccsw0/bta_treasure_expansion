@@ -7,4 +7,5 @@ public abstract class ModItemTags {
 	public static Tag<Item> fireImmuneAsEntity = Tag.of("item_entity_fireimmune");
 	public static Tag<Item> fizzleInWater = Tag.of("fizzle_water");
 	public static Tag<Item> noVampireDamagePenalty = Tag.of("noVampireDamagePenalty");
+	public static Tag<Item> earnsTreasureAchievement = Tag.of("earnsTreasureAchievement");
 }
